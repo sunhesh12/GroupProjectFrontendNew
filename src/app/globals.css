@@ -1,0 +1,113 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --gray:rgb(127,127,127);
+  --lightGrayx5:rgba(127, 127, 127, 0.5);
+  --foregroundshadow: rgba(0,0,0,0.5);
+  --redNotificationx6:rgba(252, 159, 161, 0.6);
+  --GreenNotificationx6:rgba(33, 165, 50, 0.6);
+
+  /* Font sizes */
+  --fontSize-base: 20px;
+
+  --fontSize-large-1: 90px;
+  --fontSize-large-2: 70px;
+  --fontSize-large-3: 60px;
+
+  --fontSize-medium-1: 50px;
+  --fontSize-medium-2: 40px;
+  --fontSize-medium-3: 30px;
+
+  --fontSize-small-1: 15px;
+  --fontSize-small-2: 12px; 
+  --fontSize-small-3: 10px;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+@media (max-width: 320px) {
+  :root {
+    --fontSize-large-1: 80px;
+    --fontSize-large-2: 60px;
+    --fontSize-large-3: 50px;
+
+    --fontSize-base: 12px;
+  } 
+}
+
+@media (max-width: 768px) {
+  :root {
+    --fontSize-large-1: 70px;
+    --fontSize-large-2: 50px;
+    --fontSize-large-3: 40px;
+
+    --fontSize-base: 12px;
+  } 
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --fontSize-large-1: 60px;
+    --fontSize-large-2: 40px;
+    --fontSize-large-3: 30px;
+
+    --fontSize-base: 15px;
+  } 
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContainer{
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.centerBox{
+  width: 500px;
+  background-color: var(--background);
+  min-height: 100px;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

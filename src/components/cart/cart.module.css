@@ -1,0 +1,34 @@
+.container{
+    width: 100%;
+    height: auto;
+    display: flex;
+
+}
+
+.cartIcon{
+    height: 80px;
+    max-height: 80px;
+    aspect-ratio: 1;
+    
+}
+
+.cartHeader{
+    display: flex;
+    align-items: end;
+    height: 40px;
+    width: 100%;
+    /* background-color: red; */
+}
+
+.cartHeader h1{
+    font-size: larger;
+}
+
+.textWreapper{
+    display: block;
+    margin-left: 20px;
+}
+
+.textWreapper p{
+    font-size: small;
+}

@@ -1,0 +1,253 @@
+.GreetingMessage {
+  width: calc(100%);
+  height: 50px;
+  /* background-color: red; */
+}
+
+.GreetingMessage h1 {
+  font-size: xx-large;
+  color: var(--foreground);
+  font-weight: bolder;
+}
+
+.GreetingMessage h1 span {
+  color: gray;
+}
+
+.NotificationsContainer {
+  width: 100%;
+  height: max-content;
+  display: block;
+  /* background-color: red; */
+  padding: 10px 0px 10px 0px;
+}
+
+/* ===========================Notification================== */
+
+.Notification {
+  width: calc(100%-10px);
+  height: 70px;
+  margin: 1% 0 1% 0;
+  border-radius: 10px;
+  background-color: var(--redNotificationx6);
+  display: flex;
+  cursor: pointer;
+}
+
+.NotificationHeading {
+  width: 70%;
+  display: block;
+  align-items: center;
+  padding-left: 30px;
+}
+.NotificationHeading h2{
+    font-size: x-large;
+    font-weight: bold;
+    /* color: rgb(124, 10, 10); */
+}
+
+.AssignmentLink {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 50px;
+}
+
+  
+  .RedBackground {
+    background-color: var(--redNotificationx6);
+    border: 2px solid red;
+  }
+  
+  .GreenBackground {
+    background-color:var(--GreenNotificationx6);
+    border: 2px solid green;
+  }
+  
+
+/* ========================Continue learning section======================= */
+
+.ContiueLearningContainer{
+    width: 100%;
+    min-height: 100px;
+    /* background-color: red; */
+    display: block;
+    justify-content: center;
+}
+
+.ContiueLearningH1{
+    font-size: x-large;
+    font-weight: bold;
+    padding-left: 0px;
+}
+.subContainer{
+    width: 100%;
+    min-height: 100px;
+    /* background-color: rgb(97, 84, 84); */
+}
+
+.CartContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* gap: 20px; */
+}
+
+.cart{
+    width: 48%;
+    margin: 1% 1% 1% 1%;
+    min-height: 80px;
+    height: auto;
+    background-color: rgba(128, 128, 128, 0.212);
+    cursor:pointer;
+    position: relative;
+    border-radius: 10px
+}
+
+/* ================contiuneSemesterWork==================== */
+
+.contiuneSemesterWorkWrapper{
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background-color: var(--GreenNotificationx6);
+    border: 1px solid green;
+    border-radius: 10px;
+    display: block;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+
+.contiuneSemesterWorkHedding , .contiuneSemesterWorkBody{
+    width: 100%;
+    height: 60px;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+}
+.contiuneSemesterWorkHedding h1{
+    font-size: x-large;
+    font-weight: bold;
+    color: green;
+}
+
+.contiuneSemesterWorkHedding .cswImage{
+    width: 50px;
+    height: 50px;
+}
+
+.contiuneSemesterWorkTask {
+    width: 100%;
+    min-height: 100px;
+    /* background-color: rgb(243, 190, 190); */
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly; 
+    padding: 1%; 
+}
+
+/* ==================frequenlt access courses============== */
+
+.facourses{
+  width: 100%;
+  margin-top: 20px;
+  min-height: 100px;
+  height: auto;
+  /* background-color: red; */
+  /* padding: 20px; */
+}
+
+.facoursesHeading{
+  width: 100%;
+  height: 50px;
+  /* background-color: green; */
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.facoursesHeading h1{
+  font-size: x-large;
+  font-weight: bold;
+  color: var(--foreground);
+}
+
+.cartLink{
+  width: 30%;
+  max-height: 300px;
+  height: auto;
+  /* background-color: red; */
+  border-radius: 10px;
+  margin: 15px;
+}
+
+/* =================academic perfomace sections================ */
+
+.academicPerfomanceWrapper{
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  /* background-color: red; */
+  /* padding: 20px; */
+  
+}
+
+.academicPerfomanceHeading{
+  width: 100%;
+  height: auto;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  /* background-color: rgba(255, 166, 0, 0.637); */
+}
+
+.academicPerfomanceHeading h1{
+  font-size: x-large;
+  font-weight: bold;
+  color: var(--foreground);
+}
+
+.academicPerfomanceConent{
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  background-color: rgba(255, 166, 0, 0.637);
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+}
+.apIcon{
+  height: 100%;
+  min-height: 100px;
+  aspect-ratio: 1;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.apText{
+  height: 100%;
+  min-height: 100px;
+  aspect-ratio: 7;
+  /* background-color: red; */
+  display: block;
+}
+
+.apText h1{
+  font-size: x-large;
+  font-weight:  bold;
+  color: rgb(116, 101, 19);
+}
+
+.aplinks{
+  width: calc((100% - 100px - 700px) /2);
+  height: 100%;
+  min-height: 100px;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

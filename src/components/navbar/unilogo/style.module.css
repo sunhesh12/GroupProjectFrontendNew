@@ -1,0 +1,30 @@
+.logo {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-left: auto;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.text > h5 {
+  font-size: 10px;
+  margin: 0;
+  font-weight: normal;
+}
+
+.text > h4 {
+  font-weight: bold;
+  margin: 0;
+}
+
+@media (max-width: 764px) {
+  .text {
+    display: none;
+  }
+}

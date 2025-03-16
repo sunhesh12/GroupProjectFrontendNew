@@ -1,0 +1,303 @@
+.MainWrapperHeding {
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    display: flex;
+    text-align: center;
+    /* background-color: red; */
+}
+
+.MainWrapperHeding h1{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.BackButton{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: left;
+}
+
+.MainWrapper h1 {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    /* background-color: red; */
+}
+
+.TopicContainer {
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+    padding: 0 20px 0 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    /* background-color: green; */
+    /* display: flex; */
+}
+
+.TopicContainer h1{
+    font-size: large;
+    font-weight: bold;
+}
+
+.HeadTopic{
+    width: calc(100% - 80px);
+    /* background-color: red; */
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.TopicHeading button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+}
+
+/* .TopicCartHeading {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} */
+
+.TopicCartHeadingTopic {
+    width: calc(100% - 80px);
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+
+.TopicCartBody {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+
+.TopicHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.SubtopicList {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.Subtopic {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.Subtopic h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.Subtopic p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Button icon handling (if needed) */
+.Button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.VideoWrapper, .IframeWrapper , .ImageWrapper {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 300px;
+    height: calc((300px / 16) * 9);
+  }
+
+  .LinkButton, .DownloadButton{
+    color: green; /* Default color for unvisited links */
+    text-decoration: none;
+  }
+  
+  .LinkButton:visited, .DownloadButton:visited {
+    color: purple; /* Color for visited links */
+  }
+  
+  .LinkButton:hover {
+    text-decoration: underline; /* Optional: Underline on hover */
+  }
+
+  .videoIcon {
+    width: auto;
+    height:fit-content;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    color: gray;
+    font-size: small;
+    height: 30px;
+  }
+.subtopicItem {
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.subtopicLine {
+    position: relative; /* Make the container relative for positioning the circle */
+    width: 2px; /* Line thickness */
+    height: 100%; /* Adjust as needed */
+    background-color: gray; /* Line color */
+    margin: 0 auto; /* Center the line horizontally */
+  }
+  
+  .subtopicLine::before {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute;
+    top: 50%; /* Middle of the line */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset to center the circle */
+    width: 12px; /* Circle size */
+    height: 12px; /* Circle size */
+    background-color: gray; /* Circle color (same as line or different) */
+    border: 2px solid white; /* Optional: Border to make it stand out */
+    border-radius: 50%; /* Makes the shape a circle */
+  }
+  
+
+.subtopicContent {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px; /* Space between line and content */
+}
+
+.videoIcon {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.VideoWrapper {
+  margin-top: 10px;
+}
+
+.ImageWrapper {
+  margin-top: 10px;
+}
+
+.LinkWrapper {
+  margin-top: 10px;
+}
+
+.DownloadButton {
+  background-color: #000000;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: small;
+}
+
+.Downloadpdf{
+    cursor: pointer;
+}
+.LinkButton {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.LinkButton:hover {
+  color: #0056b3;
+}
+
+/* ====================== */
+
+.subtopicItem {
+    display: flex;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .subtopicLine {
+    width: 2px;
+    background-color: #000; /* Black line */
+    height: 100%;
+    position: absolute;
+    left: -10px; /* Adjust this to your needs */
+  }
+  
+  .subtopicContent {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px; /* Space between line and content */
+  }
+  
+  .videoIcon {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .VideoWrapper {
+    margin-top: 10px;
+  }
+  
+  .ImageWrapper {
+    margin-top: 10px;
+  }
+  
+  .LinkWrapper {
+    margin-top: 10px;
+  }
+  
+.courseCoverImage{
+    width: 100%;
+    height: 200px;
+    border-radius: 20px 20px 0 0 ;
+    margin-bottom: 20px;
+}
+
+.StartButton{
+    background-color: rgb(0, 0, 0);
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+  /* =========================== */
+
+  
+
+
+  
+  
+  

@@ -1,0 +1,64 @@
+.task{
+    width: 30%;
+    height: 70px;
+    background-color: var(--background);
+    border-radius: 10px;
+    margin: 1.5%;
+    display: flex;
+    /* text-align: center; */
+}
+
+.taskImage{
+    width: 20%;
+    max-height: 100%;
+    height: auto;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;justify-content: center;
+
+}
+
+.taskBody{
+    width: 60%;
+    max-height: 100%;
+    height: auto;
+    /* background-color: red; */
+    display: block;
+}
+
+.Taskheading{
+    width: 100%;
+    height: 50%;
+    /* background-color: green; */
+    display: flex;
+    align-items: end;
+}
+
+.Taskheading h1{
+    font-size: large;
+    font-weight: bold;
+}
+
+.Taskbody p{
+    color: var(--gray);
+}
+
+.linkLink{
+    width: 20%;
+    max-height: 100%;
+    height: auto;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link{
+    width: 80%;
+    max-height: 100%;
+    height: auto;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

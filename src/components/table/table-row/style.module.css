@@ -1,0 +1,29 @@
+.courseTableRow td {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: black;
+  border-bottom: 1px solid #ddd;
+  min-width: 200px;
+}
+
+/* Zebra striping for rows */
+.courseTableRow:nth-child(even) td {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect for rows */
+.courseTableRow:hover td {
+  background-color: #f1f1f1;
+}
+
+.selectButton {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border:none;
+}
+
+.selectButton {
+  cursor: pointer;
+}

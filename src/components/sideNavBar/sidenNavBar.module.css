@@ -1,0 +1,274 @@
+.sideNavBarContainer {
+  width: 20vw;
+  min-height: 100vh;
+  height: auto;
+  background-color: var(--foregroundshadow);
+
+  transition: width 0.3s ease;
+  color: var(--background);
+  overflow: hidden;
+  /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+
+.container {
+  width: 80vw;
+  height: auto;
+  background-color: var(--background);
+  flex: 1;
+  padding: 20px;
+}
+
+/* Closed State */
+.closed {
+  width: 50px;
+}
+
+/* Open State */
+.open {
+  width: 20vw;
+}
+
+/* Content inside Side Navbar */
+.navContent {
+  padding: 20px;
+  text-align: center;
+}
+
+/* =================================================== */
+
+.mainContainer {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Side Navbar Styles */
+.sideNavBarContainer {
+  transition: width 0.3s ease;
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/* Navigation Item Styles */
+.navItem {
+  margin-top: 10px;
+  padding-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.navItem:hover {
+  background-color: #444;
+}
+
+.icon {
+  margin-right: 10px; /* Space between icon and label */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.open .navItem {
+  justify-content: left;
+  padding: 10px 10px 10px 20px;
+}
+
+.label {
+  font-size: 16px;
+  color: white;
+}
+
+.container {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+/* =============================================== */
+
+.logoContainer {
+  width: 100%;
+  height: 80px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logoText {
+  width: calc(100% - 90px);
+  height: 50px;
+}
+
+.logoTextHeading {
+  width: calc(100%);
+  height: 30px;
+  display: flex;
+  align-items: end;
+}
+
+.logoTextHeading p {
+  font-size: small;
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.logoTextBody {
+  width: calc(100%);
+  height: 30px;
+  display: flex;
+  align-items: start;
+}
+
+.logoTextBody p {
+  font-size: x-small;
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.toggleButtonContainer {
+  width: 40px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.toggleButton {
+  height: 100%;
+  cursor: pointer;
+  color: white;
+}
+
+/* .toggleButton:hover {
+    background-color: #555;
+  }  */
+
+.openlogoContainer {
+  display: flex;
+}
+
+.closedlogoContainer {
+  display: block;
+}
+
+.closedlogoContainer .logo {
+  width: 100%;
+  justify-content: center;
+}
+
+.closedlogoContainer .logoText {
+  height: 10px;
+}
+
+.closedlogoContainer .toggleButtonContainer {
+  height: 40px;
+  width: 100%;
+  justify-content: center;
+}
+
+.searchBarContainer {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchIcon {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-right: 10px;
+}
+
+.inputContainer {
+  width: calc(100% - 50px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.inputContainer input {
+  height: 100%;
+  width: 90%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.searchbarwrapper {
+  width: 90%;
+  height: 40px;
+  background-color: black;
+  display: flex;
+  border-radius: 10px;
+}
+
+.closed .inputContainer {
+  width: 0px;
+}
+
+.closed .searchBarContainer {
+  height: 40px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.closed .searchbarwrapper {
+  width: 100%;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.closed .searchIcon {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodyContainer {
+  width: 100%;
+  height: calc(100vh - 80px - 50px - 150px);
+}
+.endDiv {
+  width: 100%;
+  height: 100px;
+  /* background-color: red; */
+  display: block;
+}
+
+.settingDiv {
+  width: 100%;
+  height: 50px;
+  /* background-color: green */
+}
+
+.profile {
+  width: 100%;
+  height: 50px;
+  background-color: green;
+}
+
+@media (max-width: 768px) {
+  .open {
+    width: 100vw;
+  }
+}

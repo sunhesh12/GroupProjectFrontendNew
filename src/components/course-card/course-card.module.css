@@ -1,0 +1,78 @@
+.courseCard{
+  width: 100%;
+  height: 100%;
+  max-height: 300px;
+  background-color: white;
+  border: 1px solid #E3E3E3;
+  border-radius: 10px;
+  display: block;
+  cursor: pointer;
+}
+
+.CardImage{
+  width: 100%;
+  height: 60%;
+  /* background-color: red; */
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  display: inline-block;
+}
+
+.courseCardImage{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+  display: block;
+}
+
+.whitecorner {
+  position: absolute;
+  top: 5;
+  left: 5;
+  min-width: 0px; 
+  width: auto;
+  height: 30px; 
+  background-color: white;
+  border-radius: 20px; 
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whitecorner p{
+  font-size: small;
+  font-weight: bold
+}
+
+.courseName{
+  width: 100%;
+  max-height: 50px;
+  min-height: 50px;
+  height: auto;
+  padding: 0 10px 0 10px;
+  /* background-color: red; */
+}
+
+.courseName h1{
+  font-size: large;
+  font-weight: bold;
+  color: var(--foreground);
+}
+
+.courseSemester{
+  width: 100%;
+  height: 15%;
+  /* height: auto; */
+  padding: 10px 10px 0 10px;
+  /* background-color: red; */
+  display: flex;
+  align-items: end;
+
+}
+
+.courseSemester p{
+  color: var(--foreground);
+  font-size: medium;
+  font-weight: bold;
+}

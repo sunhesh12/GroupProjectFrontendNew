@@ -1,0 +1,48 @@
+.createCourseCard {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+    width:100%;
+    text-decoration: none;
+    color: black;
+    background-color: #F1F1F1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .createCourseCard:hover {
+    background-color: #FAFAFA;
+  }
+  
+  .iconContainer {
+    margin-top: 4px;
+  }
+  
+  .icon {
+    height: 24px;
+    width: 24px;
+    color: #000;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin: 0 0 4px 0;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  

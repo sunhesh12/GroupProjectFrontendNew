@@ -1,0 +1,84 @@
+.sidebar {
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	background-color: #1F1F1F;
+	color: #FFFFFF;
+	padding: 10px 15px;
+	font-size: 12px;
+	height: 100vh;
+	z-index: 100;
+}
+
+.sidebarHeader {
+	font-size: var(--fontSize-small);
+	margin: 0;
+}
+
+.sidebarSubHeader {
+	font-size: var(--fontSize-small-2);
+	font-weight: normal;
+	margin: 0;
+}
+
+.sidebarHeaderContainer {
+	display: flex;
+	flex-direction: column;
+	height:200px;
+	width: 100%;
+}
+
+.title {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
+	padding: 5px 5px;
+	align-items: center;
+}
+
+.navHeader {
+	font-size: 0.8rem;
+	font-weight: normal;
+	margin: 20px 0px 20px 0px;
+}
+
+.nav {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.navList {
+	display: flex;
+	flex-direction: column;
+	gap:10px;
+	list-style-type: none;
+	padding: 0;
+	height: 100%;
+	margin: 0;
+}
+
+.searchForm {
+	display:flex;
+	flex-direction: column;
+	margin: 20px 0px;
+	align-items: stretch;
+}
+
+.profileContainer {
+	display: flex;
+	flex-direction: column;
+	gap:10px;
+	margin-top: auto;
+}
+
+.username {
+	margin: 0;
+	font-size: var(--fontSize-small-2);
+	font-weight:bold;
+}
+
+.email {
+	margin: 0;
+	font-size: var(--fontSize-small-3);
+}

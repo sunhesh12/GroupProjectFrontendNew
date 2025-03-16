@@ -1,0 +1,46 @@
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 100px;
+}
+
+.form {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap:20px;
+	width: 800px;
+	margin-top: 20px;
+}
+
+.heading {
+	font-size: var(--fontSize-medium-1);
+	text-align: center;
+}
+
+.caption {
+	font-size: var(--fontSize-base);
+	text-align: center;
+}
+
+.buttonContainer {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	display: flex;
+	flex-direction: row;
+	gap:10px;
+}
+
+.hr {
+	width: 100%;
+	grid-column-start: 1;
+	grid-column-end: 3;
+	border:0.1px solid #E3E3E3;
+	margin-top:60px;
+	margin-bottom: 10px;
+}
+
+.basicInfo {
+	display: flex;
+	flex-direction: column;
+}
