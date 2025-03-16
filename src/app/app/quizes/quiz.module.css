@@ -1,0 +1,126 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+  
+  .resultContainer {
+    text-align: center;
+  }
+  
+  .resultTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .resultText {
+    font-size: 1.1rem;
+  }
+  
+  .button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .restartButton {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .restartButton:hover {
+    background-color: #1e40af;
+  }
+  
+  .quizContainer {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .question {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .optionButton {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    background-color: #e5e7eb;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-bottom: 0.5rem;
+  }
+  
+  .optionButton:hover {
+    background-color: #d1d5db;
+  }
+  
+  .selectedOption {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+  
+  .navButton {
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .previousButton {
+    background-color: #6b7280;
+    color: white;
+  }
+  
+  .previousButton:hover {
+    background-color: #4b5563;
+  }
+  
+  .nextButton {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .nextButton:hover {
+    background-color: #1e40af;
+  }
+  
+  .submitButton {
+    background-color: #10b981;
+    color: white;
+  }
+  
+  .submitButton:hover {
+    background-color: #059669;
+  }
+  
