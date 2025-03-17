@@ -17,13 +17,14 @@ type InputFieldProps = {
   type: "email" | "text" | "password" | "tel" | "number" | "select" | "file";
   min?: number;
   max?: number;
-  name: string;
+  name?: string;
   options?: Option[];
   defaultValue?: string;
   required?: boolean;
   backgroundColor?: string;
   borderColor?: string;
   color?: string;
+  disabled?: boolean;
 };
 
 /**
@@ -53,7 +54,8 @@ export default function InputField({
   required,
   backgroundColor,
   borderColor,
-  color
+  color,
+  disabled,
 }: InputFieldProps) {
   if (type === "select") {
     return (
@@ -67,6 +69,7 @@ export default function InputField({
           defaultValue={defaultValue}
           className={styles.input}
           required={required}
+          disabled={disabled}
         >
           {options?.map((option) => (
             <option key={option.value} value={option.value}>
@@ -93,6 +96,7 @@ export default function InputField({
           placeholder={placeholder}
           defaultValue={defaultValue}
           required={required}
+          disabled={disabled}
         />
       </div>
     );
