@@ -1,3 +1,25 @@
+.input {
+  background-color: #efefef;
+  border: 1px solid #e3e3e3;
+  padding: 15px 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  width: auto;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Error styles */
 .inputError {
   border-color: red !important;
 }
