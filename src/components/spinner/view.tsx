@@ -1,17 +1,19 @@
 import styles from "./style.module.css";
+import Image from "next/image";
 
 interface SpinnerProps {
-  width?: string;
-  height?: string;
+  width: number;
+  height: number;
+  theme: "dark" | "light";
 }
 
-export default function Spinner({ width, height }: SpinnerProps) {
+export default function Spinner({ width, height, theme }: SpinnerProps) {
   return (
-    <div className={styles.ldsRing} style={{ width, height }}>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <Image
+      src={`/icons/loading-${theme}.svg`}
+      width={width}
+      height={height}
+      alt="A loading spinner icon"
+    />
   );
 }

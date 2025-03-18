@@ -51,7 +51,7 @@ export default function Button({
     return (
       <button type={type} {...props}>
         {isLoading ? (
-          <Spinner width="20px" height="20px" />
+          <Spinner theme="light" width={20} height={20} />
         ) : (
           icon && <FontAwesomeIcon width={20} height={20} icon={icon} />
         )}
