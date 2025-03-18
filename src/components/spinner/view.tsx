@@ -1,7 +1,17 @@
 import styles from "./style.module.css";
 
-export default function Spinner() {
-    return (
-        <div className={styles.ldsRing}><div></div><div></div><div></div><div></div></div>
-    )
+interface SpinnerProps {
+  width?: string;
+  height?: string;
+}
+
+export default function Spinner({ width, height }: SpinnerProps) {
+  return (
+    <div className={styles.ldsRing} style={{ width, height }}>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  );
 }

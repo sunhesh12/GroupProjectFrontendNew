@@ -5,59 +5,31 @@ import { TableRowType } from "@/components/table/view";
 import styles from "./page.module.css";
 import Button from "@/components/buttons/view";
 import { User } from "@/utils/types/backend";
+import updateUser from "@/actions/update-users";
 
 interface UserUpdateFormProps {
   tableRow: TableRowType<User>;
 }
 
-export interface UpdateFormState {
-  email: { value: string; error?: string };
-  full_name: { value: string; error?: string };
-  age: { value: string; error?: string };
-  address: { value: string; error?: string };
-  profile_pic: { value: string; error?: string };
-  password: { value: string; error?: string };
-  password_confirm: { value: string; error?: string };
-  status: { value: string; error?: string };
-  role: { value: string; error?: string };
-  course_id: { value: string; error?: string };
-}
-
-export const initialData: UpdateFormState = {
-  email: {
-    value: "",
-  },
-  full_name: {
-    value: "",
-  },
-  age: {
-    value: "",
-  },
-  address: {
-    value: "",
-  },
-  profile_pic: {
-    value: "",
-  },
-  password: {
-    value: "",
-  },
-  password_confirm: {
-    value: "",
-  },
-  status: {
-    value: "",
-  },
-  role: {
-    value: "",
-  },
-  course_id: {
-    value: "",
-  },
-};
-
 export default function UserUpdateForm({ tableRow }: UserUpdateFormProps) {
-  const [state, formAction, pending] = useActionState(updateUsers, initialData);
+  const [state, formAction, pending] = useActionState(updateUser, {
+    data: {
+      id: tableRow.data.id,
+      email: tableRow.data.email,
+      full_name: tableRow.data.full_name,
+      age: tableRow.data.age,
+      address: tableRow.data.address,
+      profile_picture: tableRow.data.profile_picture,
+      password: tableRow.data.password,
+      confirm_password: tableRow.data.password,
+      mobile_no: tableRow.data.mobile_no,
+      status: tableRow.data.status,
+      role: tableRow.data.role,
+      course_id: tableRow.data.course_id,
+    },
+  });
+  console.log("Submitted ! ", state.data);
+  console.warn(state.errors);
   return (
     <form className={styles.userUpdateForm} action={formAction}>
       <header>
@@ -65,67 +37,75 @@ export default function UserUpdateForm({ tableRow }: UserUpdateFormProps) {
         <p>
           Update student info related <span>{tableRow.data.full_name}</span>
         </p>
+        <p>{pending ? "Updating" : ""}</p>
       </header>
       <InputField
         type="text"
-        label="ID"
-        disabled={true}
-        defaultValue={tableRow.data.id}
+        label="Id"
+        name="id"
+        defaultValue={state.data.id}
       />
       <InputField
         type="email"
         label="Email"
         name="email"
         required={true}
-        defaultValue={tableRow.data.email}
+        defaultValue={state.data.email}
+      />
+      <InputField
+        type="tel"
+        label="Mobile"
+        name="mobile_no"
+        required={true}
+        defaultValue={state.data.mobile_no}
       />
       <InputField
         type="text"
         label="Name"
         name="full_name"
         required={true}
-        defaultValue={tableRow.data.full_name}
+        defaultValue={state.data.full_name}
       />
       <InputField
         type="number"
         label="Age"
         name="age"
         required={true}
-        defaultValue={tableRow.data.age}
+        defaultValue={state.data.age}
       />
       <InputField
         type="text"
         label="Name"
         name="address"
         required={true}
-        defaultValue={tableRow.data.address}
+        defaultValue={state.data.address}
       />
       <InputField
         type="text"
         label="Profile picture"
-        name="profile_pic"
+        name="profile_picture"
         required={true}
-        defaultValue={tableRow.data.profile_picture}
+        defaultValue={state.data.profile_picture}
       />
       <InputField
         type="password"
         label="Password"
         name="password"
         required={true}
-        defaultValue={tableRow.data.password}
+        defaultValue={state.data.password}
       />
       <InputField
         type="password"
         label="Password"
         name="password_confirm"
         required={true}
-        defaultValue={tableRow.data.password}
+        defaultValue={state.data.password}
       />
       <InputField
         type="select"
         label="Account status"
         name="status"
-        defaultValue={tableRow.data.status}
+        defaultValue={state.data.status}
         required={true}
         options={[
           { value: "1", label: "Active" },
@@ -136,7 +116,7 @@ export default function UserUpdateForm({ tableRow }: UserUpdateFormProps) {
         type="select"
         label="Change role"
         name="role"
-        defaultValue={tableRow.data.status}
+        defaultValue={state.data.status}
         required={true}
         options={[
           { value: "student", label: "Student" },
@@ -148,7 +128,7 @@ export default function UserUpdateForm({ tableRow }: UserUpdateFormProps) {
         type="select"
         name="course_id"
         label="Select your course"
-        defaultValue="2"
+        defaultValue={state.data.course_id}
         options={[
           { value: "1", label: "Software Engineering" },
           { value: "2", label: "Information Systems" },

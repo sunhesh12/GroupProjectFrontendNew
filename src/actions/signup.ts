@@ -8,8 +8,7 @@ export default async function signup(formData: FormData) {
   const parsedForm = await signUpSchema.safeParseAsync(
     Object.fromEntries(
       formData.entries().map(([key, value]) => {
-        if (key === "age") return [key, Number(value)];
-        else return [key, value];
+        return key === "age" ? [key, Number(value)] : [key, value];
       })
     )
   );
