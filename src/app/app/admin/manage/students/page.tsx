@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import Manage from "./manage";
 
 export default async function ManageStudents() {
-  const res = await user.getAll();
+  const res = await user.getStudents();
 
   if (!res?.payload) {
     return (

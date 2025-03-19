@@ -5,10 +5,10 @@ import type { User } from "@/utils/types/backend";
 import { Table } from "@/components/table/view";
 import type { TableRowType } from "@/components/table/view";
 import { useAppControls } from "@/hooks/use-app-controls";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import UserUpdateForm from "./student-update-form";
-import UserCreateForm from "./student-create-form";
+import LecturerUpdateForm from "./lecturer-update-form";
 import NobgButton from "@/components/buttons/nobg/view";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import LecturerCreateForm from "./lecturer-create-form";
 
 // TODO: Connect backend
 
@@ -125,13 +125,10 @@ export default function Manage({ users }: ManageProps) {
       <NobgButton
         icon={faPlus}
         onClick={() => {
-          openMessageBox(
-            <UserCreateForm
-            />
-          );
+          openMessageBox(<LecturerCreateForm />);
         }}
       >
-        Create new student
+        Create new lecturer
       </NobgButton>
       <Table
         rows={state}
@@ -154,11 +151,7 @@ export default function Manage({ users }: ManageProps) {
           { name: "Updated at", type: "disabled", inputName: "updated_at" },
         ]}
         rowAction={(tableRow: TableRowType<User>) => {
-          openMessageBox(
-            <UserUpdateForm
-              tableRow={tableRow}
-            />
-          );
+          openMessageBox(<LecturerUpdateForm tableRow={tableRow} />);
         }}
       />
     </div>

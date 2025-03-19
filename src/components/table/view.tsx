@@ -18,7 +18,6 @@ export interface TableColumnType<T> {
 }
 
 interface TableProps<T> {
-  title: string;
   rows: TableRowType<T>[];
   columns: TableColumnType<T>[];
   rowAction: (tableRow: TableRowType<T>) => void;
@@ -38,7 +37,6 @@ export interface RowState {
 }
 
 export function Table<T>({
-  title,
   rows,
   columns,
   rowAction,
@@ -46,7 +44,6 @@ export function Table<T>({
   // Tracking all the rows inside the table
   return (
     <div id="tableWrapper" className={styles.wrapper}>
-      <header>{title}</header>
       <table className={styles.courseTable}>
         {/* HEADER */}
         <thead>

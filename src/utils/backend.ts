@@ -9,7 +9,9 @@ import type {
 
 export const url = process.env.BACKEND_URL;
 
-const handleResponse = async <T>(request: Response): Promise<APIResponse<T>> => {
+const handleResponse = async <T>(
+  request: Response
+): Promise<APIResponse<T>> => {
   try {
     return await request.json();
   } catch (error) {
@@ -18,7 +20,10 @@ const handleResponse = async <T>(request: Response): Promise<APIResponse<T>> => 
   }
 };
 
-const fetchAPI = async <T>(endpoint: string, options: RequestInit = {}): Promise<APIResponse<T>> => {
+const fetchAPI = async <T>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<APIResponse<T>> => {
   try {
     const request = await fetch(`${url}${endpoint}`, options);
 
@@ -58,11 +63,25 @@ const user = {
     },
   },
 
+  create: (newUser: Partial<User>) =>
+    fetchAPI<User>("/api/v1/users/", {
+      method: "POST",
+      body: JSON.stringify(newUser),
+    }),
+
   get: (id: string) => fetchAPI<User>(`/api/v1/users/${id}`),
 
   getAll: () => fetchAPI<User[]>("/api/v1/users/"),
 
   getStudents: () => fetchAPI<User[]>("/api/v1/users/students"),
+
+  getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
+
+  update: (updatedUser: Partial<User>) =>
+    fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(updatedUser),
+    }),
 };
 
 const modules = {

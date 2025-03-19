@@ -33,7 +33,7 @@ export interface FormState {
   serverError?: string;
 }
 
-export default async function updateUser(
+export default async function createUser(
   initialData: FormState,
   formData: FormData
 ) {
@@ -55,7 +55,7 @@ export default async function updateUser(
   try {
     console.log(rawFormData);
     // Send update request to the backend
-    const response = await user.update(rawFormData);
+    const response = await user.create(rawFormData);
     console.log(response);
 
     if (!response.success) {

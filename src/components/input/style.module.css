@@ -1,18 +1,39 @@
 .input {
-	background-color: #EFEFEF;
-	border:1px solid #E3E3E3;
-	padding: 15px 10px ;
-	font-size: 15px;
-	border-radius: 10px;
-	width:auto
+  background-color: #efefef;
+  border: 1px solid #e3e3e3;
+  padding: 15px 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  width: auto;
+  transition: border-color 0.3s ease-in-out;
 }
 
 .inputContainer {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .label {
-	font-size: 15px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Error styles */
+.inputError {
+  border-color: red !important;
+}
+
+.errorList {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0;
+  color: red;
+  font-size: 0.875rem;
+}
+
+.errorText {
+  margin: 2px 0;
 }

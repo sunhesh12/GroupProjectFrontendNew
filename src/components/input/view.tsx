@@ -17,7 +17,7 @@ type InputFieldProps = {
   type: "email" | "text" | "password" | "tel" | "number" | "select" | "file";
   min?: number;
   max?: number;
-  name?: string;
+  name: string;
   options?: Option[];
   defaultValue?: string;
   required?: boolean;
@@ -25,6 +25,7 @@ type InputFieldProps = {
   borderColor?: string;
   color?: string;
   disabled?: boolean;
+  errors?: string[]; // Support multiple error messages
 };
 
 /**
@@ -41,6 +42,8 @@ type InputFieldProps = {
  *   - backgroundColor?: string
  *   - borderColor?: string
  *   - color?: string
+ *   - disabled?: boolean
+ *   - errors?: string[] (Handles multiple error messages)
  */
 export default function InputField({
   label,
@@ -56,18 +59,25 @@ export default function InputField({
   borderColor,
   color,
   disabled,
+  errors = [],
 }: InputFieldProps) {
-  if (type === "select") {
-    return (
-      <div id="input-container" className={styles.inputContainer}>
-        <label htmlFor="email" className={styles.label}>
+  return (
+    <div id="input-container" className={styles.inputContainer}>
+      {label && (
+        <label htmlFor={name} className={styles.label}>
           {label}
         </label>
+      )}
+
+      {type === "select" ? (
         <select
           style={{ backgroundColor, borderColor, color }}
           name={name}
+          id={name}
           defaultValue={defaultValue}
-          className={styles.input}
+          className={`${styles.input} ${
+            errors.length ? styles.inputError : ""
+          }`}
           required={required}
           disabled={disabled}
         >
@@ -77,19 +87,14 @@ export default function InputField({
             </option>
           ))}
         </select>
-      </div>
-    );
-  } else {
-    return (
-      <div id="input-container" className={styles.inputContainer}>
-        <label htmlFor="email" className={styles.label}>
-          {label}
-        </label>
+      ) : (
         <input
           type={type}
           min={min}
           max={max}
-          className={styles.input + " " + workSans.className}
+          className={`${styles.input} ${workSans.className} ${
+            errors.length ? styles.inputError : ""
+          }`}
           style={{ backgroundColor, borderColor, color }}
           name={name}
           id={name}
@@ -98,7 +103,21 @@ export default function InputField({
           required={required}
           disabled={disabled}
         />
-      </div>
-    );
-  }
+      )}
+
+      {/* Display multiple error messages */}
+      {errors.length > 0 && (
+        <ul className={styles.errorList}>
+          {errors.map((error, index) => (
+            <li key={index} className={styles.errorText}>
+              {error}
+              {error.length > 1 && index != errors.length - 1 && (
+                <span>, &nbsp;</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
