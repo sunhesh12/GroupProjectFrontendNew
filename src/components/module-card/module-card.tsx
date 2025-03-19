@@ -1,17 +1,17 @@
 // components/CourseCart.tsx
 import React from "react";
 import Image from "next/image";
-import style from "./course-card.module.css";
+import style from "./module-card.module.css";
 
 interface CourseCardProps {
-  id: number;
+  id: string;
   imageUrl: string;
   completion: number;
   name: string;
-  semester: string;
+  semester: number;
 }
 
-export default function CourseCard({
+export default function ModuleCard({
   id,
   imageUrl,
   completion,
@@ -36,7 +36,7 @@ export default function CourseCard({
         <h1>{name}</h1>
       </div>
       <div className={style.courseSemester}>
-        <p>{semester}</p>
+        <p>Semester {semester}</p>
       </div>
     </div>
   );

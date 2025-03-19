@@ -25,10 +25,10 @@ export default async function DashboardPage() {
   return (
     <div>
       <header className={style.dashboardHeader}>
-        <Greeting name={currentUser.payload.Full_name} />
-        <Role role={currentUser.payload.Role} />
+        <Greeting name={currentUser.payload.full_name} />
+        <Role role={currentUser.payload.role} />
       </header>
-      <Menu role={currentUser.payload.Role} />
+      <Menu role={currentUser.payload.role} />
       <article>
         <header>Your activities</header>
       </article>

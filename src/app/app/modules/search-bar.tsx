@@ -1,36 +1,40 @@
-import React from "react";
-import style from "./page.module.css";
-import Image from "next/image";
+import Button from "@/components/buttons/view";
+import InputField from "@/components/input/view";
+import { redirect } from "next/navigation";
+import SemesterSelector from "./semester-selector";
+import styles from "./page.module.css";
 
-interface SearchBarProps {
+export default function SearchBar({
+  searchQuery,
+  semesters,
+}: {
   searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-}
+  semesters: string[];
+}) {
+  // Server Action to handle search form submission
+  async function handleSearch(formData: FormData) {
+    "use server";
+    const newUrl = new URL("http://localhost:3000/app/modules");
+    newUrl.searchParams.set("searchQuery", formData.get("searchQuery") as string);
+    newUrl.searchParams.set("selectedSemester", formData.get("semester") as string);
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery }) => {
+    redirect(
+     newUrl.toString()
+    );
+  }
+
   return (
-    <div className={style.searchBarContainer}>
-      <div className={style.searchbarWrapper}>
-        <div className={style.searchIcon}>
-          <Image
-            style={{ borderRadius: "50px" }}
-            src="/search.png"
-            alt="Search Icon"
-            width={30}
-            height={30}
-          />
-        </div>
-
-        <div className={style.inputContainer}>
-          <input
-            placeholder="Search course"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </div>
-    </div>
+    <form className={styles.searchBar} action={handleSearch}>
+      <InputField
+        type="text"
+        name="searchQuery"
+        placeholder="Search modules..."
+        defaultValue={searchQuery}
+      />
+      <SemesterSelector semesters={semesters} />
+      <Button fontSize="15px" type="submit">
+        Search
+      </Button>
+    </form>
   );
-};
-
-export default SearchBar;
+}

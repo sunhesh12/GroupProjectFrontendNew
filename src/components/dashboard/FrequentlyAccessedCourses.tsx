@@ -3,7 +3,7 @@ import React from "react";
 import style from "./dashboard.module.css";
 import { courses } from "@/utils/studentDasboarddb"; // Import the courses data
 import Link from "next/link";
-import CourseCart from "@/components/course-card/course-card";  // Import the CourseCart component
+import CourseCart from "@/components/module-card/module-card";  // Import the CourseCart component
 
 const FrequentlyAccessedCourses: React.FC = () => {
   return (

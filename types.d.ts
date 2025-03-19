@@ -5,6 +5,7 @@ declare module "next-auth" {
     email: string;
     accessToken: string;
     profilePicture: string | null;
+    courseId: string;
   }
 
   interface Session {

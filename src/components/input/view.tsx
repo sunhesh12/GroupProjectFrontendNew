@@ -1,6 +1,7 @@
 "use client";
 import { Work_Sans } from "next/font/google";
 import styles from "./style.module.css";
+import { ChangeEventHandler } from "react";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ type InputFieldProps = {
   borderColor?: string;
   color?: string;
   disabled?: boolean;
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
   errors?: string[]; // Support multiple error messages
 };
 
@@ -59,6 +61,7 @@ export default function InputField({
   borderColor,
   color,
   disabled,
+  onChange,
   errors = [],
 }: InputFieldProps) {
   return (
@@ -71,6 +74,7 @@ export default function InputField({
 
       {type === "select" ? (
         <select
+          onChange={onChange}
           style={{ backgroundColor, borderColor, color }}
           name={name}
           id={name}
@@ -102,6 +106,7 @@ export default function InputField({
           defaultValue={defaultValue}
           required={required}
           disabled={disabled}
+          onChange={onChange}
         />
       )}
 

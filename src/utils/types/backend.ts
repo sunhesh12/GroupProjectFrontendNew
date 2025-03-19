@@ -34,7 +34,10 @@ export interface Module {
   course_id: string;
   created_at: string | null;
   updated_at: string | null;
-  courses: Course[];
+  pivot: {
+    module_id: string;
+    course_id: string;
+  };
 }
 
 export interface Course {

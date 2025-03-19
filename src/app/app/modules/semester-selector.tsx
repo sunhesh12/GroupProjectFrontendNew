@@ -1,35 +1,23 @@
-import React from "react";
-import style from "./page.module.css";
+import Button from "@/components/buttons/view";
+import InputField from "@/components/input/view";
+import { redirect } from "next/navigation";
 
-interface SemesterSelectorProps {
-  selectedSemester: string;
-  setSelectedSemester: React.Dispatch<React.SetStateAction<string>>;
-  semesters: string[];
-}
-
-const SemesterSelector: React.FC<SemesterSelectorProps> = ({
-  selectedSemester,
-  setSelectedSemester,
+export default function SemesterSelector({
   semesters,
-}) => {
-  // Sort semesters in ascending order
-  const sortedSemesters = [...semesters].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+}: {
+  semesters: string[];
+}) {
 
   return (
-    <div className={style.semesterSelector}>
-      <select
-        value={selectedSemester}
-        onChange={(e) => setSelectedSemester(e.target.value)}
-      >
-        <option value="">Select Semester</option>
-        {sortedSemesters.map((semester) => (
-          <option key={semester} value={semester}>
-            {semester}
-          </option>
-        ))}
-      </select>
-    </div>
+    <>
+      <InputField
+        type="select"
+        name="semester"
+        options={semesters.map((semester) => ({
+          value: semester,
+          label: `Semester ${semester}`,
+        }))}
+      />
+    </>
   );
-};
-
-export default SemesterSelector;
+}

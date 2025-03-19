@@ -30,9 +30,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             const { user, token } = response.payload;
             currentUser = {
               id: user.id,
-              name: user.Full_name,
-              email: user.Email,
-              profilePicture: user.Profile_Picture,
+              name: user.full_name,
+              email: user.email,
+              profilePicture: user.profile_picture,
+              courseId: user.course_id,
               accessToken: token,
             };
           } 
