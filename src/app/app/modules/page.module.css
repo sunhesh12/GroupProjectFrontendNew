@@ -1,6 +1,7 @@
 .mainWrapper {
   width: 100%;
   height: auto;
+  padding: 20px 20px;
   min-height: 100px;
   display: block;
 }
@@ -41,9 +42,9 @@
   width: 100%;
   min-height: 100px;
   display: flex;
+  gap:20px;
   flex-wrap: wrap;
   align-content: space-evenly;
-  padding: 1%;
 }
 
 .cardLink {
@@ -199,15 +200,7 @@
   width: 30%;
   max-height: 300px;
   border-radius: 10px;
-  margin: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
-}
-
-.cardWrapper:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.099);
 }
 
 .cardLink {

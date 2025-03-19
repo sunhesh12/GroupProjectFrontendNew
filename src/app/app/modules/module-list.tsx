@@ -21,10 +21,10 @@ export default async function ModuleList({
             <Link href={`/app/modules/${module.id}`} className={style.cardLink}>
               <ModuleCard
                 id={module.id}
-                imageUrl="/images/course.jpg"
+                imageUrl={module.image ?? "/module-cover.webp"}
                 completion={0}
                 name={module.module_name}
-                semester={1}
+                semester={Number(module.semester)}
               />
             </Link>
           </div>

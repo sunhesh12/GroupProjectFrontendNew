@@ -29,6 +29,8 @@ export interface Module {
   id: string;
   module_name: string;
   credit_value: string;
+  semester: string;
+  image: string;
   practical_exam_count: string | null;
   writing_exam_count: string | null;
   course_id: string;

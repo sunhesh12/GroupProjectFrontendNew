@@ -22,7 +22,6 @@ export default async function Modules({
   }
 
   const user = session.user;
-  console.log(user);
   const modules = (await courses.getModules(user.courseId)).payload;
 
   // Extract search query and selected semester from URL search params

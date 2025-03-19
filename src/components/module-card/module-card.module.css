@@ -2,16 +2,24 @@
   width: 100%;
   height: 100%;
   max-height: 300px;
+  padding-bottom: 80px;
   background-color: white;
   border: 1px solid #E3E3E3;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
   border-radius: 10px;
   display: block;
   cursor: pointer;
 }
 
+.courseCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.099);
+}
+
 .CardImage{
   width: 100%;
-  height: 60%;
+  height: 200px;
   /* background-color: red; */
   border-radius: 10px 10px 0 0;
   position: relative;

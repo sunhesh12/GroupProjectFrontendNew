@@ -25,8 +25,7 @@ export default function ModuleCard({
           className={style.courseCardImage}
           src={imageUrl}
           alt="cardImage"
-          width={100}
-          height={100}
+          fill={true}
         />
         <div className={style.whitecorner}>
           <p>{completion}% completed</p>
