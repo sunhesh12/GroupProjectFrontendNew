@@ -111,6 +111,9 @@ export default function InputField({
           {errors.map((error, index) => (
             <li key={index} className={styles.errorText}>
               {error}
+              {error.length > 1 && index != errors.length - 1 && (
+                <span>, &nbsp;</span>
+              )}
             </li>
           ))}
         </ul>

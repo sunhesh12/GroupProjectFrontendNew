@@ -63,11 +63,19 @@ const user = {
     },
   },
 
+  create: (newUser: Partial<User>) =>
+    fetchAPI<User>("/api/v1/users/", {
+      method: "POST",
+      body: JSON.stringify(newUser),
+    }),
+
   get: (id: string) => fetchAPI<User>(`/api/v1/users/${id}`),
 
   getAll: () => fetchAPI<User[]>("/api/v1/users/"),
 
   getStudents: () => fetchAPI<User[]>("/api/v1/users/students"),
+
+  getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
 
   update: (updatedUser: Partial<User>) =>
     fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {

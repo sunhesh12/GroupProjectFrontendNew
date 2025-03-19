@@ -54,10 +54,7 @@ export const updateUserSchema = z
   })
   .refine(
     (data) => {
-      if (data.password && data.confirm_password) {
         return data.password === data.confirm_password;
-      }
-      return true;
     },
     {
       message: "Passwords do not match",

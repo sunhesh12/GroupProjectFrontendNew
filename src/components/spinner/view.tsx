@@ -1,4 +1,4 @@
-import styles from "./style.module.css";
+"use client";
 import Image from "next/image";
 
 interface SpinnerProps {
@@ -8,9 +8,16 @@ interface SpinnerProps {
 }
 
 export default function Spinner({ width, height, theme }: SpinnerProps) {
-  return (
+  return theme === "dark" ? (
     <Image
-      src={`/icons/loading-${theme}.svg`}
+      src={`/icons/loading-dark.svg`}
+      width={width}
+      height={height}
+      alt="A loading spinner icon"
+    />
+  ) : (
+    <Image
+      src={`/icons/loading-light.svg`}
       width={width}
       height={height}
       alt="A loading spinner icon"
