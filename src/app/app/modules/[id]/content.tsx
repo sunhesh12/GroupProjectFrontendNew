@@ -106,7 +106,7 @@ export default function ModulePage({ module }: ConentProps) {
               openMessageBox(
                 <div
                   style={{
-                    color: "brown",
+                    color: "green",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "left",
@@ -115,14 +115,14 @@ export default function ModulePage({ module }: ConentProps) {
                 >
                   <div>
                     <FontAwesomeIcon
-                      icon={faWarning}
+                      icon={faCircleCheck}
                       width={20}
                       height={20}
                     />
-                    You submitted the assignment after the due date. Penalty will be recieved for the late submission.
+                    Quiz submitted successfully
                     <br />
                   </div>
-                  <Button fontSize="15px">Go to activity</Button>
+                  <Button fontSize="15px">Go to module</Button>
                 </div>
               )
             }
