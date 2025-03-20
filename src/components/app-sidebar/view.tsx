@@ -160,7 +160,7 @@ export default function AppSidebar({
                   />
                 )}
                 <SidebarLink
-                  icon={"/icons/user.svg"}
+                  icon={"/profile-pic.webp"}
                   alt="An image of a person"
                   dimensions={{ width: 30, height: 30 }}
                   rounded={true}

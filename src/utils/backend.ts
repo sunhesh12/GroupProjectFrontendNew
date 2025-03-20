@@ -86,6 +86,7 @@ const user = {
 
 const modules = {
   getAll: () => fetchAPI<ModuleWithCourses[]>("/api/v1/modules"),
+  get: (id: string) => fetchAPI<Module>(`/api/v1/modules/${id}`),
 };
 
 const courses = {

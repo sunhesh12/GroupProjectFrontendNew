@@ -3,6 +3,8 @@ import styles from "./page.module.css";
 import InputField from "@/components/input/view";
 import Button from "@/components/buttons/view";
 import { Work_Sans } from "next/font/google";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -14,15 +16,17 @@ export default function SignUpPage() {
       <header>
         <h1 className={styles.heading}>Register as a student</h1>
         <p className={styles.caption}>
-          Join Us Today – Your Learning Journey Starts Here!
+          Join Us Today, Your Learning Journey Starts Here!
         </p>
       </header>
+      
       <form action={signup} className={styles.form}>
         <InputField
           type="email"
           label="Email"
           placeholder="someone@something.com"
           name="email"
+          errors={["Invalid email address"]}
           required={true}
         />
         <InputField
@@ -32,14 +36,27 @@ export default function SignUpPage() {
           placeholder="Rasuwan Kalhara"
           required={true}
         />
-        <InputField type="password" label="Password" name="password" required={true} />
+        <InputField
+          type="password"
+          label="Password"
+          name="password"
+          errors={["Either email or password invalid"]}
+          required={true}
+        />
         <InputField
           type="password"
           label="Confirm Password"
           name="confirm_password"
           required={true}
         />
-        <InputField type="number" min={18} max={100} label="Age" name="age" required={true} />
+        <InputField
+          type="number"
+          min={18}
+          max={100}
+          label="Age"
+          name="age"
+          required={true}
+        />
         <InputField
           type="tel"
           label="Mobile no"
@@ -47,7 +64,12 @@ export default function SignUpPage() {
           placeholder="eg: 0771234567"
           required={true}
         />
-        <InputField type="text" label="Address" name="address" required={true} />
+        <InputField
+          type="text"
+          label="Address"
+          name="address"
+          required={true}
+        />
         <InputField
           type="select"
           name="course_id"

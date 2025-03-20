@@ -3,6 +3,8 @@ import styles from "./sigin.module.css";
 import Button from "@/components/buttons/view";
 import InputField from "@/components/input/view";
 import signInAction from "@/actions/signin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignIn() {
   const LoginIcon = "/logo.jpg";
@@ -13,6 +15,18 @@ export default function SignIn() {
         <header className={styles.formHeader}>
           <Image src={LoginIcon} alt="LMS Logo" width={80} height={80} />
           <h1>Sign in</h1>
+          <div
+            style={{
+              color: "green",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <FontAwesomeIcon icon={faCircleCheck} width={20} height={20} />
+            Logged out successfully
+          </div>
         </header>
         <InputField
           type="text"

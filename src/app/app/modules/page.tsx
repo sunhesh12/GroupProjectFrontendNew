@@ -32,8 +32,7 @@ export default async function Modules({
   console.log(params.searchQuery);
 
   return (
-    <>
-      <div className={style.mainWrapper}>
+      <main className={style.mainWrapper}>
         <header className={style.courseHeader}>
           <h1 className={style.heading}>Modules</h1>
           {user.courseId ? (
@@ -58,7 +57,6 @@ export default async function Modules({
         ) : (
           <p>No modules available for this course</p>
         )}
-      </div>
-    </>
+      </main>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import TopicSection from "../../../../components/topicCart/TopicSection";
-import style from "./couseId.module.css";
+import style from "./page.module.css";
 import { MainTopic } from "../../../../utils/ModuleSubtopics";
 import Image from "next/image";
 

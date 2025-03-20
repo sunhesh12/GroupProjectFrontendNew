@@ -1,10 +1,19 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { MainTopic, Subtopic } from "../../utils/ModuleSubtopics";
 import style from "./couseId.module.css";
 import RenderContent from "./RenderContent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBook,
+  faBell,
+  faThumbTack,
+  faThumbTackSlash,
+  faCircleQuestion,
+  faChevronUp,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface TopicSectionProps {
   mainTopic: MainTopic;
@@ -22,30 +31,60 @@ const TopicSection: React.FC<TopicSectionProps> = ({
   isPinned,
 }) => {
   // Get the background color based on the subtopic type
-  const getBackgroundColor = (type: string) => {
-    switch (type.toLowerCase()) {
-      case "lesson":
-        return "#d4edda"; // Light green
-      case "announcement":
-        return "#f8d7da"; // Light red
-      case "assignment":
-        return "#ffffff"; // White (default)
-      default:
-        return "#f5f5f5"; // Light gray for other types
-    }
+  const topicStyle: {
+    title: string;
+    background: string;
+    color: string;
+    icon: any;
+  } = {
+    title: "",
+    background: "",
+    color: "black",
+    icon: faBook,
   };
+  switch (mainTopic.type.toLowerCase()) {
+    case "lesson":
+      topicStyle.title = "Lesson";
+      topicStyle.background = "#81D6E3";
+      topicStyle.icon = faBook;
+      break;
+    case "announcement":
+      topicStyle.title = "Announcement";
+      topicStyle.background = "#2364AA";
+      topicStyle.color = "white";
+      topicStyle.icon = faBell;
+      break;
+    case "assignment":
+      topicStyle.title = "Assignment";
+      topicStyle.background = "#883677";
+      topicStyle.icon = faCircleQuestion;
+      topicStyle.color = "white";
+      break;
+    default:
+      topicStyle.title = "Default Topic";
+      topicStyle.background = "#D9DCD6";
+      topicStyle.icon = faBook;
+      break;
+  }
 
   return (
     <div
       className={style.TopicContainer}
-      style={{ backgroundColor: getBackgroundColor(mainTopic.type) }}
+      style={{
+        backgroundColor: topicStyle.background,
+        color: topicStyle.color,
+      }}
     >
       <div
         className={style.TopicHeading}
         onClick={() => toggleTopic(mainTopic.id)}
       >
         <div className={style.HeadTopic}>
-          <h1>{mainTopic.title}</h1>
+          <FontAwesomeIcon icon={topicStyle.icon} />
+          &nbsp;&nbsp;
+          <h1>
+            {topicStyle.title} - {mainTopic.title}
+          </h1>
         </div>
 
         {/* Pin Button */}
@@ -58,34 +97,16 @@ const TopicSection: React.FC<TopicSectionProps> = ({
           aria-label={`Pin ${mainTopic.title}`}
         >
           {isPinned ? (
-            <h3 style={{ display: "flex", height: "30px", margin: "10px" }}>
-              <Image src={"/pin.ico"} alt={"pin icon"} width={20} height={20} />
-            </h3>
+              <FontAwesomeIcon icon={faThumbTackSlash} size="lg" color={topicStyle.color} />
           ) : (
-            <h3 style={{ display: "flex", height: "30px", margin: "10px" }}>
-              <Image
-                src={"/unpin.ico"}
-                alt={"pin icon"}
-                width={20}
-                height={20}
-              />
-            </h3>
+              <FontAwesomeIcon icon={faThumbTack} size="lg" color={topicStyle.color} />
           )}
         </button>
-
-        {/* Toggle expand/collapse button */}
-        <button
-          className="Button"
-          aria-expanded={openTopics[mainTopic.id]}
-          aria-label={`Toggle ${mainTopic.title}`}
-        >
-          <Image
-            src={openTopics[mainTopic.id] ? "/up.png" : "/down.png"}
-            alt={openTopics[mainTopic.id] ? "Collapse" : "Expand"}
-            width={20}
-            height={20}
-          />
-        </button>
+          {openTopics[mainTopic.id] ? (
+            <FontAwesomeIcon icon={faChevronUp} color={topicStyle.color} />
+          ) : (
+            <FontAwesomeIcon icon={faChevronDown} color={topicStyle.color} />
+          )}
       </div>
 
       {/* Render only when open */}
@@ -96,7 +117,7 @@ const TopicSection: React.FC<TopicSectionProps> = ({
 
           {/* Map through subtopics */}
           {mainTopic.subtopics.map((subtopic: Subtopic) => (
-            <div key={subtopic.id} className={style.Subtopic}>
+            <div key={subtopic.id} style={{color: topicStyle.color}} className={style.Subtopic}>
               <RenderContent subtopic={subtopic} />
             </div>
           ))}

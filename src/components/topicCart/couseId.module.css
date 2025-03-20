@@ -7,6 +7,12 @@
     /* background-color: red; */
 }
 
+.PinButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .MainWrapperHeding h1{
     height: 30px;
     display: flex;
@@ -35,20 +41,22 @@
 }
 
 .TopicContainer {
-    width: 100%;
-    height: auto;
-    min-height: 60px;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
-    padding: 0 20px 0 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #f9f9f9;
-    /* background-color: green; */
-    /* display: flex; */
+  width: 100%;
+  height: auto;
+  min-height: 60px;
+  box-shadow: 3px 2px 6px rgba(145, 145, 145, 0.16); /* Soft shadow */
+  padding: 10px 20px; /* Combined padding shorthand */
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #f8f8f8;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
+/* Hover effect to elevate the container */
+.TopicContainer:hover {
+  transform: translateY(-5px); /* Slightly lift the container */
+  box-shadow: 5px 4px 12px rgba(145, 145, 145, 0.3); /* Stronger shadow on hover */
+}
 .TopicContainer h1{
     font-size: large;
     font-weight: bold;
@@ -108,7 +116,6 @@
 .Subtopic {
     margin-top: 10px;
     padding: 10px;
-    background-color: #f8f8f8;
     border-radius: 5px;
 }
 
@@ -184,8 +191,7 @@
     transform: translate(-50%, -50%); /* Offset to center the circle */
     width: 12px; /* Circle size */
     height: 12px; /* Circle size */
-    background-color: gray; /* Circle color (same as line or different) */
-    border: 2px solid white; /* Optional: Border to make it stand out */
+    background-color: rgb(255, 255, 255); /* Circle color (same as line or different) */
     border-radius: 50%; /* Makes the shape a circle */
   }
   

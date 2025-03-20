@@ -23,7 +23,7 @@ export default async function DashboardPage() {
 
   console.log(currentUser);
   return (
-    <div className={style.page}>
+    <main className={style.page}>
       <header className={style.dashboardHeader}>
         <Greeting name={currentUser.payload.full_name} />
         <Role role={currentUser.payload.role} />
@@ -38,6 +38,6 @@ export default async function DashboardPage() {
       <article>
         <header>Courses</header>
       </article>
-    </div>
+    </main>
   );
 }

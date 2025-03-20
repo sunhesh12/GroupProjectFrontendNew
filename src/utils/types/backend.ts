@@ -27,19 +27,33 @@ export type UserRequest = Omit<User, "created_at" | "updated_at" | "id">;
 
 export interface Module {
   id: string;
-  module_name: string;
-  credit_value: string;
-  semester: string;
-  image: string;
+  module_name: string | null;
+  credit_value: string | null;
+  semester: string | null;
+  image: string | null;
   practical_exam_count: string | null;
   writing_exam_count: string | null;
-  course_id: string;
+  course_id: string | null;
   created_at: string | null;
   updated_at: string | null;
-  pivot: {
+  pivot?: {
     module_id: string;
     course_id: string;
   };
+  activities?: {
+    id: string;
+    activity_name: string | null;
+    type: "lesson";
+    start_date: string | null;
+    start_time: string | null;
+    end_date: string | null;
+    end_time: string | null;
+    instructions: string | null;
+    question_count: string;
+    module_id: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+  }[];
 }
 
 export interface Course {
