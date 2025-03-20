@@ -21,6 +21,8 @@ export default function SignIn() {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
               gap: "10px",
             }}
           >

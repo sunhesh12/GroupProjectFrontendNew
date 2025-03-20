@@ -14,8 +14,13 @@ import {
   faArrowLeft,
   faCircle,
   faDotCircle,
+  faCircleCheck,
+  faPlus,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { Module } from "@/utils/types/backend";
+import { useAppControls } from "@/hooks/use-app-controls";
+import NobgButton from "@/components/buttons/nobg/view";
 
 interface ConentProps {
   module: Module; // Allow undefined to be handled properly
@@ -28,6 +33,7 @@ export default function ModulePage({ module }: ConentProps) {
     []
   ); // Store pinned announcements
   const router = useRouter();
+  const { openMessageBox } = useAppControls();
 
   const decodedIdParam = module.id; // Ensure `params` is not undefined and `id` exists
 
@@ -86,7 +92,39 @@ export default function ModulePage({ module }: ConentProps) {
           <FontAwesomeIcon icon={faArrowLeft} color="black" size="lg" />
         </button>
         <h1 className={style.courseName}>{module.module_name}</h1>
-        <Link href={`/app/profile/2`} className={style.LecturerName}>Prof. M.G. Perera</Link>
+        <Link href={`/app/profile/2`} className={style.LecturerName}>
+          Prof. M.G. Perera
+        </Link>
+        <div style={{ marginLeft: "600px" }}>
+          <NobgButton
+            icon={faPenToSquare}
+            onClick={() =>
+              openMessageBox(
+                <div
+                  style={{
+                    color: "green",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "left",
+                    gap: "30px",
+                  }}
+                >
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCircleCheck}
+                      width={20}
+                      height={20}
+                    />
+                    Course updated successfully
+                    <br />
+                  </div>
+                </div>
+              )
+            }
+          >
+            Update course
+          </NobgButton>
+        </div>
       </nav>
       <div className={style.MainWrapperHeding}></div>
       <div className={style.MainWrapper}>

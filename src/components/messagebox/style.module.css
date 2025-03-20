@@ -17,9 +17,8 @@
 	padding: 15px 20px 20px 20px;
 	border-radius: 15px;
 	background-color: white;
-	width:50%;
 	min-width: 400px;
-	height: 80%;
+	height: auto;
 	z-index: 300;
 	overflow-y: scroll;
 }

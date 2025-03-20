@@ -5,10 +5,12 @@ import type { User } from "@/utils/types/backend";
 import { Table } from "@/components/table/view";
 import type { TableRowType } from "@/components/table/view";
 import { useAppControls } from "@/hooks/use-app-controls";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import UserUpdateForm from "./student-update-form";
 import UserCreateForm from "./student-create-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NobgButton from "@/components/buttons/nobg/view";
+import Button from "@/components/buttons/view";
 
 // TODO: Connect backend
 
@@ -128,37 +130,37 @@ export default function Manage({ users }: ManageProps) {
           openMessageBox(
             <UserCreateForm
             />
+            // <div
+            //   style={{
+            //     color: "green",
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   alignItems: "left",
+            //   gap: "30px",
+            //   }}
+            // >
+            //   <div>
+            //     <FontAwesomeIcon icon={faCircleCheck} width={20} height={20} />
+            //     Course created successfully<br />
+            //   </div>
+            //   <Button fontSize="15px">View course</Button>
+            // </div>
           );
         }}
       >
         Create new course
       </NobgButton>
       <Table
-        rows={state}
+        rows={[]}
         columns={[
           { name: "Id", type: "text", inputName: "id" },
-          { name: "Full name", type: "text", inputName: "full_name" },
-          { name: "Age", type: "number", inputName: "age" },
-          { name: "Email", type: "email", inputName: "email" },
-          { name: "Address", type: "text", inputName: "address" },
-          {
-            name: "Profile picture",
-            type: "text",
-            inputName: "profile_picture",
-          },
-          { name: "Password", type: "password", inputName: "password" },
-          { name: "Role", type: "disabled", inputName: "role" },
-          { name: "Status", type: "text", inputName: "status" },
-          { name: "Course id", type: "text", inputName: "course_id" },
-          { name: "Created at", type: "disabled", inputName: "created_at" },
-          { name: "Updated at", type: "disabled", inputName: "updated_at" },
+          { name: "Module name", type: "text", inputName: "full_name" },
+          { name: "Credit value", type: "number", inputName: "age" },
+          { name: "Semester", type: "email", inputName: "email" },
+          { name: "Course id", type: "text", inputName: "address" },
         ]}
         rowAction={(tableRow: TableRowType<User>) => {
-          openMessageBox(
-            <UserUpdateForm
-              tableRow={tableRow}
-            />
-          );
+          openMessageBox(<UserUpdateForm tableRow={tableRow} />);
         }}
       />
     </div>
