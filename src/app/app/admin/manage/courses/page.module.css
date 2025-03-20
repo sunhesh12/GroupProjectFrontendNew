@@ -1,0 +1,16 @@
+.page {
+    margin-top: 40px;
+}
+
+.userUpdateForm {
+    display: flex;
+    gap:20px;
+    flex-direction: column;
+}
+
+.controls {
+    margin-top:10px;
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+}
