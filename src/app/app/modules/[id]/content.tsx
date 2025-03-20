@@ -19,6 +19,7 @@ import {
   faPenToSquare,
   faCircleXmark,
   faTrash,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { Module } from "@/utils/types/backend";
 import { useAppControls } from "@/hooks/use-app-controls";
@@ -105,7 +106,7 @@ export default function ModulePage({ module }: ConentProps) {
               openMessageBox(
                 <div
                   style={{
-                    color: "red",
+                    color: "brown",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "left",
@@ -114,14 +115,14 @@ export default function ModulePage({ module }: ConentProps) {
                 >
                   <div>
                     <FontAwesomeIcon
-                      icon={faCircleXmark}
+                      icon={faWarning}
                       width={20}
                       height={20}
                     />
-                    Upload failed invalid file format
+                    You submitted the assignment after the due date. Penalty will be recieved for the late submission.
                     <br />
                   </div>
-                  <Button fontSize="15px">Try a different file</Button>
+                  <Button fontSize="15px">Go to activity</Button>
                 </div>
               )
             }

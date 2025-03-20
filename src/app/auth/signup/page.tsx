@@ -26,7 +26,6 @@ export default function SignUpPage() {
           label="Email"
           placeholder="someone@something.com"
           name="email"
-          errors={["Invalid email address"]}
           required={true}
         />
         <InputField
@@ -40,7 +39,6 @@ export default function SignUpPage() {
           type="password"
           label="Password"
           name="password"
-          errors={["Either email or password invalid"]}
           required={true}
         />
         <InputField

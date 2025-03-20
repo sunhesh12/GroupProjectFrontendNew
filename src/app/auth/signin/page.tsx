@@ -15,7 +15,7 @@ export default function SignIn() {
         <header className={styles.formHeader}>
           <Image src={LoginIcon} alt="LMS Logo" width={80} height={80} />
           <h1>Sign in</h1>
-          <div
+          {/* <div
             style={{
               color: "green",
               display: "flex",
@@ -28,7 +28,7 @@ export default function SignIn() {
           >
             <FontAwesomeIcon icon={faCircleCheck} width={20} height={20} />
             Logged out successfully
-          </div>
+          </div> */}
         </header>
         <InputField
           type="text"
