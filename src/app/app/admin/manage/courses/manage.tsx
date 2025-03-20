@@ -131,7 +131,7 @@ export default function Manage({ users }: ManageProps) {
           );
         }}
       >
-        Create new student
+        Create new course
       </NobgButton>
       <Table
         rows={state}

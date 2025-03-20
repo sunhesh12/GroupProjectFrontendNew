@@ -9,7 +9,7 @@ export default async function ManageStudents() {
     return (
       <div id="studentsConsole" className={styles.page}>
         <header>
-          <h3>Student details</h3>
+          <h3>Course details</h3>
         </header>
         No users found
       </div>
