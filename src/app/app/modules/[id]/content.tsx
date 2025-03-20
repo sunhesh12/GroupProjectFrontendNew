@@ -17,10 +17,13 @@ import {
   faCircleCheck,
   faPlus,
   faPenToSquare,
+  faCircleXmark,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Module } from "@/utils/types/backend";
 import { useAppControls } from "@/hooks/use-app-controls";
 import NobgButton from "@/components/buttons/nobg/view";
+import Button from "@/components/buttons/view";
 
 interface ConentProps {
   module: Module; // Allow undefined to be handled properly
@@ -102,7 +105,7 @@ export default function ModulePage({ module }: ConentProps) {
               openMessageBox(
                 <div
                   style={{
-                    color: "green",
+                    color: "red",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "left",
@@ -111,13 +114,14 @@ export default function ModulePage({ module }: ConentProps) {
                 >
                   <div>
                     <FontAwesomeIcon
-                      icon={faCircleCheck}
+                      icon={faCircleXmark}
                       width={20}
                       height={20}
                     />
-                    Course updated successfully
+                    Upload failed invalid file format
                     <br />
                   </div>
+                  <Button fontSize="15px">Try a different file</Button>
                 </div>
               )
             }
