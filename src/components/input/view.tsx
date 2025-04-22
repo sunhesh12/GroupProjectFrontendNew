@@ -1,6 +1,7 @@
 "use client";
 import { Work_Sans } from "next/font/google";
 import styles from "./style.module.css";
+import { ChangeEventHandler } from "react";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -25,7 +26,8 @@ type InputFieldProps = {
   borderColor?: string;
   color?: string;
   disabled?: boolean;
-  errors?: string[]; // Support multiple error messages
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
+  error?: string | null; // Support multiple error messages
 };
 
 /**
@@ -59,7 +61,8 @@ export default function InputField({
   borderColor,
   color,
   disabled,
-  errors = [],
+  onChange,
+  error,
 }: InputFieldProps) {
   return (
     <div id="input-container" className={styles.inputContainer}>
@@ -69,14 +72,17 @@ export default function InputField({
         </label>
       )}
 
+      <span className={styles.errorText}>{error}</span>
+
       {type === "select" ? (
         <select
+          onChange={onChange}
           style={{ backgroundColor, borderColor, color }}
           name={name}
           id={name}
           defaultValue={defaultValue}
           className={`${styles.input} ${
-            errors.length ? styles.inputError : ""
+            error ? styles.inputError : ""
           }`}
           required={required}
           disabled={disabled}
@@ -93,7 +99,7 @@ export default function InputField({
           min={min}
           max={max}
           className={`${styles.input} ${workSans.className} ${
-            errors.length ? styles.inputError : ""
+            error ? styles.inputError : ""
           }`}
           style={{ backgroundColor, borderColor, color }}
           name={name}
@@ -102,21 +108,8 @@ export default function InputField({
           defaultValue={defaultValue}
           required={required}
           disabled={disabled}
+          onChange={onChange}
         />
-      )}
-
-      {/* Display multiple error messages */}
-      {errors.length > 0 && (
-        <ul className={styles.errorList}>
-          {errors.map((error, index) => (
-            <li key={index} className={styles.errorText}>
-              {error}
-              {error.length > 1 && index != errors.length - 1 && (
-                <span>, &nbsp;</span>
-              )}
-            </li>
-          ))}
-        </ul>
       )}
     </div>
   );

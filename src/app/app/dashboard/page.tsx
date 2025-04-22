@@ -23,12 +23,12 @@ export default async function DashboardPage() {
 
   console.log(currentUser);
   return (
-    <div>
+    <main className={style.page}>
       <header className={style.dashboardHeader}>
-        <Greeting name={currentUser.payload.Full_name} />
-        <Role role={currentUser.payload.Role} />
+        <Greeting name={currentUser.payload.full_name} />
+        <Role role={currentUser.payload.role} />
       </header>
-      <Menu role={currentUser.payload.Role} />
+      <Menu role={currentUser.payload.role} />
       <article>
         <header>Your activities</header>
       </article>
@@ -38,6 +38,6 @@ export default async function DashboardPage() {
       <article>
         <header>Courses</header>
       </article>
-    </div>
+    </main>
   );
 }

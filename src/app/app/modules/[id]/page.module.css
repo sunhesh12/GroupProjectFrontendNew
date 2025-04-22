@@ -1,0 +1,74 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px 20px;
+}
+
+.loadingPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.topics {
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.courseNav {
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    color: white;
+    background: #2119198e;
+    backdrop-filter: blur(7px);
+    padding: 10px 5px;
+}
+
+.courseInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.courseInfo h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.courseInfo p {
+    margin: 0;
+    padding: 0;
+}
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

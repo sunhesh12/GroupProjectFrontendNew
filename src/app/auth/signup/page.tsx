@@ -14,9 +14,10 @@ export default function SignUpPage() {
       <header>
         <h1 className={styles.heading}>Register as a student</h1>
         <p className={styles.caption}>
-          Join Us Today – Your Learning Journey Starts Here!
+          Join Us Today, Your Learning Journey Starts Here!
         </p>
       </header>
+      
       <form action={signup} className={styles.form}>
         <InputField
           type="email"
@@ -32,14 +33,26 @@ export default function SignUpPage() {
           placeholder="Rasuwan Kalhara"
           required={true}
         />
-        <InputField type="password" label="Password" name="password" required={true} />
+        <InputField
+          type="password"
+          label="Password"
+          name="password"
+          required={true}
+        />
         <InputField
           type="password"
           label="Confirm Password"
           name="confirm_password"
           required={true}
         />
-        <InputField type="number" min={18} max={100} label="Age" name="age" required={true} />
+        <InputField
+          type="number"
+          min={18}
+          max={100}
+          label="Age"
+          name="age"
+          required={true}
+        />
         <InputField
           type="tel"
           label="Mobile no"
@@ -47,7 +60,12 @@ export default function SignUpPage() {
           placeholder="eg: 0771234567"
           required={true}
         />
-        <InputField type="text" label="Address" name="address" required={true} />
+        <InputField
+          type="text"
+          label="Address"
+          name="address"
+          required={true}
+        />
         <InputField
           type="select"
           name="course_id"

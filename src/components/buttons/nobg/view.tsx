@@ -7,6 +7,7 @@ import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 interface ToobarButtonProps {
   children?: ReactNode;
   icon: IconDefinition;
+  color: string;
   onClick?: MouseEventHandler<HTMLElement>;
 }
 
@@ -14,10 +15,11 @@ export default function
 NobgButton({
   children,
   icon,
+  color,
   onClick,
 }: ToobarButtonProps) {
   return (
-    <Button icon={icon} className={styles.toolbarButton} onClick={onClick}>
+    <Button icon={icon} className={styles.toolbarButton} color={color} onClick={onClick}>
       {children}
     </Button>
   );

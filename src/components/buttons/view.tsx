@@ -20,6 +20,7 @@ export type ButtonProps = {
   width?: string;
   icon?: IconDefinition;
   fontSize?: string;
+  color?: string;
   type?: "submit" | "reset" | "button";
   onClick?: MouseEventHandler<HTMLElement>;
 };
@@ -35,13 +36,14 @@ export default function Button({
   onClick,
   type,
   className,
+  color
 }: ButtonProps) {
   // Any additional props
   const props: HTMLAttributes<HTMLElement> = {
     onClick,
     "aria-label": "Button",
     role: "button",
-    style: { fontSize: fontSize, width: width },
+    style: { fontSize: fontSize, width: width, color },
     className: styles.button + " " + workSans.className + " " + className,
   };
 

@@ -86,9 +86,15 @@ const user = {
 
 const modules = {
   getAll: () => fetchAPI<ModuleWithCourses[]>("/api/v1/modules"),
+  get: (id: string) => fetchAPI<Module>(`/api/v1/modules/${id}`),
 };
+
+const courses = {
+  getModules: (id: string) => fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`)
+}
 
 Object.freeze(modules);
 Object.freeze(user);
+Object.freeze(courses);
 
-export { user, modules };
+export { user, modules, courses };

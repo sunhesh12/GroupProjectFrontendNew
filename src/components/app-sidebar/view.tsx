@@ -8,6 +8,8 @@ import SidebarLink from "./sidebar-link/view";
 import InputField from "@/components/input/view";
 import ToggleButton from "./toggle-button/view";
 import Menu from "@/components/menu/view";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface AppSidebarProps {
   expanded: boolean;
@@ -160,7 +162,7 @@ export default function AppSidebar({
                   />
                 )}
                 <SidebarLink
-                  icon={"/icons/user.svg"}
+                  icon={"/profile-pic.webp"}
                   alt="An image of a person"
                   dimensions={{ width: 30, height: 30 }}
                   rounded={true}

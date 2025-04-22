@@ -1,0 +1,58 @@
+  
+  .cardImageContainer {
+    position: relative;
+  }
+
+  .invalidCardContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+  }
+
+  .fileInfo {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+  }
+
+  .fileInfo p {
+    margin: 0;
+  }
+
+  .fileInfo span {
+    font-size: 0.8rem;
+    color: #888;
+  }
+  
+  .cardImage {
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .cardOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .playButton {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .cardContent {
+    padding: 1rem;
+  }
+  
+  .cardTitle {
+    font-weight: 500;
+  }
