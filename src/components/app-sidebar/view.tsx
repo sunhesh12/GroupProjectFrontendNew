@@ -8,6 +8,8 @@ import SidebarLink from "./sidebar-link/view";
 import InputField from "@/components/input/view";
 import ToggleButton from "./toggle-button/view";
 import Menu from "@/components/menu/view";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface AppSidebarProps {
   expanded: boolean;

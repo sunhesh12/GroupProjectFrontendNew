@@ -3,8 +3,6 @@ import styles from "./page.module.css";
 import InputField from "@/components/input/view";
 import Button from "@/components/buttons/view";
 import { Work_Sans } from "next/font/google";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const workSans = Work_Sans({
   subsets: ["latin"],

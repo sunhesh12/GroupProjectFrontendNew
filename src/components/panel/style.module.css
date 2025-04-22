@@ -1,0 +1,29 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    background-color: #F0F0F0;
+    border:1px solid #E3E3E3;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.panelHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.panelHeaderText {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.panelHeaderButtons {
+    margin-left: auto;
+}
+
+.panelContent {
+    margin-left: 25px;
+}

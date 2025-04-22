@@ -1,0 +1,28 @@
+.container {
+    max-width: 32rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+  } 
+  
+  .timeline {
+    position: relative;
+  }
+  
+  .timelineLine {
+    position: absolute;
+    left: 0.38rem;
+    top: 0;
+    height: 100%;
+    width: 0.108rem;
+    background-color: #d1d5db;
+  }
+  
+  .timelineItems {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
