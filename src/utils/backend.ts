@@ -5,6 +5,7 @@ import type {
   Course,
   UserWithToken,
   ModuleWithCourses,
+  PortalUser,
 } from "@/utils/types/backend";
 
 export const url = process.env.BACKEND_URL;
@@ -26,6 +27,7 @@ const fetchAPI = async <T>(
 ): Promise<APIResponse<T>> => {
   try {
     const request = await fetch(`${url}${endpoint}`, options);
+    console.log(request.url);
 
     if (!request.ok) {
       console.error(`Error: ${request.status} - ${request.statusText}`);
@@ -69,13 +71,15 @@ const user = {
       body: JSON.stringify(newUser),
     }),
 
-  get: (id: string) => fetchAPI<User>(`/api/v1/users/${id}`),
+  get: (id: string) => fetchAPI<PortalUser>(`/api/v1/users/${id}`),
 
   getAll: () => fetchAPI<User[]>("/api/v1/users/"),
 
   getStudents: () => fetchAPI<User[]>("/api/v1/users/students"),
 
   getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
+
+  getTeachingModules: (id: string) => fetchAPI<Module[]>(`/api/v1/users/${id}/teaching/modules`),
 
   update: (updatedUser: Partial<User>) =>
     fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {
@@ -92,9 +96,5 @@ const modules = {
 const courses = {
   getModules: (id: string) => fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`)
 }
-
-Object.freeze(modules);
-Object.freeze(user);
-Object.freeze(courses);
 
 export { user, modules, courses };

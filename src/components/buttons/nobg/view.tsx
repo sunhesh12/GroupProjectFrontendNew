@@ -7,7 +7,7 @@ import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 interface ToobarButtonProps {
   children?: ReactNode;
   icon: IconDefinition;
-  color: string;
+  color?: string;
   onClick?: MouseEventHandler<HTMLElement>;
 }
 
