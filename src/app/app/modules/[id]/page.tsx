@@ -1,6 +1,6 @@
 import { auth } from "@/utils/auth";
 import { notFound, redirect } from "next/navigation";
-import { modules } from "@/utils/backend";
+import { modules, user } from "@/utils/backend";
 import styles from "./page.module.css";
 import {
   faArrowLeft,
@@ -13,6 +13,7 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { topics } from "@/utils/ModuleSubtopics";
 import Timeline from "@/components/timeline/view";
 import TimelineItem from "@/components/timeline/timeline-item/view";
+import TopicToolbar from "@/components/module-toolbar/view";
 
 interface ModuleProps {
   params: Promise<{ id: string | undefined }>;
@@ -22,19 +23,20 @@ export default async function Module({ params }: ModuleProps) {
   const session = await auth();
 
   // Unauthenticated
-  if (!session) {
+  if (!session || !session.user || !session.user.id) {
     redirect("/login");
   }
 
   const moduleId = (await params).id;
-  console.log(moduleId);
 
   // No module id provided
   if (!moduleId) {
     notFound();
   }
 
-  const module = (await modules.get(moduleId)).payload;
+  const currentUser = await user.get(session.user.id);
+  
+  const module =  (await modules.get(moduleId)).payload;
 
   // Module isn't awailable
   if (!module) {
@@ -51,7 +53,7 @@ export default async function Module({ params }: ModuleProps) {
             <p>
               {module.teachers.map((teacher, index) => (
                 <span key={index}>
-                  {teacher.Full_name}
+                  {teacher.Full_Name}
                   {index < module.teachers.length - 1 ? ", " : ""}
                 </span>
               ))}
@@ -66,6 +68,7 @@ export default async function Module({ params }: ModuleProps) {
         ></article>
       </header>
       <div className={styles.content}>
+        {currentUser.payload?.Role === "lecturer" && <TopicToolbar />}
         <Panel header="Announcements" icon={faBell}>
           <p>Panel Content</p>
         </Panel>
@@ -76,7 +79,7 @@ export default async function Module({ params }: ModuleProps) {
               header={topic.title}
               key={index}
               icon={topic.type === "lecture" ? faBook : faVideo}
-            > 
+            >
               <p>{topic.description}</p>
               <div id="materials">
                 <h4>Lecture Materials</h4>

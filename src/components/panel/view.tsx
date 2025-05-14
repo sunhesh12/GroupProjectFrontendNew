@@ -12,6 +12,7 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from "@fortawesome/react-fontawesome";
+import Card from "../card/view";
 
 interface PanelProps {
   children?: React.ReactNode;
@@ -22,7 +23,7 @@ interface PanelProps {
 export default function Panel({ children, header, icon }: PanelProps) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <article className={styles.panel}>
+    <Card>
       <div
         className={styles.panelHeader}
         onClick={() => {
@@ -42,6 +43,6 @@ export default function Panel({ children, header, icon }: PanelProps) {
         </div>
       </div>
       {expanded && <div className={styles.panelContent}>{children}</div>}
-    </article>
+    </Card>
   );
 }

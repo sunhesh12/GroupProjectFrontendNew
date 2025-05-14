@@ -1,11 +1,17 @@
 .toolbarButton {
-    color:black;
+    color: black;
     background-color: transparent;
     transition-property: all;
     transition-duration: 400ms;
     font-size: 15px;
-}
-
-.toolbarButton:hover {
+    position: relative;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0; /* Added subtle border */
+  }
+  
+  .toolbarButton:hover {
     background-color: #e3e3e356;
-}
+    border-color: #d0d0d0; /* Slightly darker border on hover */
+  }
+  

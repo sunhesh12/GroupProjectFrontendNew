@@ -38,20 +38,20 @@ export interface Topic {
   lecture_materials: LectureMaterial[];
 }
 
-interface PortalUser {
-  id: number;
-  Full_name: string;
-  Age: number;
+export interface PortalUser {
+  id: string;
+  Full_Name: string;
+  Age: string;
   Email: string;
   Mobile_No: string;
   Address: string;
   Profile_Picture: string | null;
   Password: string;
+  updated_at: string;
+  created_at: string;
   Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
   Status: number; // maybe use enum for 0 = inactive, 1 = active
   course_id: number | null;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
 }
 
 export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executable' | 'zip' | 'image' | 'website' | 'unknown' | 'error' | 'pdf';
