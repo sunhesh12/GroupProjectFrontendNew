@@ -51,7 +51,7 @@ export interface PortalUser {
   created_at: string;
   Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
   Status: number; // maybe use enum for 0 = inactive, 1 = active
-  course_id: number | null;
+  course_id: string | null;
 }
 
 export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executable' | 'zip' | 'image' | 'website' | 'unknown' | 'error' | 'pdf';

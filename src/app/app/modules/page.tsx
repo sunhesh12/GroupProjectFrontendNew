@@ -9,21 +9,8 @@ import { redirect } from "next/navigation";
 import { courses } from "@/utils/backend";
 import { user } from "@/utils/backend";
 
-export default async function Modules({
-  searchParams,
-}: {
-  modules: ModuleWithCourses[];
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function Modules() {
   const session = await auth();
-  
-  const courseId = (await searchParams).courseId;
-
-  if(!courseId) {
-    throw new Error(
-      "Malformed courseId !, Course ID is not available in the URL"
-    )
-  }
 
   if (!session?.user) {
     // If un authenticated redirected to signin
@@ -49,16 +36,14 @@ export default async function Modules({
     );
   }
 
+  if(currentUser.payload.Role === "student" && !currentUser.payload.course_id) {
+    throw new Error("Malformed courseId !, Course ID is not available in the session");
+  }
+
   const modules =
     currentUser.payload.Role === "lecturer"
       ? (await user.getTeachingModules(currentUser.payload.id)).payload
-      : (await courses.getModules(courseId)).payload;
-
-  // Extract search query and selected semester from URL search params
-  const params = (await searchParams) as {
-    searchQuery: string;
-    selectedSemester: string;
-  };
+      : (await courses.getModules(currentUser.payload.course_id!)).payload;
 
   return (
     <main className={style.mainWrapper}>
@@ -73,12 +58,11 @@ export default async function Modules({
             You might not have assigned to any course.
           </p>
         )} */}
-
         <div className={style.filterCourse}>
-          <SearchBar
+          {/* <SearchBar
             searchQuery={params.searchQuery}
             semesters={["1", "2", "3"]}
-          />
+          /> */}
         </div>
       </header>
       {modules ? (

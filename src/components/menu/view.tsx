@@ -33,7 +33,7 @@ export default function Menu({ options, position }: MenuProps) {
     >
       <ul className={styles.menuList}>
         {options.map(({ name, action, styles }, index) => (
-          <SidebarLink key={index} onClick={action} styles={styles} href="/app/profile" expanded={true}>
+          <SidebarLink key={index} onClick={action} styles={styles} expanded={true}>
             {name}
           </SidebarLink>
         ))}
