@@ -16,6 +16,14 @@ export default async function Modules({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const session = await auth();
+  
+  const courseId = (await searchParams).courseId;
+
+  if(!courseId) {
+    throw new Error(
+      "Malformed courseId !, Course ID is not available in the URL"
+    )
+  }
 
   if (!session?.user) {
     // If un authenticated redirected to signin
@@ -44,14 +52,13 @@ export default async function Modules({
   const modules =
     currentUser.payload.Role === "lecturer"
       ? (await user.getTeachingModules(currentUser.payload.id)).payload
-      : (await courses.getModules(currentUser.payload.id)).payload;
+      : (await courses.getModules(courseId)).payload;
 
   // Extract search query and selected semester from URL search params
   const params = (await searchParams) as {
     searchQuery: string;
     selectedSemester: string;
   };
-  console.log(params.searchQuery);
 
   return (
     <main className={style.mainWrapper}>
