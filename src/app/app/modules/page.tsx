@@ -4,7 +4,6 @@ import SemesterSelector from "./semester-selector";
 import CourseList from "./module-list";
 import EnrollmentModal from "./enrollment-modal";
 import type { ModuleWithCourses } from "@/utils/types/backend";
-import { auth } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import { courses } from "@/utils/backend";
 import { user } from "@/utils/backend";
@@ -15,36 +14,29 @@ export default async function Modules({
   modules: ModuleWithCourses[];
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const session = await auth();
 
-  if (!session?.user) {
-    // If un authenticated redirected to signin
-    redirect("/auth/signin");
-  }
+  // if (!session?.user) {
+  //   // If un authenticated redirected to signin
+  //   redirect("/auth/signin");
+  // }
 
-  if (!session) {
-    // If un authenticated redirected to signin
-    redirect("/auth/signin");
-  }
+  // if (!session) {
+  //   // If un authenticated redirected to signin
+  //   redirect("/auth/signin");
+  // }
 
-  if (!session.user.id) {
-    throw new Error(
-      "Malformed session !, User ID is not available in the session"
-    );
-  }
+  // if (!session.user.id) {
+  //   throw new Error(
+  //     "Malformed session !, User ID is not available in the session"
+  //   );
+  // }
 
-  const currentUser = await user.get(session.user.id);
+  //const currentUser = await user.get("11");
 
-  if (!currentUser.payload) {
-    throw new Error(
-      'User data for user id "' + session.user.id + '" not found'
-    );
-  }
-
-  const modules =
-    currentUser.payload.Role === "lecturer"
-      ? (await user.getTeachingModules(currentUser.payload.id)).payload
-      : (await courses.getModules(currentUser.payload.id)).payload;
+  // const modules =
+  //   currentUser.payload.Role === "lecturer"
+  //     ? (await user.getTeachingModules(currentUser.payload.id)).payload
+  //     : (await courses.getModules(currentUser.payload.id)).payload;
 
   // Extract search query and selected semester from URL search params
   const params = (await searchParams) as {
