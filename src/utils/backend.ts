@@ -6,7 +6,9 @@ import type {
   UserWithToken,
   ModuleWithCourses,
   PortalUser,
+  AllModulesResponse,
 } from "@/utils/types/backend";
+import { cookies } from "next/headers";
 
 export const url = process.env.BACKEND_URL;
 
@@ -63,7 +65,27 @@ const user = {
         method: "POST",
       });
     },
+
+    get: async (session: { userId: string; token: string }) => {
+      return fetchAPI<UserWithToken>(`/api/v1/users/${session.userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${session.token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+    },
   },
+
+  modules: async (session: { userId: string; token: string }) =>
+      fetchAPI<Module[]>(`/api/v1/users/${session.userId}/enrolled/modules`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${session.token}`,
+        },
+      }),
 
   create: (newUser: Partial<User>) =>
     fetchAPI<User>("/api/v1/users/", {
@@ -79,7 +101,8 @@ const user = {
 
   getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
 
-  getTeachingModules: (id: string) => fetchAPI<Module[]>(`/api/v1/users/${id}/teaching/modules`),
+  getTeachingModules: (id: string) =>
+    fetchAPI<Module[]>(`/api/v1/users/${id}/teaching/modules`),
 
   update: (updatedUser: Partial<User>) =>
     fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {
@@ -89,12 +112,13 @@ const user = {
 };
 
 const modules = {
-  getAll: () => fetchAPI<ModuleWithCourses[]>("/api/v1/modules"),
+  getAll: () => fetchAPI<AllModulesResponse>("/api/v1/modules"),
   get: (id: string) => fetchAPI<Module>(`/api/v1/modules/${id}`),
 };
 
 const courses = {
-  getModules: (id: string) => fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`)
-}
+  getModules: (id: string) =>
+    fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`),
+};
 
 export { user, modules, courses };
