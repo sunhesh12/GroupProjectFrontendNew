@@ -7,8 +7,9 @@ import type {
   ModuleWithCourses,
   PortalUser,
   AllModulesResponse,
+  FullModule
 } from "@/utils/types/backend";
-import { cookies } from "next/headers";
+import { Session } from "@/utils/types/backend";
 
 export const url = process.env.BACKEND_URL;
 
@@ -65,9 +66,10 @@ const user = {
         method: "POST",
       });
     },
+  },
 
-    get: async (session: { userId: string; token: string }) => {
-      return fetchAPI<UserWithToken>(`/api/v1/users/${session.userId}`, {
+  get: async (session: Session) => {
+      return fetchAPI<User>(`/api/v1/users/${session.id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${session.token}`,
@@ -76,10 +78,9 @@ const user = {
         },
       });
     },
-  },
 
-  modules: async (session: { userId: string; token: string }) =>
-      fetchAPI<Module[]>(`/api/v1/users/${session.userId}/enrolled/modules`, {
+  modules: async (session: Session) =>
+      fetchAPI<Module[]>(`/api/v1/users/${session.id}/enrolled/modules`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -93,16 +94,14 @@ const user = {
       body: JSON.stringify(newUser),
     }),
 
-  get: (id: string) => fetchAPI<PortalUser>(`/api/v1/users/${id}`),
-
   getAll: () => fetchAPI<User[]>("/api/v1/users/"),
 
   getStudents: () => fetchAPI<User[]>("/api/v1/users/students"),
 
   getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
 
-  getTeachingModules: (id: string) =>
-    fetchAPI<Module[]>(`/api/v1/users/${id}/teaching/modules`),
+  getTeachingModules: (session: Session) =>
+    fetchAPI<Module[]>(`/api/v1/users/${session.id}/teaching/modules`),
 
   update: (updatedUser: Partial<User>) =>
     fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {
@@ -113,7 +112,7 @@ const user = {
 
 const modules = {
   getAll: () => fetchAPI<AllModulesResponse>("/api/v1/modules"),
-  get: (id: string) => fetchAPI<Module>(`/api/v1/modules/${id}`),
+  get: (id: string) => fetchAPI<FullModule>(`/api/v1/modules/${id}`),
 };
 
 const courses = {
