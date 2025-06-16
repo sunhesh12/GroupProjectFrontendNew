@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import styles from "./style.module.css";
 import Preview from "@/components/preview/view";
-import Loading from "@/app/app/modules/[id]/loading";
 import Spinner from "@/components/spinner/view";
 
 interface TimelineProps {
