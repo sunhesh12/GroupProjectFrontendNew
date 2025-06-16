@@ -7,6 +7,11 @@ export type APIResponse<PayloadType> = {
   errors?: string[];
 };
 
+export interface Session {
+  id: string;
+  token: string;
+}
+
 export type Module = {
   id: string;
   module_name: string;
@@ -83,13 +88,16 @@ export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executabl
 interface LectureMaterial {
   id: number;
   topic_id: number;
-  material_type: MaterialTypes; // Adjust based on your use cases
+  material_type: MaterialTypes;
   material_title: string;
   material_url: string;
   created_at: string; // ISO 8601 timestamp format
   updated_at: string; // ISO 8601 timestamp format
 };
 
+export interface Activity {
+
+}
 
 export interface Announcement {
   id: string;
@@ -113,4 +121,9 @@ export type AllModulesResponse = APIResponse<Module[]>;
 export type UserWithToken = {
   user: User;
   token: string;
-};
+}
+export type FullModule = Module & {
+  topics: Topic[];
+  activities: Activity[];
+  announcements: Announcement[];
+}
