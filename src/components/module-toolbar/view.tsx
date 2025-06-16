@@ -9,11 +9,17 @@ import {
   faCode,
   faServer,
   faGear,
+  faBook,
 } from "@fortawesome/free-solid-svg-icons";
 import Card from "../card/view";
+import MessageBox from "../messagebox/view";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InputField from "../input/view";
 
 export default function TopicToolbar() {
   const [activeButton, setActiveButton] = useState<string | null>(null);
+  const [topicVisible, setTopicVisible] = useState(false);
+  const [announcementVisible, setAnnouncementVisible] = useState(false);
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName === activeButton ? null : buttonName);
@@ -22,14 +28,56 @@ export default function TopicToolbar() {
 
   return (
     <Card layout="column">
+      <MessageBox
+        visible={topicVisible}
+        closeAction={() => setTopicVisible(false)}
+      >
+        <h2>
+          <FontAwesomeIcon icon={faBook} /> Create a new Topic
+        </h2>
+        <p>
+          Add a new topic to provide necessary guidance and lecture materials
+          for a module lesson
+        </p>
+        <form>
+          <InputField
+            name="type"
+            type="select"
+            options={[
+              { value: "lecture", label: "Lecture" },
+              { value: "assignment", label: "Assignment" },
+              { value: "lab", label: "Lab" },
+            ]}
+          />
+          <InputField type="text" name="title" label="Topic Title" />
+          <InputField
+            type="text"
+            name="description"
+            label="Topic Description"
+          />
+          <div id="form-controls">
+            <Button>Add topic</Button>
+            <NobgButton icon={faServer}>Add to drafts</NobgButton>
+          </div>
+        </form>
+      </MessageBox>
+      <MessageBox
+        visible={announcementVisible}
+        closeAction={() => setAnnouncementVisible(false)}
+      >
+        <p>Add new topics</p>
+      </MessageBox>
       <h3 className={styles.toolbarHeader}>Module toolbar</h3>
-      <p>Change your module by adding topics, resources, assignments or any resources</p>
+      <p>
+        Change your module by adding topics, resources, assignments or any
+        resources
+      </p>
       <div className={styles.toolbar}>
         <Button
           icon={faPlus}
           type="button"
           fontSize="16px"
-          onClick={() => console.log("Add topic clicked")}
+          onClick={() => setTopicVisible(true)}
         >
           Add Topic
         </Button>
@@ -37,7 +85,7 @@ export default function TopicToolbar() {
         <NobgButton
           icon={faBullhorn}
           color="black"
-          onClick={() => handleButtonClick("announcement")}
+          onClick={() => setAnnouncementVisible(true)}
         >
           Post Announcement
         </NobgButton>
