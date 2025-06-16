@@ -51,7 +51,7 @@ export default async function signInAction(
     cookieStore.set({
       name: "session",
       // TODO: Make it more secure
-      value: JSON.stringify({userId: response.payload.user.id, token: response.payload?.token}),
+      value: JSON.stringify({id: response.payload.user.id, token: response.payload?.token}),
       httpOnly: true,
       maxAge: 86400,
     });
