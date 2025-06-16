@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./style.module.css";
 import Image from "next/image";
@@ -151,7 +150,6 @@ export default function AppSidebar({
                       {
                         name: "Sign out",
                         action: () => {
-                          signOut();
                         },
                         styles: {
                           color: "red",
