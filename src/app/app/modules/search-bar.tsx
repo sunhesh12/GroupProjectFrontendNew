@@ -32,7 +32,7 @@ export default function SearchBar({
         defaultValue={searchQuery}
       />
       <SemesterSelector semesters={semesters} />
-      <Button fontSize="15px" type="submit">
+      <Button type="submit">
         Search
       </Button>
     </form>
