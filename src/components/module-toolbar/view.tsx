@@ -16,14 +16,17 @@ import MessageBox from "../messagebox/view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InputField from "../input/view";
 
+type TopicType = "assignment" | "lecture" | "lab";
+
 export default function TopicToolbar() {
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [topicVisible, setTopicVisible] = useState(false);
   const [announcementVisible, setAnnouncementVisible] = useState(false);
+  const [selection, setSelection] = useState<TopicType>("lecture");
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName === activeButton ? null : buttonName);
-    console.log(`${buttonName} clicked`);
+    console.log(`${buttonName} clicked`);  
   };
 
   return (
@@ -48,16 +51,23 @@ export default function TopicToolbar() {
               { value: "assignment", label: "Assignment" },
               { value: "lab", label: "Lab" },
             ]}
+            onChange={(e => setSelection(e.target.value as TopicType))} // Handle type change
           />
           <InputField type="text" name="title" label="Topic Title" />
+          {selection === "assignment" && (
+            <InputField
+              type="date"
+              name="deadline"
+              label="Assignment Deadline"
+            />
+          )}
           <InputField
-            type="text"
+            type="textarea"
             name="description"
-            label="Topic Description"
+            label="Topic Description" 
           />
           <div id="form-controls">
-            <Button>Add topic</Button>
-            <NobgButton icon={faServer}>Add to drafts</NobgButton>
+            <Button type="submit">Add topic</Button>
           </div>
         </form>
       </MessageBox>
@@ -112,7 +122,7 @@ export default function TopicToolbar() {
           onClick={() => handleButtonClick("other")}
         >
           Course settings
-        </NobgButton>
+        </NobgButton>  
       </div>
     </Card>
   );

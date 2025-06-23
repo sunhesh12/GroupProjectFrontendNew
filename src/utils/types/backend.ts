@@ -62,9 +62,18 @@ export interface Topic {
   type: string;
   is_visible: string;
   is_complete: string;
+  deadline: string | null; // ISO date string or null if no deadline
   created_at: string;
   updated_at: string;
   lecture_materials: LectureMaterial[];
+}
+
+export interface TopicCreate {
+  title: string;
+  description: string;
+  type: string;
+  is_visible: boolean;
+  deadline?: string | null; // ISO date string or null if no deadline
 }
 
 export interface PortalUser {
@@ -94,10 +103,6 @@ interface LectureMaterial {
   created_at: string; // ISO 8601 timestamp format
   updated_at: string; // ISO 8601 timestamp format
 };
-
-export interface Activity {
-
-}
 
 export interface Announcement {
   id: string;

@@ -10,3 +10,28 @@ export interface SignInState {
         errors: string[] | null;
     }
 }
+
+export interface TopicCreateState {
+    status: "pending" | "success" | "failiure",
+    internalErrors: string[] | null,
+    id: {
+        value: string;
+        errors: string[] | null;
+    }
+    type: {
+        value: string;
+        errors: string[] | null;
+    },
+    title: {
+        value: string;
+        errors: string[] | null;
+    },
+    deadline?: {
+        value: string;
+        errors: string[] | null;
+    }
+    description: {
+        value: string;
+        errors: string[] | null;
+    },
+}

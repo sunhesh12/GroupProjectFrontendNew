@@ -15,7 +15,7 @@ type Option = {
 type InputFieldProps = {
   label?: string;
   placeholder?: string;
-  type: "email" | "text" | "password" | "tel" | "number" | "select" | "file";
+  type: "email" | "text" | "password" | "tel" | "number" | "select" | "file" | "textarea" | "date";
   min?: number;
   max?: number;
   name: string;
@@ -26,7 +26,7 @@ type InputFieldProps = {
   borderColor?: string;
   color?: string;
   disabled?: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
   error?: string | null; // Support multiple error messages
 };
 
@@ -93,6 +93,21 @@ export default function InputField({
             </option>
           ))}
         </select>
+      ) : type === "textarea" ? (
+        <textarea
+          className={`${styles.input} ${workSans.className} ${
+            error ? styles.inputError : ""
+          }`}
+          rows={5}
+          style={{ backgroundColor, borderColor, color }}
+          name={name}
+          id={name}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          required={required}
+          disabled={disabled}
+          onChange={onChange}
+        />
       ) : (
         <input
           type={type}

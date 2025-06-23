@@ -2,14 +2,12 @@ import type {
   APIResponse,
   User,
   Module,
-  Course,
   UserWithToken,
-  ModuleWithCourses,
-  PortalUser,
   AllModulesResponse,
-  FullModule
+  FullModule,
+  TopicCreate,
 } from "@/utils/types/backend";
-import { Session } from "@/utils/types/backend";
+import { Session, Topic } from "@/utils/types/backend";
 
 export const url = process.env.BACKEND_URL;
 
@@ -69,24 +67,24 @@ const user = {
   },
 
   get: async (session: Session) => {
-      return fetchAPI<User>(`/api/v1/users/${session.id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${session.token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-    },
+    return fetchAPI<User>(`/api/v1/users/${session.id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+  },
 
   modules: async (session: Session) =>
-      fetchAPI<Module[]>(`/api/v1/users/${session.id}/enrolled/modules`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${session.token}`,
-        },
-      }),
+    fetchAPI<Module[]>(`/api/v1/users/${session.id}/enrolled/modules`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session.token}`,
+      },
+    }),
 
   create: (newUser: Partial<User>) =>
     fetchAPI<User>("/api/v1/users/", {
@@ -113,6 +111,15 @@ const user = {
 const modules = {
   getAll: () => fetchAPI<AllModulesResponse>("/api/v1/modules"),
   get: (id: string) => fetchAPI<FullModule>(`/api/v1/modules/${id}`),
+  createTopic: (moduleId: string, topicData: TopicCreate) =>
+    fetchAPI<Topic>("api/v1/modules/${moduleId}/topics", {
+      method: "POST",
+      body: JSON.stringify(topicData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
 };
 
 const courses = {
