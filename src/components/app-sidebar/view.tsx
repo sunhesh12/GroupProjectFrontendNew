@@ -21,7 +21,6 @@ export default function AppSidebar({
   toggleExpanded,
 }: AppSidebarProps) {
   const [sessionMenu, toggleSessionMenu] = useState(false);
-  const { data: session } = useSession();
   return (
     <aside
       className={styles.sidebar}
@@ -171,8 +170,8 @@ export default function AppSidebar({
                   }}
                   expanded={expanded}
                 >
-                  <div className={styles.username}>{session?.user.name}</div>
-                  <div className={styles.email}>{session?.user.email}</div>
+                  {/* <div className={styles.username}>{session?.user.name}</div> */}
+                  {/* <div className={styles.email}>{session?.user.email}</div> */}
                 </SidebarLink>
               </div>
             </div>

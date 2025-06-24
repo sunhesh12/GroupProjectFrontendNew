@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import Navbar from "@/components/navbar/view";
-import { SessionProvider } from "next-auth/react";
 
 import "@/app/globals.css";
 
@@ -20,7 +19,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionProvider>
       <html lang="en">
         <body className={workSansFont.className}>
           <Navbar />
@@ -32,6 +30,5 @@ export default function RootLayout({
           defer
         ></script>
       </html>
-    </SessionProvider>
   );
 }
