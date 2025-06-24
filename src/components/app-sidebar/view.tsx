@@ -10,6 +10,8 @@ import ToggleButton from "./toggle-button/view";
 import Menu from "@/components/menu/view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation"; // for App Router
+
 
 interface AppSidebarProps {
   expanded: boolean;
@@ -22,6 +24,8 @@ export default function AppSidebar({
 }: AppSidebarProps) {
   const [sessionMenu, toggleSessionMenu] = useState(false);
   const { data: session } = useSession();
+
+  const router = useRouter();
   return (
     <aside
       className={styles.sidebar}
@@ -146,7 +150,7 @@ export default function AppSidebar({
                       {
                         name: "Profile",
                         action: () => {
-
+                          router.push("/app/profile");
                         },
                       },
                       {
@@ -162,7 +166,7 @@ export default function AppSidebar({
                   />
                 )}
                 <SidebarLink
-                  icon={"/profile-pic.webp"}
+                  icon={"/profile-pic.png"}
                   alt="An image of a person"
                   dimensions={{ width: 30, height: 30 }}
                   rounded={true}

@@ -63,6 +63,7 @@ export default function InputField({
   disabled,
   onChange,
   error,
+  value,
 }: InputFieldProps) {
   return (
     <div id="input-container" className={styles.inputContainer}>
@@ -109,6 +110,7 @@ export default function InputField({
           required={required}
           disabled={disabled}
           onChange={onChange}
+          value={value}
         />
       )}
     </div>
