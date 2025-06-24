@@ -32,7 +32,7 @@ export default async function SettingsPage() {
           <article id="profileInfo" className={styles.profileInfo}>
             <section id="left">
               <ProfilePic
-                src={payload.profile_picture ?? "/kirula.png"}
+                src={payload.profile_picture ?? "/profile-pic.png"}
                 alt="Profile picture"
                 width={100}
               />
