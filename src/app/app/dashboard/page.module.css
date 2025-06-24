@@ -125,8 +125,8 @@
         width: 100%;
     height: auto;
     padding-bottom: 20px;
-    background-color: rgba(144, 238, 144, 0.505);
-    border: 1px solid lightgreen;
+    /* background-color: rgba(144, 238, 144, 0.505); */
+    /* border: 1px solid lightgreen; */
     border-radius: 10px;
     padding-left: 20px;
     padding-top: 20px;
