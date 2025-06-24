@@ -15,3 +15,133 @@
     list-style-type: none;
     padding: 0;
 }
+
+.activityList{
+    width: 100%;
+    height: auto;
+    background-color: rgba(144, 238, 144, 0.505);
+    border: 1px solid lightgreen;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
+
+}
+
+.activityHeader{
+    width: 100% ;
+    height: max-content;
+    /* background-color: red; */
+    display: flex;
+    /* text-align: center; */
+    /* justify-content: ce; */
+}
+
+.activityHeaderIcon{
+    width: 35px;
+    height: 40px;
+    /* aspect-ratio: 1; */
+    /* background-color: rgb(255, 255, 255); */
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.activityHeaderText{
+    width: max-content;
+    height: 40px;
+    /* background-color: rgba(144, 238, 144, 0.505); */
+    /* font-size: 20px; */
+    /* font-weight: 600; */
+    /* color: white; */
+    /* padding-left: 10px; */
+    display: flex;
+    text-align: center;
+    justify-content: left;
+    align-items: center;
+}
+
+.activityContentHeading{
+    width: max-content;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    margin-top: -10px;
+    /* align-items: center; */
+    /* padding-top: -5px; */
+}
+
+.activityContentContainer{
+    width: 99%;
+    height: 100px;
+    /* background-color: red; */
+    display: flex;
+    gap: 3%;
+    flex-wrap: wrap;
+
+}
+
+.activityContent{
+    width: 30%;
+    height: 80px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.activityContentIcon{
+    width: 30%;
+    height: 100%;
+    /* background-color: blue; */
+    border-radius: 10px 0px 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.activityContentText{
+    width: 40%;
+    height: 100%;
+    /* background-color: red; */
+
+}
+
+.activityContentText p{
+    margin-top: -20px;
+}
+
+.activityContentLink{
+    width: 30%;
+    height: 100%;
+    /* background-color: green; */
+    border-radius: 0px 10px 10px 0px;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activityListFAC{
+        width: 100%;
+    height: auto;
+    padding-bottom: 20px;
+    background-color: rgba(144, 238, 144, 0.505);
+    border: 1px solid lightgreen;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap:3%;
+    /* flex-wrap: wrap; */
+    
+}
+
+.moduleCardWrapper{
+    width: 30%;
+    height:auto;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+}
