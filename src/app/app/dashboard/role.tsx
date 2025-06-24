@@ -4,12 +4,12 @@ interface RoleProps {
 
 export default function Role({role}: RoleProps) {
     if(role === "lecturer") {
-        return <h1>Student</h1>
+        return <p>Lecture</p>
     }
 
     if(role === "admin") {
-        return <h1>Admin</h1>
+        return <p>Admin</p>
     }
 
-    return <h1>Student</h1>
+    return <p>Student</p>
 }
