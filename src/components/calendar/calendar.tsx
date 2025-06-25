@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react';
 import {
@@ -21,9 +22,9 @@ function CalendarApp() {
     events: [
       {
         id: '1',
-        title: 'Event 1',
-        start: '09-03-2025',
-        end: '09-03-2025',
+        title: 'Data Structures and Algorithms Exam',
+        start: '2025-06-27',
+        end: '2025-06-29',
       },
     ],
     plugins: [eventsService,createEventModalPlugin(),createDragAndDropPlugin()],
