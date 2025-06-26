@@ -18,7 +18,7 @@ export default async function Modules() {
   const userResponse = await user.get(session);
 
   if (userResponse.status === 404 || !userResponse.payload) {
-    redirect("/app/auth/signin");
+    redirect("/auth/signin");
   }
 
   if (userResponse.status === 500) {
