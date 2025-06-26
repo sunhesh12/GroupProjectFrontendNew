@@ -15,12 +15,13 @@ type Option = {
 type InputFieldProps = {
   label?: string;
   placeholder?: string;
-  type: "email" | "text" | "password" | "tel" | "number" | "select" | "file" | "textarea" | "date";
+  type: "email" | "text" | "password" | "tel" | "number" | "select" | "file" | "textarea" | "date" | "checkbox";
   min?: number;
   max?: number;
   name: string;
   options?: Option[];
   defaultValue?: string;
+  defaultChecked?: boolean; // For checkbox type
   required?: boolean;
   backgroundColor?: string;
   borderColor?: string;
@@ -58,6 +59,7 @@ export default function InputField({
   defaultValue,
   required,
   backgroundColor,
+  defaultChecked,
   borderColor,
   color,
   disabled,
@@ -66,7 +68,7 @@ export default function InputField({
 }: InputFieldProps) {
   return (
     <div id="input-container" className={styles.inputContainer}>
-      {label && (
+      {label && type !== "checkbox" && (
         <label htmlFor={name} className={styles.label}>
           {label}
         </label>
@@ -88,12 +90,33 @@ export default function InputField({
           disabled={disabled}
         >
           {options?.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option key={option.value} className={`${
+            error ? styles.inputError : ""
+          }`} value={option.value}>
               {option.label}
             </option>
           ))}
         </select>
-      ) : type === "textarea" ? (
+      ) : type === "checkbox" ? (
+        <div className={styles.checkboxContainer}>
+          <input
+            type="checkbox"
+            defaultChecked={defaultChecked}
+            className={`${styles.input} ${workSans.className} ${
+            error ? styles.inputError : ""
+          }`}
+            name={name}
+            id={name}
+            value={"true"}
+            required={required}
+            disabled={disabled}
+            onChange={onChange}
+          />
+          <label htmlFor={name} className={styles.label}>
+            {label}
+          </label>
+        </div>
+      )  : type === "textarea" ? (
         <textarea
           className={`${styles.input} ${workSans.className} ${
             error ? styles.inputError : ""
