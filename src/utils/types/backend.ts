@@ -7,6 +7,12 @@ export type APIResponse<PayloadType> = {
   errors?: string[];
 };
 
+export interface MaterialCreate {
+  material_type: MaterialTypes;
+  material_title: string;
+  material_url?: string;
+}
+
 export interface Session {
   id: string;
   token: string;
@@ -129,6 +135,5 @@ export type UserWithToken = {
 }
 export type FullModule = Module & {
   topics: Topic[];
-  activities: Activity[];
   announcements: Announcement[];
 }

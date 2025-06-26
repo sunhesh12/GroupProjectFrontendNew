@@ -88,3 +88,9 @@ export const topicCreateSchema = z.object({
     }), 
   is_visible: z.boolean(),
 });
+
+export const materialCreateSchema = z.object({
+  material_type: z.enum(['video' , 'document' , 'link' , 'audio' , 'executable' , 'zip' , 'image' , 'website' , 'unknown' , 'error' , 'pdf']),
+  material_title: z.string().min(1).max(255),
+  material_url: z.string().url().optional().or(z.literal("")),
+});

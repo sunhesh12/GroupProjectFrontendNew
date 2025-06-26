@@ -6,6 +6,7 @@ import type {
   AllModulesResponse,
   FullModule,
   TopicCreate,
+  MaterialCreate
 } from "@/utils/types/backend";
 import { Session, Topic } from "@/utils/types/backend";
 
@@ -112,7 +113,7 @@ const modules = {
   getAll: () => fetchAPI<AllModulesResponse>("/api/v1/modules"),
   get: (id: string) => fetchAPI<FullModule>(`/api/v1/modules/${id}`),
   createTopic: (moduleId: string, topicData: TopicCreate) =>
-    fetchAPI<Topic>("api/v1/modules/${moduleId}/topics", {
+    fetchAPI<Topic>(`/api/v1/modules/${moduleId}/topics`, {
       method: "POST",
       body: JSON.stringify(topicData),
       headers: {
@@ -122,9 +123,23 @@ const modules = {
     }),
 };
 
+const topics = {
+  get: (moduleId: string) =>
+    fetchAPI<Topic[]>(`/api/v1/modules/${moduleId}/topics`),
+  addMaterial: (topicId: string, materialData: MaterialCreate) =>
+    fetchAPI<Topic>(`/api/v1/topics/${topicId}/materials`, {
+      method: "POST",
+      body: JSON.stringify(materialData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
+}
+
 const courses = {
   getModules: (id: string) =>
     fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`),
 };
 
-export { user, modules, courses };
+export { user, modules, courses, topics };
