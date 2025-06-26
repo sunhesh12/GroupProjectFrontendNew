@@ -5,7 +5,7 @@ import CloseButton from "../buttons/close/view";
 
 interface MessageBoxProps {
   visible: boolean;
-  children: ReactNode;
+  children?: ReactNode;
   closeAction: () => void;
 }
 
