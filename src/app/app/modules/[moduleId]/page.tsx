@@ -6,10 +6,10 @@ import { faBook, faVideo } from "@fortawesome/free-solid-svg-icons";
 import Panel from "@/components/panel/view";
 import Timeline from "@/components/timeline/view";
 import TimelineItem from "@/components/timeline/timeline-item/view";
-import TopicToolbar from "@/components/module-toolbar/view";
 import ModuleHeader from "./module-header";
+import ModuleToolbar from "@/components/module-toolbar/view";
 import Announcements from "./announcements";
-
+import TopicToolbar from "./topic-toolbar";
 interface ModuleProps {
   params: Promise<{ moduleId: string }>;
 }
@@ -73,19 +73,22 @@ export default async function Module({ params }: ModuleProps) {
         teachers={["Amal"]}
       />
       <div className={styles.content}>
-        {currentUserResponse.payload.role === "lecturer" && <TopicToolbar />}
+        {currentUserResponse.payload.role === "lecturer" && <ModuleToolbar moduleId={moduleId} />}
         <Announcements />
         <nav>Tabs</nav>
         <ul id="topics" className={styles.topics}>
           {courseModule.topics.map((topic, index) => (
             <li key={index}>
-              <Panel
+              <Panel 
                 header={topic.title}
                 icon={topic.type === "lecture" ? faBook : faVideo}
               >
-                <p>{topic.description}</p>
+                
+                <p>{topic.description}</p> 
                 <div id="materials">
                   <h4>Lecture Materials</h4>
+                  {currentUserResponse.payload?.role === "lecturer" && 
+                  <TopicToolbar topicId={topic.id} />}
                   <Timeline>
                     {topic.lecture_materials.map((material, index) => (
                       <TimelineItem
