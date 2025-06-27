@@ -8,6 +8,7 @@ interface ToobarButtonProps {
   children?: ReactNode;
   icon?: IconDefinition;
   color?: string;
+  backgroundColor?: string;
   onClick?: MouseEventHandler<HTMLElement>;
 }
 
