@@ -10,6 +10,7 @@ import ModuleHeader from "./module-header";
 import ModuleToolbar from "@/components/module-toolbar/view";
 import Announcements from "./announcements";
 import TopicToolbar from "./topic-toolbar";
+import ArchiveModule from "./archive";
 interface ModuleProps {
   params: Promise<{ moduleId: string }>;
 }
@@ -32,19 +33,21 @@ export default async function Module({ params }: ModuleProps) {
   const currentUserResponse = await user.get(session);
 
   // No user found for given session (probably a cookie indjection)
-  if(currentUserResponse.status === 404 || !currentUserResponse.payload) {
+  if (currentUserResponse.status === 404 || !currentUserResponse.payload) {
     redirect("/auth/signin");
   }
 
   // Error while fetching user
-  if(currentUserResponse.status === 500) {
-    throw new Error("Internal server error has occurred while fetching user data");
+  if (currentUserResponse.status === 500) {
+    throw new Error(
+      "Internal server error has occurred while fetching user data"
+    );
   }
 
   const moduleResponse = await modules.get(moduleId);
 
   // No module found for given id
-  if (moduleResponse.status === 404) {
+  if (moduleResponse.status === 404 || !moduleResponse.payload) {
     notFound();
   }
 
@@ -65,6 +68,12 @@ export default async function Module({ params }: ModuleProps) {
     throw new Error("Empty module response payload");
   }
 
+  if(moduleResponse.payload.archived) {
+    return (
+      <ArchiveModule moduleId={moduleId} role={currentUserResponse.payload.role} />
+    );
+  }
+
   return (
     <main className={styles.main}>
       <ModuleHeader
@@ -73,22 +82,24 @@ export default async function Module({ params }: ModuleProps) {
         teachers={["Amal"]}
       />
       <div className={styles.content}>
-        {currentUserResponse.payload.role === "lecturer" && <ModuleToolbar moduleId={moduleId} />}
+        {currentUserResponse.payload.role === "lecturer" && (
+          <ModuleToolbar moduleId={moduleId} />
+        )}
         <Announcements />
         <nav>Tabs</nav>
         <ul id="topics" className={styles.topics}>
           {courseModule.topics.map((topic, index) => (
             <li key={index}>
-              <Panel 
+              <Panel
                 header={topic.title}
                 icon={topic.type === "lecture" ? faBook : faVideo}
               >
-                
-                <p>{topic.description}</p> 
+                <p>{topic.description}</p>
                 <div id="materials">
                   <h4>Lecture Materials</h4>
-                  {currentUserResponse.payload?.role === "lecturer" && 
-                  <TopicToolbar topicId={topic.id} />}
+                  {currentUserResponse.payload?.role === "lecturer" && (
+                    <TopicToolbar topicId={topic.id} />
+                  )}
                   <Timeline>
                     {topic.lecture_materials.map((material, index) => (
                       <TimelineItem
