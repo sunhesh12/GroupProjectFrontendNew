@@ -6,7 +6,7 @@ import type {
   AllModulesResponse,
   FullModule,
   TopicCreate,
-  MaterialCreate
+  MaterialCreate,
 } from "@/utils/types/backend";
 import { Session, Topic } from "@/utils/types/backend";
 
@@ -121,6 +121,23 @@ const modules = {
         Accept: "application/json",
       },
     }),
+  archive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/modules/${moduleId}/archive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+
+  unarchive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/modules/${moduleId}/unarchive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
 };
 
 const topics = {
@@ -135,7 +152,24 @@ const topics = {
         Accept: "application/json",
       },
     }),
-}
+  archive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/topics/${moduleId}/archive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+
+  unarchive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/topics/${moduleId}/unarchive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+};
 
 const courses = {
   getModules: (id: string) =>
