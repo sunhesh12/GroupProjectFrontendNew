@@ -11,7 +11,7 @@ const initialState: MaterialCreateState = {
   internalErrors: null,
   material_type: {
     value: "document",
-    errors: null,
+    errors: null, 
   },
   material_title: {
     value: "",
