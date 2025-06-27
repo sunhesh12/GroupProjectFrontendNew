@@ -15,6 +15,7 @@ import Card from "../../../../components/card/view";
 import MessageBox from "../../../../components/messagebox/view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TopicForm from "@/app/app/modules/[moduleId]/topic-form";
+import archiveModule from "@/actions/archive-module";
 
 interface TopicToolbarProps {
   moduleId: string;
@@ -56,7 +57,7 @@ export default function TopicToolbar({moduleId}: TopicToolbarProps) {
         Change your module by adding topics, resources, assignments or any
         resources
       </p>
-      <div className={styles.toolbar}>
+      <div className={styles.toolbar}> 
         <Button
           icon={faPlus}
           type="button"
@@ -82,13 +83,13 @@ export default function TopicToolbar({moduleId}: TopicToolbarProps) {
           Create assignment
         </NobgButton>
 
-        <NobgButton
+        <Button
           icon={faServer}
-          color="black"
-          onClick={() => handleButtonClick("systems")}
+          backgroundColor="#B22222"
+          onClick={() => archiveModule(moduleId)}
         >
           Archive course
-        </NobgButton>
+        </Button>
 
         <NobgButton
           icon={faGear}
