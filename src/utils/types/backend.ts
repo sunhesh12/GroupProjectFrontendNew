@@ -28,6 +28,7 @@ export type Module = {
   updated_at: string; // ISO date string
   image: string | null;
   semester: string | null;
+  archived: boolean;
   courses: Course[];
 };
 
