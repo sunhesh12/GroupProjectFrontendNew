@@ -1,7 +1,5 @@
 "use client";
-
 import {
-  faBell,
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,7 +30,7 @@ export default function Panel({ children, header, icon }: PanelProps) {
       >
         <h2 className={styles.panelHeaderText}>
           {icon && <FontAwesomeIcon icon={icon} size="sm" />}&nbsp;&nbsp;
-          <span>{header}</span>
+          <span>{header}</span >
         </h2>
         <div className={styles.panelHeaderButtons}>
           {expanded ? (

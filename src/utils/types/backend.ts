@@ -7,6 +7,42 @@ export type APIResponse<PayloadType> = {
   errors?: string[];
 };
 
+export interface MaterialCreate {
+  material_type: MaterialTypes;
+  material_title: string;
+  material_url?: string;
+}
+
+export interface Session {
+  id: string;
+  token: string;
+}
+
+export type Module = {
+  id: string;
+  module_name: string;
+  credit_value: number;
+  practical_exam_count: number;
+  writing_exam_count: number;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  image: string | null;
+  semester: string | null;
+  archived: boolean;
+  courses: Course[];
+};
+
+export type Course = {
+  id: number;
+  course_name: string;
+  credit_value: number;
+  maximum_students: number;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  description: string;
+};
+
+
 export interface User {
   full_name: string;
   age: string;
@@ -33,9 +69,18 @@ export interface Topic {
   type: string;
   is_visible: string;
   is_complete: string;
+  deadline: string | null; // ISO date string or null if no deadline
   created_at: string;
   updated_at: string;
   lecture_materials: LectureMaterial[];
+}
+
+export interface TopicCreate {
+  title: string;
+  description: string;
+  type: string;
+  is_visible: boolean;
+  deadline?: string | null; // ISO date string or null if no deadline
 }
 
 export interface PortalUser {
@@ -59,13 +104,12 @@ export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executabl
 interface LectureMaterial {
   id: number;
   topic_id: number;
-  material_type: MaterialTypes; // Adjust based on your use cases
+  material_type: MaterialTypes;
   material_title: string;
   material_url: string;
   created_at: string; // ISO 8601 timestamp format
   updated_at: string; // ISO 8601 timestamp format
 };
-
 
 export interface Announcement {
   id: string;
@@ -77,54 +121,6 @@ export interface Announcement {
   updated_at: string;
 }
 
-export interface Module {
-  id: string;
-  module_name: string | null;
-  credit_value: string | null;
-  semester: string | null;
-  image: string | null;
-  practical_exam_count: string | null;
-  writing_exam_count: string | null;
-  course_id: string | null;
-  created_at: string | null;
-  updated_at: string | null;
-  pivot?: {
-    module_id: string;
-    course_id: string;
-  };
-  activities: {
-    id: string;
-    activity_name: string | null;
-    type: "lesson";
-    start_date: string | null;
-    start_time: string | null;
-    end_date: string | null;
-    end_time: string | null;
-    instructions: string | null;
-    question_count: string;
-    module_id: string | null;
-    created_at: string | null;
-    updated_at: string | null;
-  }[];
-  topics: Topic[];
-  teachers: PortalUser[];
-  annoucements: Announcement[];
-}
-
-export interface Course {
-  id: string;
-  course_name: string;
-  credit_value: string;
-  maximum_students: string;
-  created_at: string;
-  updated_at: string | null;
-  description: string | null;
-  pivot: {
-    module_id: string;
-    course_id: string;
-  };
-}
-
 export interface CourseWithPivot extends Course {
   pivot: {
     module_id: string;
@@ -132,11 +128,13 @@ export interface CourseWithPivot extends Course {
   };
 }
 
-export interface ModuleWithCourses extends Module {
-  courses: CourseWithPivot[];
-}
+export type AllModulesResponse = APIResponse<Module[]>;
 
 export type UserWithToken = {
   user: User;
   token: string;
-};
+}
+export type FullModule = Module & {
+  topics: Topic[];
+  announcements: Announcement[];
+}

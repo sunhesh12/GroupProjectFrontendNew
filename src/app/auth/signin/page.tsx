@@ -1,10 +1,10 @@
-import { redirect } from "next/navigation";
 import SignInForm from "./sign-in-form";
-import { auth } from "@/utils/auth";
+import { redirect } from "next/navigation";
+import { getSession } from "@/utils/auth";
 
 export default async function SignIn() {
-  const session = await auth();
-  
+  const session = await getSession();
+
   if(session) {
     redirect("/app/dashboard");
   }

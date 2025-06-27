@@ -1,83 +1,28 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { user } from "@/utils/backend";
+import { cookies } from "next/headers";
+import { user } from "./backend";
+import type { Session } from "./types/backend";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    Credentials({
-      credentials: {
-        email: {},
-        password: {}, 
-      },
+export async function getSession(): Promise<Session | null> {
+  // Checking if the user is authenticated (with cookie)
+  const cookieStore = await cookies();
 
-      authorize: async (credentials) => {
-        let currentUser = null; 
-        const {email, password} = credentials as {email: string, password: string};
+  if (cookieStore.has("session")) {
+    const sessionCookie = cookieStore.get("session")?.value;
+    if (sessionCookie) {
+      try {
+        const session = JSON.parse(sessionCookie) as Session;
 
-        // Executing sig  n in route of backend
-        const response = await user.auth.signin({
-          email,
-          password
-        });
+        // Validating the session with the user backend
+        const userObj = await user.get(session);
 
-        // Status of the response
-        if (response.success) {
-          // Successfull
-          if (response.payload?.user) {
-            // Sign in successfull
-            const { user, token } = response.payload;
-            currentUser = {
-              id: user.id,
-              name: user.full_name,
-              email: user.email,
-              profilePicture: user.profile_picture,
-              courseId: user.course_id,
-              accessToken: token,
-            };
-          }
-
-        } else {
-          // Sign in failed
-          if (response.status == 401) {
-            // Invalid credentials
-            throw new Error("Error: Unmatching credentials !");
-          } else if(response.status == 500) {
-            // Server error
-            throw new Error("ServerError: Sign in request failed due to a server error !");
-          } else {
-            // Unknown error
-            console.log(response);
-            throw new Error("UnknownError: Sign in request failed !");
-          }
+        if (userObj) {
+          return session;
         }
-
-        return currentUser;
-      },
-    }),
-  ],
-  callbacks: {
-    authorized: async ({auth}) => {
-      return !!auth;
-    },
-
-    jwt: async ({ token, user }) => {
-      if (user) {
-        token.user = user;
+      } catch (error) {
+        console.error("Error parsing session cookie:", error);
       }
+    }
+  }
 
-      return token;
-    },
-    session: async ({ session, token }) => {
-      if (token) {
-        session.user = token.user;
-      }
-      return session; 
-    },
-  },
-  session: {
-    strategy: "jwt",
-  },
-  pages: {
-    signIn: "/auth/signin",
-  },
-});
+  return null; // No session found
+}
