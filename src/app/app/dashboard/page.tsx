@@ -1,16 +1,13 @@
-import { auth } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import { user } from "@/utils/backend";
 import Greeting from "./greeting";
 import style from "./page.module.css";
-import Role from "./role";
 import Menu from "./menu";
 import Image from "next/image";
 import ModuleCard from "@/components/module-card/module-card";
 import { Module } from "@/utils/types/backend";
 import Link from "next/link";
-import { PortalUser } from "@/utils/types/backend";
-
+import { getSession } from "@/utils/auth";
 interface ModuleListProps {
   filteredModules: Module[];
   handleCourseClick?: (course: any) => void;
@@ -20,13 +17,13 @@ export default async function DashboardPage({
   filteredModules,
   handleCourseClick,
 }: ModuleListProps) {
-  const session = await auth();
+  const session = await getSession();
 
-  if (!session || !session.user) {
+  if (!session) {
     redirect("/auth/signin");
   }
 
-  const currentUser = await user.get(session?.user.id!);
+  const currentUser = await user.get(session);
 
   if (!currentUser?.payload) {
     throw new Error("No user payload received from API");
