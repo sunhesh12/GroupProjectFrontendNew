@@ -23,6 +23,7 @@ export type Module = {
   module_name: string;
   credit_value: number;
   practical_exam_count: number;
+  description: string;
   writing_exam_count: number;
   created_at: string; // ISO date string
   updated_at: string; // ISO date string
@@ -52,6 +53,7 @@ export interface User {
   profile_picture: string;
   password: string;
   role: string;
+  token: string;
   status: string;
   course_id: string;
   updated_at: string;
@@ -83,21 +85,21 @@ export interface TopicCreate {
   deadline?: string | null; // ISO date string or null if no deadline
 }
 
-export interface PortalUser {
-  id: string;
-  Full_Name: string;
-  Age: string;
-  Email: string;
-  Mobile_No: string;
-  Address: string;
-  Profile_Picture: string | null;
-  Password: string;
-  updated_at: string;
-  created_at: string;
-  Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
-  Status: number; // maybe use enum for 0 = inactive, 1 = active
-  course_id: string | null;
-}
+// export interface PortalUser {
+//   id: string;
+//   Full_Name: string;
+//   Age: string;
+//   Email: string;
+//   Mobile_No: string;
+//   Address: string;
+//   Profile_Picture: string | null;
+//   Password: string;
+//   updated_at: string;
+//   created_at: string;
+//   Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
+//   Status: number; // maybe use enum for 0 = inactive, 1 = active
+//   course_id: string | null;
+// }
 
 export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executable' | 'zip' | 'image' | 'website' | 'unknown' | 'error' | 'pdf';
 

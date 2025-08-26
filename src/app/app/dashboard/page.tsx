@@ -17,16 +17,10 @@ export default async function DashboardPage({
   filteredModules,
   handleCourseClick,
 }: ModuleListProps) {
-  const session = await getSession();
+  const currentUser = await getSession();
 
-  if (!session) {
+  if (!currentUser) {
     redirect("/auth/signin");
-  }
-
-  const currentUser = await user.get(session);
-
-  if (!currentUser?.payload) {
-    throw new Error("No user payload received from API");
   }
 
   console.log(currentUser);
@@ -34,7 +28,7 @@ export default async function DashboardPage({
   return (
     <main className={style.page}>
       <header className={style.dashboardHeader}>
-        <Greeting name={currentUser.payload.full_name} />
+        <Greeting name={currentUser.full_name} />
         {/* <Role role={currentUser.payload.role} /> */}
       </header>
       <article>
@@ -48,7 +42,7 @@ export default async function DashboardPage({
         </div>
       </article>
       <br></br>
-      <Menu role={currentUser.payload.Role} />
+      <Menu role={currentUser.role} />
       <article>
         <div className={style.activityList}>
           <div className={style.activityHeader}>

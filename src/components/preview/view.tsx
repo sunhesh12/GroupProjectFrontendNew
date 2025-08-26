@@ -1,3 +1,4 @@
+"use client";
 import Card from "../card/view";
 import Image from "next/image";
 import styles from "./style.module.css";
@@ -30,7 +31,7 @@ export default async function Preview({ title, link }: PreviewProps) {
       <Card link={link}>
         <div className={styles.cardImageContainer}>
           <Image
-            src={thumnail}
+            src={thumnail} 
             alt="YouTube thumbnail"
             width={dimentions.width}
             height={dimentions.height}

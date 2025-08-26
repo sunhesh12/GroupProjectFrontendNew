@@ -1,5 +1,4 @@
 "use client";
-import { Suspense } from "react";
 import styles from "./style.module.css";
 import Preview from "@/components/preview/view";
 import Spinner from "@/components/spinner/view";
@@ -16,7 +15,7 @@ export default function TimelineItem({ title, link }: TimelineProps) {
       <div className={styles.timelineDot} />
 
       <br />
-      {title}
+      <h4>{title}</h4>
       {/* <Suspense fallback={
         <div className={styles.loading}>
           <Spinner theme="dark" width={20} height={20} />

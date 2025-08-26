@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { user } from "./backend";
-import type { Session } from "./types/backend";
+import type { Session, User } from "./types/backend";
 
-export async function getSession(): Promise<Session | null> {
+export async function getSession(): Promise<User | null> {
   // Checking if the user is authenticated (with cookie)
   const cookieStore = await cookies();
 
@@ -15,11 +15,11 @@ export async function getSession(): Promise<Session | null> {
         // Validating the session with the user backend
         const userObj = await user.get(session);
 
-        if (userObj) {
-          return session;
+        if (userObj.status === 200 && userObj.payload) {
+          return {...userObj.payload, token: session.token};
         }
       } catch (error) {
-        console.error("Error parsing session cookie:", error);
+        console.error("Error while authenticating", error);
       }
     }
   }

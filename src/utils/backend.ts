@@ -67,23 +67,23 @@ const user = {
     },
   },
 
-  get: async (session: Session) => {
-    return fetchAPI<User>(`/api/v1/users/${session.id}`, {
+  get: async (user: User) => {
+    return fetchAPI<User>(`/api/v1/users/${user.id}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${session.token}`,
+        Authorization: `Bearer ${user.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     });
   },
 
-  modules: async (session: Session) =>
-    fetchAPI<Module[]>(`/api/v1/users/${session.id}/enrolled/modules`, {
+  modules: async (user: User) =>
+    fetchAPI<Module[]>(`/api/v1/users/${user.id}/enrolled/modules`, {
       method: "GET",
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${session.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
     }),
 
@@ -99,8 +99,8 @@ const user = {
 
   getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
 
-  getTeachingModules: (session: Session) =>
-    fetchAPI<Module[]>(`/api/v1/users/${session.id}/teaching/modules`),
+  getTeachingModules: (user: User) =>
+    fetchAPI<Module[]>(`/api/v1/users/${user.id}/teaching/modules`),
 
   update: (updatedUser: Partial<User>) =>
     fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {

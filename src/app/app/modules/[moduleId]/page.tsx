@@ -16,10 +16,10 @@ interface ModuleProps {
 }
 
 export default async function Module({ params }: ModuleProps) {
-  const session = await getSession();
+  const currentUser = await getSession();
 
   // Unauthenticated
-  if (!session) {
+  if (!currentUser) {
     redirect("/auth/signin");
   }
 
@@ -28,20 +28,6 @@ export default async function Module({ params }: ModuleProps) {
   // No module id provided
   if (!moduleId) {
     notFound();
-  }
-
-  const currentUserResponse = await user.get(session);
-
-  // No user found for given session (probably a cookie indjection)
-  if (currentUserResponse.status === 404 || !currentUserResponse.payload) {
-    redirect("/auth/signin");
-  }
-
-  // Error while fetching user
-  if (currentUserResponse.status === 500) {
-    throw new Error(
-      "Internal server error has occurred while fetching user data"
-    );
   }
 
   const moduleResponse = await modules.get(moduleId);
@@ -68,10 +54,8 @@ export default async function Module({ params }: ModuleProps) {
     throw new Error("Empty module response payload");
   }
 
-  if(moduleResponse.payload.archived) {
-    return (
-      <ArchiveModule moduleId={moduleId} role={currentUserResponse.payload.role} />
-    );
+  if (moduleResponse.payload.archived) {
+    return <ArchiveModule moduleId={moduleId} role={currentUser.role} />;
   }
 
   return (
@@ -79,14 +63,14 @@ export default async function Module({ params }: ModuleProps) {
       <ModuleHeader
         moduleName={courseModule.module_name}
         moduleImage={courseModule.image}
+        description={courseModule.description}
         teachers={["Amal"]}
       />
       <div className={styles.content}>
-        {currentUserResponse.payload.role === "lecturer" && (
+        {currentUser.role === "lecturer" && (
           <ModuleToolbar moduleId={moduleId} />
         )}
         <Announcements />
-        <nav>Tabs</nav>
         <ul id="topics" className={styles.topics}>
           {courseModule.topics.map((topic, index) => (
             <li key={index}>
@@ -97,7 +81,7 @@ export default async function Module({ params }: ModuleProps) {
                 <p>{topic.description}</p>
                 <div id="materials">
                   <h4>Lecture Materials</h4>
-                  {currentUserResponse.payload?.role === "lecturer" && (
+                  {currentUser.role === "lecturer" && (
                     <TopicToolbar topicId={topic.id} />
                   )}
                   <Timeline>
