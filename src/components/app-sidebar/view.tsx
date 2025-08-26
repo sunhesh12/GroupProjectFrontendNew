@@ -8,16 +8,19 @@ import InputField from "@/components/input/view";
 import ToggleButton from "./toggle-button/view";
 import Menu from "@/components/menu/view";
 import { useRouter } from "next/navigation"; // for App Router
-
+import signOut from "@/actions/signout";
+import type { User } from "@/utils/types/backend";
 
 interface AppSidebarProps {
   expanded: boolean;
   toggleExpanded: Dispatch<SetStateAction<boolean>>;
+  user: User | null;
 }
 
 export default function AppSidebar({
   expanded,
   toggleExpanded,
+  user,
 }: AppSidebarProps) {
   const [sessionMenu, toggleSessionMenu] = useState(false);
 
@@ -61,7 +64,7 @@ export default function AppSidebar({
               type="text"
               backgroundColor="#141414"
               borderColor="#343434"
-              color="white" 
+              color="white"
               name="Search anything"
               placeholder="Search"
             />
@@ -139,8 +142,11 @@ export default function AppSidebar({
                 {sessionMenu && (
                   <Menu
                     position={{
-                      right: "0px",
+                      right: expanded ? "0px" : "-140px",
                       bottom: "60px",
+                    }}
+                    onClose={() => {
+                      toggleSessionMenu(false);
                     }}
                     options={[
                       {
@@ -152,6 +158,7 @@ export default function AppSidebar({
                       {
                         name: "Sign out",
                         action: () => {
+                          signOut();
                         },
                         styles: {
                           color: "red",
@@ -166,12 +173,12 @@ export default function AppSidebar({
                   dimensions={{ width: 30, height: 30 }}
                   rounded={true}
                   onClick={() => {
-                    toggleSessionMenu((sessionMenu) => !sessionMenu);
+                    toggleSessionMenu(!sessionMenu);
                   }}
                   expanded={expanded}
                 >
-                  {/* <div className={styles.username}>{session?.user.name}</div> */}
-                  {/* <div className={styles.email}>{session?.user.email}</div> */}
+                  <div className={styles.username}>{user?.full_name ?? "Guest Account"}</div>
+                  <div className={styles.email}>{user?.email}</div>
                 </SidebarLink>
               </div>
             </div>
