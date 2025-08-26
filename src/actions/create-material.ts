@@ -3,7 +3,7 @@
 import { MaterialCreateState } from "./types";
 import { materialCreateSchema } from "@/utils/schema";
 import { topics } from "@/utils/backend";
-import { getSession } from "@/utils/auth";
+import { getSession } from "@/actions/get-session";
 import { MaterialTypes } from "@/utils/types/backend";
 
 export async function createMaterialAction(
