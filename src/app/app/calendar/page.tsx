@@ -18,7 +18,7 @@ export default async function HomePage() {
 
   return (
     <div className={styles["page-calendar-container"]}>
-      <h1 className={styles.one}>Calendar</h1>
+      
       <CalendarApp userId={userId} token={token} />
     </div>
   );
