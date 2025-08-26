@@ -118,13 +118,14 @@ body {
 }
 
 .sx-react-calendar-wrapper {
-  width: 1000px;
+  width: 100%;
   max-width: 100%;
   height: 550px;
   max-height: 100%;
   margin-top: 0px;
 
 }
+
 .sx__time-grid-event-time{
   font-size: 10px !important;
   padding-top: 7px;
