@@ -10,7 +10,7 @@ import type {
 } from "@/utils/types/backend";
 import { Session, Topic } from "@/utils/types/backend";
 
-export const url = process.env.BACKEND_URL;
+export const url = "http://127.0.0.1:8000";
 
 const handleResponse = async <T>(
   request: Response

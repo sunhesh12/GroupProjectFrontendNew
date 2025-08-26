@@ -21,6 +21,11 @@
   --fontSize-small-1: 15px;
   --fontSize-small-2: 12px; 
   --fontSize-small-3: 10px;
+
+  --sx-color-primary: #000 !important; 
+  --sx-color-on-primary: #fff !important; 
+  --sx-color-primary-container: #00000072 !important; 
+  --sx-color-on-primary-container: #fff !important;
 }
 
 
@@ -117,5 +122,10 @@ body {
   max-width: 100%;
   height: 550px;
   max-height: 100%;
-  margin-top: 0px; ;
+  margin-top: 0px;
+
+}
+.sx__time-grid-event-time{
+  font-size: 10px !important;
+  padding-top: 7px;
 }

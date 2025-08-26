@@ -1,22 +1,25 @@
-"use client";
 import dynamic from "next/dynamic";
 import styles from "./page.module.css";
+import { getSession } from "@/utils/auth"; // your custom cookie reader
+import { redirect } from "next/navigation";
+import { user } from "@/utils/backend";
 
-const CalendarApp = dynamic(
-  () => import("../../../components/calendar/calendar")
-);
 
-// import CalendarApp from '@/components/calendar/calendar';
+// Load the calendar dynamically (client only)
+const CalendarApp = dynamic(() => import('../../../components/calendar/calendar'));
 
-export default function HomePage() {
+
+export default async function HomePage() {
+  const session = await getSession();
+  if (!session) redirect("/auth/signin");
+
+  const userId = session.id;
+  const token = session.token; // if your API needs Bearer token
+
   return (
-    <>
-      <div className={styles.calenderContainer}>
-        <div className={styles["page-calendar-container"]}>
-          <h1 className={styles.one}>Calendar</h1>
-          <CalendarApp />
-        </div>
-      </div>
-    </>
+    <div className={styles["page-calendar-container"]}>
+      <h1 className={styles.one}>Calendar</h1>
+      <CalendarApp userId={userId} token={token} />
+    </div>
   );
 }

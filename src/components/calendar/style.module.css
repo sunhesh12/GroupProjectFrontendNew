@@ -1,0 +1,10 @@
+/* style.module.css */
+
+.schedule-x-event {
+  padding: 4px 6px !important;
+  font-size: 12px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  color: black;
+  line-height: 1.2;
+}
