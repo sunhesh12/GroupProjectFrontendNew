@@ -71,3 +71,26 @@ export const signInSchema = z.object({
     .string()
     .nonempty({ message: "Password is required" }),
 });
+
+export const topicCreateSchema = z.object({
+  id: z
+    .string(),
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().min(1, { message: "Description is required" }),
+  type: z.enum(["lecture", "assignment", "resource"], {
+    message: "Type must be one of 'lecture', 'assignment', or 'resource'",
+  }),
+  deadline: z
+    .string()
+    .optional()
+    .refine((val) => !val || !isNaN(Date.parse(val)), {
+      message: "Invalid date format",
+    }), 
+  is_visible: z.boolean(),
+});
+
+export const materialCreateSchema = z.object({
+  material_type: z.enum(['video' , 'document' , 'link' , 'audio' , 'executable' , 'zip' , 'image' , 'website' , 'unknown' , 'error' , 'pdf']),
+  material_title: z.string().min(1).max(255),
+  material_url: z.string().url().optional().or(z.literal("")),
+});

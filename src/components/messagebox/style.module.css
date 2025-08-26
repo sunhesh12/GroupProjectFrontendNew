@@ -1,10 +1,13 @@
 .messageBoxContainer {
+	top: 0;
+	left: 0;
 	position: fixed;
+	top:0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	z-index: 200;
+	z-index: 400;
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.345);
@@ -20,6 +23,5 @@
 	min-width: 300px;
 	max-height: 80%;
 	height: auto;
-	z-index: 300;
 	overflow-y: scroll;
 }

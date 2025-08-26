@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./style.module.css";
 import Image from "next/image";
@@ -8,8 +7,8 @@ import SidebarLink from "./sidebar-link/view";
 import InputField from "@/components/input/view";
 import ToggleButton from "./toggle-button/view";
 import Menu from "@/components/menu/view";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation"; // for App Router
+
 
 interface AppSidebarProps {
   expanded: boolean;
@@ -21,6 +20,8 @@ export default function AppSidebar({
   toggleExpanded,
 }: AppSidebarProps) {
   const [sessionMenu, toggleSessionMenu] = useState(false);
+
+  const router = useRouter();
   return (
     <aside
       className={styles.sidebar}
@@ -60,7 +61,7 @@ export default function AppSidebar({
               type="text"
               backgroundColor="#141414"
               borderColor="#343434"
-              color="white"
+              color="white" 
               name="Search anything"
               placeholder="Search"
             />
@@ -145,13 +146,12 @@ export default function AppSidebar({
                       {
                         name: "Profile",
                         action: () => {
-
+                          router.push("/app/profile");
                         },
                       },
                       {
                         name: "Sign out",
                         action: () => {
-                          signOut();
                         },
                         styles: {
                           color: "red",
@@ -161,7 +161,7 @@ export default function AppSidebar({
                   />
                 )}
                 <SidebarLink
-                  icon={"/profile-pic.webp"}
+                  icon={"/profile-pic.png"}
                   alt="An image of a person"
                   dimensions={{ width: 30, height: 30 }}
                   rounded={true}

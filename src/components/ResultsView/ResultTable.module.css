@@ -1,0 +1,65 @@
+/* ResultTable.module.css */
+.bgCanvas_bx89 {
+  min-height: 100vh;
+  background-color: #1f2937; /* gray-900 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.cardContainer_xz23 {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1024px;
+  width: 100%;
+  padding: 2rem;
+}
+
+.titleText_fj02 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 0.25rem;
+}
+
+.subText_jk56 {
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+.divider_hr34 {
+  margin-bottom: 1.5rem;
+}
+
+.scrollWrap_aa11 {
+  overflow-x: auto;
+}
+
+.resultTable_yy99 {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.tableHead_zz22 {
+  background-color: #1f2937;
+  color: white;
+}
+
+.tableCell_kk77 {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+}
+
+.evenRow_ee45 {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.oddRow_mm32 {
+  background-color: white;
+  color: #1f2937;
+}

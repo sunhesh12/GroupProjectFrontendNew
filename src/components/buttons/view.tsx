@@ -14,6 +14,7 @@ const workSans = Work_Sans({
 export type ButtonProps = {
   children?: ReactNode;
   isLink?: boolean;
+  backgroundColor?: string;
   isLoading?: boolean;
   className?: string;
   href?: string;
@@ -36,14 +37,15 @@ export default function Button({
   onClick,
   type,
   className,
-  color
+  color,
+  backgroundColor
 }: ButtonProps) {
   // Any additional props
   const props: HTMLAttributes<HTMLElement> = {
     onClick,
     "aria-label": "Button",
     role: "button",
-    style: { fontSize: fontSize, width: width, color },
+    style: { fontSize: fontSize, width: width, color, backgroundColor },
     className: styles.button + " " + workSans.className + " " + className,
   };
 
