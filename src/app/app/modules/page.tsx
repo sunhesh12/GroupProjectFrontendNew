@@ -3,7 +3,7 @@ import SearchBar from "./search-bar";
 import { redirect } from "next/navigation";
 import { user } from "@/utils/backend";
 import Link from "next/link";
-import { getSession } from "@/utils/auth";
+import { getSession } from "@/actions/get-session";
 import ModuleCard from "@/components/module-card/module-card";
 
 export default async function Modules() {

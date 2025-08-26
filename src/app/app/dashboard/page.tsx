@@ -7,7 +7,7 @@ import Image from "next/image";
 import ModuleCard from "@/components/module-card/module-card";
 import { Module } from "@/utils/types/backend";
 import Link from "next/link";
-import { getSession } from "@/utils/auth";
+import { getSession } from "@/actions/get-session";
 interface ModuleListProps {
   filteredModules: Module[];
   handleCourseClick?: (course: any) => void;

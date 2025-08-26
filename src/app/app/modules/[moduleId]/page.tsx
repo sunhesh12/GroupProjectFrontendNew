@@ -1,4 +1,4 @@
-import { getSession } from "@/utils/auth";
+import { getSession } from "@/actions/get-session";
 import { notFound, redirect } from "next/navigation";
 import { modules, user } from "@/utils/backend";
 import styles from "./page.module.css";
