@@ -67,11 +67,12 @@ const user = {
     },
   },
 
-  get: async (user: User) => {
-    return fetchAPI<User>(`/api/v1/users/${user.id}`, {
+  // Exchanging the session object with the user object
+  get: async (session: Session) => {
+    return fetchAPI<User>(`/api/v1/users/${session.id}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${session.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
