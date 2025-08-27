@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputField from "@/components/input/view";
 import styles from "./style.module.css";
 import { url } from "@/utils/backend";
@@ -16,6 +15,7 @@ type User = {
   role?: string;
   status?: string;
   course_id?: number;
+  profile_picture?: string;
 };
 
 type SettingsClientProps = {
@@ -34,16 +34,26 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
     institution: user.institution || "",
     password: "",
   });
-
+  
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
     sms: false,
   });
-
+  
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(user.profile_picture || null);
+
+  // Load profile picture from localStorage on mount
+  useEffect(() => {
+    const savedProfilePic = localStorage.getItem(`profile_pic_${userId}`);
+    if (savedProfilePic) {
+      setPreviewUrl(savedProfilePic);
+    }
+  }, [userId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -51,7 +61,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -67,27 +77,44 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
     }));
   };
 
+  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfilePicture(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setPreviewUrl(result);
+        // Save to localStorage
+        localStorage.setItem(`profile_pic_${userId}`, result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
+    
     if (!formData.full_name.trim()) {
       newErrors.full_name = "Full name is required";
     }
-
+    
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email";
     }
-
+    
     if (!formData.mobile_no.trim()) {
       newErrors.mobile_no = "Phone number is required";
     }
-
+    
     if (formData.age && (parseInt(formData.age) < 1 || parseInt(formData.age) > 120)) {
       newErrors.age = "Please enter a valid age";
     }
-
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -98,10 +125,10 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
     if (!validateForm()) {
       return;
     }
-
+    
     setIsLoading(true);
     setSuccessMessage("");
-
+    
     try {
       const updateData: any = {
         full_name: formData.full_name,
@@ -110,15 +137,20 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
         address: formData.address,
         institution: formData.institution,
       };
-
+      
       if (formData.age) {
         updateData.age = parseInt(formData.age);
       }
-
+      
       if (formData.password.trim()) {
         updateData.password = formData.password;
       }
-
+      
+      // Include profile picture if available
+      if (previewUrl && previewUrl.startsWith('data:')) {
+        updateData.profile_picture = previewUrl;
+      }
+      
       const response = await fetch(`${url}/api/v1/users/${userId}`, {
         method: "PATCH",
         headers: {
@@ -128,19 +160,27 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
         },
         body: JSON.stringify(updateData),
       });
-
+      
       const result = await response.json();
-
+      
       if (response.ok) {
         setSuccessMessage("Profile updated successfully!");
-        setFormData(prev => ({ ...prev, password: "" })); // Clear password field
+        setFormData(prev => ({ ...prev, password: "" }));
+        
+        // Clear profile picture from state but keep localStorage
+        if (profilePicture) {
+          setProfilePicture(null);
+        }
+        
         setTimeout(() => setSuccessMessage(""), 3000);
       } else {
         throw new Error(result.message || "Failed to update profile");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      setErrors({ general: error instanceof Error ? error.message : "Failed to update profile" });
+      setErrors({ 
+        general: error instanceof Error ? error.message : "Failed to update profile" 
+      });
     } finally {
       setIsLoading(false);
     }
@@ -152,7 +192,15 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
       <div className={styles.profileHeader}>
         <div className={styles.avatarSection}>
           <div className={styles.avatar}>
-            {formData.full_name.charAt(0).toUpperCase() || "U"}
+            {previewUrl ? (
+              <img 
+                src={previewUrl} 
+                alt="Profile" 
+                className={styles.avatarImage}
+              />
+            ) : (
+              formData.full_name.charAt(0).toUpperCase() || "U"
+            )}
           </div>
           <div className={styles.userInfo}>
             <h2 className={styles.userName}>{formData.full_name || "User"}</h2>
@@ -168,28 +216,61 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
           {isLoading ? "Saving..." : "Save Changes"}
         </button>
       </div>
-
+      
       {/* Success Message */}
       {successMessage && (
         <div className={styles.successMessage}>
           {successMessage}
         </div>
       )}
-
+      
       {/* General Error */}
       {errors.general && (
         <div className={styles.errorMessage}>
           {errors.general}
         </div>
       )}
-
+      
       {/* Profile Settings Form */}
       <form id="settings-form" onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.sectionTitle}>
           <h3>Profile Settings</h3>
         </div>
-
+        
         <div className={styles.formGrid}>
+          {/* Profile Picture Upload */}
+          <div className={styles.formGroupFull}>
+            <div className={styles.profilePictureContainer}>
+              <div className={styles.profilePicturePreview}>
+                {previewUrl ? (
+                  <img 
+                    src={previewUrl} 
+                    alt="Profile Preview" 
+                    className={styles.previewImage}
+                  />
+                ) : (
+                  <div className={styles.placeholderText}>
+                    {formData.full_name.charAt(0).toUpperCase() || "U"}
+                  </div>
+                )}
+              </div>
+              <div className={styles.uploadSection}>
+                <label className={styles.uploadButton}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfilePictureChange}
+                    className={styles.fileInput}
+                  />
+                  Choose Photo
+                </label>
+                <p className={styles.uploadHelper}>
+                  JPG, GIF or PNG. Max size of 5MB
+                </p>
+              </div>
+            </div>
+          </div>
+          
           <div className={styles.formGroup}>
             <InputField
               label="Full Name"
@@ -202,7 +283,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               error={errors.full_name}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <InputField
               label="Email"
@@ -215,7 +296,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               error={errors.email}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <InputField
               label="Address"
@@ -227,7 +308,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               error={errors.address}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <InputField
               label="Phone Number"
@@ -240,7 +321,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               error={errors.mobile_no}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <InputField
               label="Age"
@@ -254,7 +335,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               error={errors.age}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <InputField
               label="Institution"
@@ -266,7 +347,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               error={errors.institution}
             />
           </div>
-
+          
           <div className={styles.formGroupFull}>
             <InputField
               label="Change Password"
@@ -279,12 +360,12 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
             />
           </div>
         </div>
-
+        
         {/* Notification Settings */}
         <div className={styles.sectionTitle}>
           <h3>Notification Preferences</h3>
         </div>
-
+        
         <div className={styles.notificationGrid}>
           <div className={styles.notificationItem}>
             <InputField
@@ -295,7 +376,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               onChange={() => handleNotificationChange("email")}
             />
           </div>
-
+          
           <div className={styles.notificationItem}>
             <InputField
               label="Push Notifications"
@@ -305,7 +386,7 @@ export default function SettingsClient({ user, token, userId }: SettingsClientPr
               onChange={() => handleNotificationChange("push")}
             />
           </div>
-
+          
           <div className={styles.notificationItem}>
             <InputField
               label="SMS Notifications"

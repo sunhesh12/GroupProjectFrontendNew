@@ -29,7 +29,7 @@ async function getUser(token: string, userId: number) {
 }
 
 export default async function SettingsPage() {
-  // ✅ read session from cookies via your util
+  
   const session = await getSession();
 
   if (!session || !session.id || !session.token) {
