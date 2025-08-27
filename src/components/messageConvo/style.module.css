@@ -3,8 +3,9 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 0px;
-  height: calc(100vh - 120px);
+  height: 100vh;
   color: #111; /* default text dark */
+  overflow: hidden; /* Prevent layout from scrolling */
 }
 
 /* sidebar */
@@ -12,17 +13,24 @@
   background: #ffffff;           /* white sidebar */
   border: 2px solid #e5e5e5;
   border-radius: 0px;
-  padding: 12px;
-  overflow: auto;
-  height: 123%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  max-height: 100vh; /* Ensure it doesn't exceed viewport */
   position: relative; /* Add this to contain the modal positioning */
+  overflow: hidden; /* Prevent sidebar itself from scrolling */
 }
 
 .sidebarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  padding: 12px 12px 12px 12px; /* Add padding to header */
+  flex-shrink: 0; /* Don't shrink the header */
+  border-bottom: 2px solid #e5e5e5; /* Nice horizontal line */
+  position: relative;
 }
 
 .sidebarTitle {
@@ -50,9 +58,40 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
 }
 
+/* conversation list container - this is the scrollable part */
+.convListContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px 12px 12px;
+  min-height: 0; /* Important: allows flex child to shrink below content size */
+}
+
+/* Add scrollbar styling for webkit browsers */
+.convListContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.convListContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.convListContainer::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.convListContainer::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
 
 /* conversation list */
-.convList { list-style: none; padding: 0; margin: 0; }
+.convList { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+}
+
 .convItem {
   width: 100%;
   text-align: left;
@@ -67,8 +106,14 @@
   cursor: pointer;
   font-family: 'Work Sans', sans-serif;
 }
-.convItem:hover { background: #000000d2; }
-.convItemActive { background: #000000;  color:white}
+.convItem:hover { 
+  background: #000000d2; 
+  color: #ffffff;
+}
+.convItemActive { 
+  background: #000000;  
+  color: white;
+}
 .convTitle { font-weight: 600; }
 .convLast { font-size: 12px; }
 
@@ -78,27 +123,50 @@
   border: 1px solid #ffffff;
   border-radius: 0px;
   padding: 12px;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  min-height: 400px;
-  color: #e5e5e5;  
-  height: 123%;             /* light text default */
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  max-height: 100vh; /* Ensure it doesn't exceed viewport */
+  color: #e5e5e5;               /* light text default */
+  overflow: hidden; /* Prevent thread from creating layout scroll */
 }
 
 .threadEmpty {
   color: #a3a3a3;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 /* messages */
 .threadBody {
-  overflow: auto;
+  flex: 1;
+  overflow-y: auto;
   padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  
+  min-height: 0; /* Important: allows flex child to shrink */
+}
+
+/* Add scrollbar styling for messages area */
+.threadBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.threadBody::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.threadBody::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.threadBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .threadHeader{
@@ -139,6 +207,7 @@
   gap: 8px;
   padding-top: 8px;
   padding-bottom: 15px;
+  flex-shrink: 0; /* Don't shrink the composer */
 }
 .input {
   flex: 1;
@@ -162,7 +231,10 @@
   cursor: pointer;
   font-family: 'Work Sans', sans-serif;
 }
-.sendBtn:hover { background: #e5e5e5; }
+.sendBtn:hover { 
+  background: #333333; 
+  color: #ffffff;
+}
 
 /* MODAL STYLES - Add these for the popup */
 .modalBackdrop {
@@ -323,7 +395,6 @@
 
 /* reset native arrow and give room for our icon on the right */
 .select {
-  
   appearance: none;
   width: 100%;
   padding: 10px 42px 10px 12px;  /* right padding for arrow */
@@ -336,18 +407,14 @@
   cursor: pointer;
 }
 
-/* focus ring that doesn’t blur the arrow */
+/* focus ring that doesn't blur the arrow */
 .select:focus {
   outline: none;
   border-color: #111;            /* or your accent */
   box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
 }
 
-
 /* optional hover */
 .select:hover {
   border-color: #bdbdbd;
 }
-
-
-
