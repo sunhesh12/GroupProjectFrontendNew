@@ -6,6 +6,7 @@ import InputField from "@/components/input/view";
 import Button from "@/components/buttons/view";
 import Message from "@/components/message/view";
 import type { TopicCreateState } from "@/actions/types";
+import Spinner from "@/components/spinner/view";
 
 type TopicType = "assignment" | "lecture" | "lab";
 
@@ -113,7 +114,10 @@ export default function TopicForm({ moduleId }: TopicFormProps) {
         defaultChecked={true}
       />
       <div id="form-controls">
-        <Button type="submit">Add topic</Button>
+        <Button type="submit">
+          {isPending && <Spinner theme="light" width={15} height={15} />} Add
+          topic
+        </Button>
       </div>
     </form>
   );
