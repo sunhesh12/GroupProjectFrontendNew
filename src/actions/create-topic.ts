@@ -58,15 +58,28 @@ export async function createTopicAction(
   //     )
   // );
 
-  const rawFormData = Object.fromEntries(
-  Array.from(formData.entries()).map(([key, value]) =>
-    key === "is_visible"
-      ? [key, value === "true"]
-      : key === "deadline"
-      ? [key, new Date(value.toString()).toISOString()]
-      : [key, value]
-  )
+//   const rawFormData = Object.fromEntries(
+//   Array.from(formData.entries()).map(([key, value]) =>
+//     key === "is_visible"
+//       ? [key, value === "true"]
+//       : key === "deadline"
+//       ? [key, new Date(value.toString()).toISOString()]
+//       : [key, value]
+//   )
+// );
+
+const rawFormData = Object.fromEntries(
+  Array.from(formData.entries()).map(([key, value]) => {
+    if (key === "is_visible") {
+      return [key, value === "true"];
+    } else if (key === "deadline") {
+      return [key, new Date(value.toString()).toISOString()];
+    } else {
+      return [key, value];
+    }
+  })
 );
+
 
   rawFormData.id = session.id.toString();
 
