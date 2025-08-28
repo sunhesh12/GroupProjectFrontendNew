@@ -7,7 +7,7 @@ import Panel from "@/components/panel/view";
 import Timeline from "@/components/timeline/view";
 import TimelineItem from "@/components/timeline/timeline-item/view";
 import ModuleHeader from "./module-header";
-import ModuleToolbar from "@/components/module-toolbar/view";
+import ModuleToolbar from "./module-toolbar";
 import Announcements from "./announcements";
 import TopicToolbar from "./topic-toolbar";
 import ArchiveModule from "./archive";
