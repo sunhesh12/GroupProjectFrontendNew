@@ -46,17 +46,28 @@ export async function createTopicAction(
     };
   }
 
-  console.log("Form Data:", formData);
+  // console.log("Form Data:", formData);
+
+  // const rawFormData = Object.fromEntries(
+  //   formData
+  //     .entries()
+  //     .map(([key, value]) =>
+  //       key === "is_visible"
+  //         ? [key, value === "true" ? true : false]
+  //         : key === "deadline" ? [key, new Date(value.toString()).toISOString()] : [key, value] 
+  //     )
+  // );
 
   const rawFormData = Object.fromEntries(
-    formData
-      .entries()
-      .map(([key, value]) =>
-        key === "is_visible"
-          ? [key, value === "true" ? true : false]
-          : key === "deadline" ? [key, new Date(value.toString()).toISOString()] : [key, value] 
-      )
-  );
+  Array.from(formData.entries()).map(([key, value]) =>
+    key === "is_visible"
+      ? [key, value === "true"]
+      : key === "deadline"
+      ? [key, new Date(value.toString()).toISOString()]
+      : [key, value]
+  )
+);
+
   rawFormData.id = session.id.toString();
 
   const parsedForm = await topicCreateSchema.safeParseAsync(rawFormData);
