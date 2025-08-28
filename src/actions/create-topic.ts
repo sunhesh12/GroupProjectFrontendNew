@@ -12,6 +12,8 @@ export async function createTopicAction(
 ): Promise<TopicCreateState> {
   const session = await getSession();
 
+  console.log("Form data", formData);
+
   // user is unauthenticated
   if (!session) {
     return {
@@ -43,6 +45,8 @@ export async function createTopicAction(
       },
     };
   }
+
+  console.log("Form Data:", formData);
 
   const rawFormData = Object.fromEntries(
     formData
