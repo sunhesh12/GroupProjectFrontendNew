@@ -1,7 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import { useParams } from "next/navigation";
 
 export default function AddQuizQuestions() {
+  const params = useParams();
+  const moduleId = params?.moduleId; // will capture [moduleId] from your route
+
   const [questions, setQuestions] = useState([
     {
       question_number: "",
@@ -41,30 +45,19 @@ export default function AddQuizQuestions() {
       })),
     };
 
-    // Show all data in console
     console.log("Payload sending to backend:", JSON.stringify(payload, null, 2));
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/quiz/1/questions", {
+      const res = await fetch(`http://localhost:8000/api/v1/quiz/1/questions`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error("Failed to add questions");
 
       alert("Questions added successfully!");
-      setQuestions([
-        {
-          question_number: "",
-          question: "",
-          question_type: "",
-          answer: "",
-          options: "",
-        },
-      ]);
+      setQuestions([{ question_number: "", question: "", question_type: "", answer: "", options: "" }]);
     } catch (err: any) {
       console.error("Error occurred:", err);
       alert(err.message);
@@ -73,7 +66,9 @@ export default function AddQuizQuestions() {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Add Quiz Questions</h2>
+      {/* Show Module Number */}
+      <h1 className="text-2xl font-bold mb-4">Module {moduleId} - Add Quiz Questions</h1>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {questions.map((q, index) => (
           <div key={index} className="border p-4 rounded space-y-2">
