@@ -1,28 +1,26 @@
 import { cookies } from "next/headers";
 import { user } from "./backend";
-import type { Session } from "./types/backend";
+import type { Session, User } from "./types/backend";
 
-export async function getSession(): Promise<Session | null> {
-  // Checking if the user is authenticated (with cookie)
-  const cookieStore = await cookies();
+// A utility to get the current user session from the server (used in client components)
+export async function getClientSession() {
+  try {
+    const response = await fetch("/api/session", {
+      cache: "no-store",
+    });
 
-  if (cookieStore.has("session")) {
-    const sessionCookie = cookieStore.get("session")?.value;
-    if (sessionCookie) {
-      try {
-        const session = JSON.parse(sessionCookie) as Session;
-
-        // Validating the session with the user backend
-        const userObj = await user.get(session);
-
-        if (userObj) {
-          return session;
-        }
-      } catch (error) {
-        console.error("Error parsing session cookie:", error);
-      }
+    if (!response.ok) {
+      throw new Error("Failed to fetch session");
     }
-  }
 
-  return null; // No session found
+    const data = await response.json();
+    if (data.status === "success") {
+      return data.payload;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching session:", error);
+    return null;
+  }
 }

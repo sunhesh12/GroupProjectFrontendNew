@@ -1,6 +1,6 @@
 import SignInForm from "./sign-in-form";
 import { redirect } from "next/navigation";
-import { getSession } from "@/utils/auth";
+import { getSession } from "@/actions/get-session";
 
 export default async function SignIn() {
   const session = await getSession();

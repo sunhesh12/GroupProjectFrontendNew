@@ -3,33 +3,24 @@ import SearchBar from "./search-bar";
 import { redirect } from "next/navigation";
 import { user } from "@/utils/backend";
 import Link from "next/link";
-import { getSession } from "@/utils/auth";
+import { getSession } from "@/actions/get-session";
 import ModuleCard from "@/components/module-card/module-card";
 
 export default async function Modules() {
-  const session = await getSession();
-  console.log(session);
+  const currentUser = await getSession();
 
-  if (!session) {
+  if (!currentUser) {
     // If unauthenticated, redirect to signin
     redirect("/auth/signin");
   }
 
-  const userResponse = await user.get(session);
-
-  if (userResponse.status === 404 || !userResponse.payload) {
-    redirect("/auth/signin");
-  }
-
-  if (userResponse.status === 500) {
-    throw new Error("Internal server error while fetching the user");
-  }
-
+  // Fetching modules based on user role
   const modules =
-    userResponse.payload.role === "student"
-      ? await user.modules(session)
-      : await user.getTeachingModules(session);
+    currentUser.role === "student"
+      ? await user.modules(currentUser)
+      : await user.getTeachingModules(currentUser);
 
+  // Case for no module found
   if (!modules.payload) {
     return;
   }

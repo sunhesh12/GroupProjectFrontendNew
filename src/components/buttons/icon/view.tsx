@@ -10,13 +10,15 @@ import {
 interface IconButtonProps {
   icon: FontAwesomeIconProps["icon"];
   color?: string;
+  width?: number | string;
+  height?: number | string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function IconButton({ icon, color, onClick }: IconButtonProps) {
+export default function IconButton({ icon, color, onClick, width, height }: IconButtonProps) {
   return (
     <button className={styles.button} onClick={onClick}>
-      <FontAwesomeIcon icon={icon} width={20} height={20} size="lg" color={color} />
+      <FontAwesomeIcon icon={icon} width={width} height={height} size="lg" color={color} />
     </button>
   );
 }

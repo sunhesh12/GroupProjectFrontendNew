@@ -1,58 +1,73 @@
-  
-  .cardImageContainer {
-    position: relative;
-  }
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem; /* 20px */
+  border-radius: 1.5rem; /* 24px */
+  background: linear-gradient(to right, #ffffff, #f9f9f9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+  /* Add this line for the border */
+  border: 1px solid #e5e7eb; /* A light gray border */
+}
 
-  .invalidCardContent {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px;
-    gap: 20px;
-  }
+.card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
 
-  .fileInfo {
-    display: flex;
-    flex-direction: column;
-    gap:5px;
-  }
+.info {
+  display: flex;
+  flex-direction: column;
+}
 
-  .fileInfo p {
-    margin: 0;
-  }
+.title {
+  font-weight: 700;
+  font-size: 1rem; /* 18px */
+  color: #1f2937; /* gray-800 */
+  margin: 0;
+}
 
-  .fileInfo span {
-    font-size: 0.8rem;
-    color: #888;
-  }
-  
-  .cardImage {
-    width: 100%;
-    object-fit: cover;
-  }
-  
-  .cardOverlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .playButton {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: black;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-  }
-  
-  .cardContent {
-    padding: 1rem;
-  }
-  
-  .cardTitle {
-    font-weight: 500;
-  }
+.type {
+  font-size: 0.875rem; /* 14px */
+  color: #6b7280; /* gray-500 */
+  margin-top: 0.25rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem; /* 12px */
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem; /* 16px */
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.linkButton {
+  background-color: #3b82f6; /* blue-500 */
+}
+
+.linkButton:hover {
+  background-color: #2563eb; /* blue-600 */
+}
+
+.downloadButton {
+  background-color: #10b981; /* green-500 */
+}
+
+.downloadButton:hover {
+  background-color: #059669; /* green-600 */
+}

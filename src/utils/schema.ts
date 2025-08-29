@@ -72,6 +72,14 @@ export const signInSchema = z.object({
     .nonempty({ message: "Password is required" }),
 });
 
+export const announcementCreateSchema = z.object({
+  userId: z.string(),
+  topic: z.string().min(1, "Topic is required"),
+  description: z.string().min(1, "Description is required"),
+  is_visible: z.boolean(),
+});
+
+
 export const topicCreateSchema = z.object({
   id: z
     .string(),

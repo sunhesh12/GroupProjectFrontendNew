@@ -23,6 +23,7 @@ export type Module = {
   module_name: string;
   credit_value: number;
   practical_exam_count: number;
+  description: string;
   writing_exam_count: number;
   created_at: string; // ISO date string
   updated_at: string; // ISO date string
@@ -52,6 +53,7 @@ export interface User {
   profile_picture: string;
   password: string;
   role: string;
+  token: string;
   status: string;
   course_id: string;
   updated_at: string;
@@ -70,10 +72,48 @@ export interface Topic {
   is_visible: string;
   is_complete: string;
   deadline: string | null; // ISO date string or null if no deadline
-  created_at: string;
-  updated_at: string;
-  lecture_materials: LectureMaterial[];
+  created_at?: string;
+  updated_at?: string;
+  lecture_materials?: LectureMaterial[];
 }
+
+export type Activity = {
+  id: number;
+  activity_name: string;
+  type: string; // e.g., "assignment" | "quiz" | "lecture"
+  start_date: string | null;
+  start_time: string | null;
+  end_date: string | null;
+  end_time: string | null;
+  instructions: string | null;
+  question_count: number | null;
+  module_id: number;
+
+  // relationships
+  module?: {
+    id: number;
+    module_name: string;
+    [key: string]: any;
+  };
+  questions?: {
+    id: number;
+    question_text: string;
+    [key: string]: any;
+  }[];
+  participants?: {
+    id: number;
+    name: string;
+    email: string;
+    pivot: {
+      submission: string | null;
+      marks: number | null;
+      is_done: boolean;
+      created_at: string;
+      updated_at: string;
+    };
+  }[];
+};
+
 
 export interface TopicCreate {
   title: string;
@@ -83,28 +123,34 @@ export interface TopicCreate {
   deadline?: string | null; // ISO date string or null if no deadline
 }
 
-export interface PortalUser {
-  id: string;
-  Full_Name: string;
-  Age: string;
-  Email: string;
-  Mobile_No: string;
-  Address: string;
-  Profile_Picture: string | null;
-  Password: string;
-  updated_at: string;
-  created_at: string;
-  Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
-  Status: number; // maybe use enum for 0 = inactive, 1 = active
-  course_id: string | null;
+export interface AnnouncementCreate {
+  topic: string;
+  description: string;
 }
+
+// export interface PortalUser {
+//   id: string;
+//   Full_Name: string;
+//   Age: string;
+//   Email: string;
+//   Mobile_No: string;
+//   Address: string;
+//   Profile_Picture: string | null;
+//   Password: string;
+//   updated_at: string;
+//   created_at: string;
+//   Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
+//   Status: number; // maybe use enum for 0 = inactive, 1 = active
+//   course_id: string | null;
+// }
 
 export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executable' | 'zip' | 'image' | 'website' | 'unknown' | 'error' | 'pdf';
 
-interface LectureMaterial {
+export interface LectureMaterial {
   id: number;
   topic_id: number;
-  material_type: MaterialTypes;
+  file_path: string;
+  material_type: MaterialTypes; 
   material_title: string;
   material_url: string;
   created_at: string; // ISO 8601 timestamp format

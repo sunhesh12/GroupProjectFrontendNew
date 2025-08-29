@@ -5,14 +5,11 @@ import InputField from "@/components/input/view";
 import Button from "@/components/buttons/view";
 import Message from "@/components/message/view";
 import type { MaterialCreateState } from "@/actions/types";
+import Spinner from "@/components/spinner/view";
 
 const initialState: MaterialCreateState = {
   status: "pending",
   internalErrors: null,
-  material_type: {
-    value: "document",
-    errors: null, 
-  },
   material_title: {
     value: "",
     errors: null,
@@ -39,7 +36,7 @@ export default function MaterialForm({ topicId }: MaterialFormProps) {
       {state.status === "success" && (
         <Message type="success" message="Material submitted successfully" />
       )}
-      {state.status === "failiure" && (
+      {state.status === "failure" && (
         <Message
           type="error"
           message={
@@ -48,27 +45,7 @@ export default function MaterialForm({ topicId }: MaterialFormProps) {
           }
         />
       )}
-
-      <InputField
-        name="material_type"
-        type="select"
-        defaultValue={state.material_type.value ?? "document"}
-        error={state.material_type.errors?.join(" ")}
-        options={[
-          { value: "document", label: "Document" },
-          { value: "video", label: "Video" },
-          { value: "audio", label: "Audio" },
-          {value: "link", label: "Link" },
-          { value: "executable", label: "Executable" },
-            { value: "zip", label: "Zip" },
-            { value: "image", label: "Image" },
-            { value: "website", label: "Website" },
-            { value: "unknown", label: "Unknown" },
-            { value: "pdf", label: "PDF" },
-        ]}
-        //onChange={(e) => setTypeSelection(e.target.value)}
-      />
-
+      <InputField name="file" type="file" label="Add your lecture material" />
       <InputField
         name="material_title"
         type="text"
@@ -82,9 +59,9 @@ export default function MaterialForm({ topicId }: MaterialFormProps) {
         label="Material URL"
         error={state.material_url.errors?.join(" ")}
       />
-
       <div id="form-controls">
         <Button type="submit">
+          {isPending && <Spinner theme="light" width={15} height={15} />}
           Add Material
         </Button>
       </div>
