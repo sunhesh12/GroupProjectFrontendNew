@@ -1,15 +1,6 @@
 import { getSession } from "@/actions/get-session";
 import { notFound, redirect } from "next/navigation";
-import { modules, user } from "@/utils/backend";
-import styles from "./page.module.css";
-import { faBook, faVideo } from "@fortawesome/free-solid-svg-icons";
-import Panel from "@/components/panel/view";
-import Timeline from "@/components/timeline/view";
-import TimelineItem from "@/components/timeline/timeline-item/view";
-import ModuleHeader from "./module-header";
-import ModuleToolbar from "./module-toolbar";
-import Announcements from "./announcements";
-import TopicToolbar from "./topic-toolbar";
+import { modules } from "@/utils/backend";
 import ArchiveModule from "./archive";
 import ModuleContent from "./content";
 interface ModuleProps {

@@ -72,9 +72,9 @@ export interface Topic {
   is_visible: string;
   is_complete: string;
   deadline: string | null; // ISO date string or null if no deadline
-  created_at: string;
-  updated_at: string;
-  lecture_materials: LectureMaterial[];
+  created_at?: string;
+  updated_at?: string;
+  lecture_materials?: LectureMaterial[];
 }
 
 export interface TopicCreate {

@@ -1,12 +1,14 @@
 "use client";
-import { useState } from "react";
-import { createTopicAction } from "@/actions/create-topic";
+import { useEffect, useState } from "react";
+import createTopicAction from "@/actions/create-topic";
 import { useActionState } from "react";
 import InputField from "@/components/input/view";
 import Button from "@/components/buttons/view";
 import Message from "@/components/message/view";
 import type { TopicCreateState } from "@/actions/types";
 import Spinner from "@/components/spinner/view";
+import { Topic } from "@/utils/types/backend";
+import { create } from "domain";
 
 type TopicType = "assignment" | "lecture" | "lab";
 
@@ -41,14 +43,32 @@ const initialState: TopicCreateState = {
 
 interface TopicFormProps {
   moduleId: string;
+  topicUpdate: (action: Topic) => void;
 }
 
-export default function TopicForm({ moduleId }: TopicFormProps) {
+export default function TopicForm({ moduleId, topicUpdate }: TopicFormProps) {
   const [state, formAction, isPending] = useActionState(
     createTopicAction.bind(null, moduleId),
     initialState
   );
   const [selection, setSelection] = useState<TopicType>("lecture");
+
+  useEffect(() => {
+    if(state.status === "success" && state.id.value) {
+      const newTopic: Topic = {
+        id: state.id.value,
+        module_id: moduleId,
+        title: state.title.value || "",
+        description: state.description.value || "",
+        type: state.type.value || "lecture",
+        is_visible: state.is_visible.value === "true" ? "true" : "false",
+        is_complete: "false",
+        deadline: state.deadline?.value || null,
+      };
+      topicUpdate(newTopic);
+    }
+  }, [state]);
+
   return (
     <form action={formAction}>
       {state.status === "success" && (

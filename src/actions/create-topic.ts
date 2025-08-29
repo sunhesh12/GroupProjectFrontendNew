@@ -5,7 +5,7 @@ import { topicCreateSchema } from "@/utils/schema";
 import { modules } from "@/utils/backend";
 import { getSession } from "@/actions/get-session";
 
-export async function createTopicAction(
+export default async function createTopicAction(
   moduleId: string,
   previousState: TopicCreateState,
   formData: FormData

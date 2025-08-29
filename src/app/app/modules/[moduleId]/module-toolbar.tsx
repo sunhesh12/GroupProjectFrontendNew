@@ -16,12 +16,14 @@ import MessageBox from "../../../../components/messagebox/view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TopicForm from "@/app/app/modules/[moduleId]/topic-form";
 import archiveModule from "@/actions/archive-module";
+import { Topic } from "@/utils/types/backend";
 
 interface TopicToolbarProps {
   moduleId: string;
+  topicUpdate: (action: Topic) => void;
 }
 
-export default function TopicToolbar({moduleId}: TopicToolbarProps) {
+export default function TopicToolbar({moduleId, topicUpdate}: TopicToolbarProps) {
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [topicVisible, setTopicVisible] = useState(false);
   const [announcementVisible, setAnnouncementVisible] = useState(false);
@@ -44,7 +46,7 @@ export default function TopicToolbar({moduleId}: TopicToolbarProps) {
           Add a new topic to provide necessary guidance and lecture materials
           for a module lesson
         </p>
-        <TopicForm moduleId={moduleId} />
+        <TopicForm topicUpdate={topicUpdate} moduleId={moduleId} />
       </MessageBox>
       <MessageBox
         visible={announcementVisible}
