@@ -1,3 +1,4 @@
+// 'use client'
 import { redirect } from "next/navigation";
 import { user } from "@/utils/backend";
 import Greeting from "./greeting";
@@ -8,6 +9,8 @@ import ModuleCard from "@/components/module-card/module-card";
 import { Module } from "@/utils/types/backend";
 import Link from "next/link";
 import { getSession } from "@/actions/get-session";
+import { fetchQuizQuestions } from "@/utils/quizbackend";
+
 interface ModuleListProps {
   filteredModules: Module[];
   handleCourseClick?: (course: any) => void;
@@ -25,22 +28,71 @@ export default async function DashboardPage({
 
   console.log(currentUser);
 
+  let quizAnswerList = [];
+  try {
+    quizAnswerList = await fetchQuizQuestions();
+    console.log("Fetched quiz data:", quizAnswerList);
+  } catch (error) {
+    console.error("Error fetching quiz data:", error);
+  }
+
+  const today = new Date();
+  const oneWeekFromNow = new Date();
+  oneWeekFromNow.setDate(today.getDate() + 7);
+
+  // Filter only items with deadlines within a week
+  const upcomingQuizzes = quizAnswerList.filter((item) => {
+    const deadlineDate = new Date(item.deadline);
+    return deadlineDate >= today && deadlineDate <= oneWeekFromNow;
+  });
+
+  // const deadlineDate = new Date(upcomingQuizzes.deadline);
+  // const formattedDeadline = deadlineDate.toLocaleDateString("en-US", {
+  //   weekday: "short",   // e.g., Mon
+  //   year: "numeric",    // e.g., 2025
+  //   month: "short",     // e.g., Aug
+  //   day: "numeric"      // e.g., 29
+  // });
+
   return (
     <main className={style.page}>
       <header className={style.dashboardHeader}>
         <Greeting name={currentUser.full_name} />
         {/* <Role role={currentUser.payload.role} /> */}
       </header>
-      <article>
-        {/* <h1>Academic Performance</h1> */}
-        <div className={style.activityListAD}>
-          <div className={style.activityContentTextAD}>
-            <div><h1>Assignment Deadline soon</h1></div>
-            <div><p>Complete these urgent assignments before their deadline ends</p></div>
+
+      <div>
+        {/* <h1>Quizzes with Deadlines This Week</h1> */}
+        {/* <ul> */}
+        {upcomingQuizzes.map((item, idx) => (
+          <div>
+            {/* <li key={idx}>{item.deadline}</li> */}
+            <article>
+              {/* <h1>Academic Performance</h1> */}
+              <div className={style.activityListAD}>
+                <div className={style.activityContentTextAD}>
+                  <div>
+                    <h1>Assignment Deadline soon</h1>
+                  </div>
+                  <div>
+                    <p>
+                      {item.description} is due on {item.deadline.slice(0, 10)}
+                    </p>
+                  </div>
+                </div>
+                <div className={style.activityContentLinkAD}>
+                  <Link href="/app/modules/1/quiz/1">Go to Activity</Link>
+                </div>
+              </div>
+            </article>
           </div>
-          <div className={style.activityContentLinkAD}><Link href="#">Go to Activity</Link></div>
-        </div>
-      </article>
+        ))}
+        {/* </ul> */}
+        {upcomingQuizzes.length === 0 && (
+          <p>No upcoming deadlines this week.</p>
+        )}
+      </div>
+
       <br></br>
       <Menu role={currentUser.role} />
       <article>
@@ -69,32 +121,40 @@ export default async function DashboardPage({
           </div>
 
           <div className={style.activityContentContainer}>
-            <div className={style.activityContent}>
-              <div className={style.activityContentIcon}>
-                <Image
-                  src="/icons/checklist.png"
-                  alt="Activity Image"
-                  width={50}
-                  height={50}
-                />
-              </div>
-              <div className={style.activityContentText}>
-                <h3>Task 01</h3>
-                <p>09.30 A.M.</p>
-              </div>
-              <div className={style.activityContentLink}>
-                <Image
-                  src="/icons/link.svg"
-                  alt="Link Icon"
-                  width={50}
-                  height={50}
-                />
-              </div>
-            </div>
+            {quizAnswerList.map((item, idx) => (
+              // <li key={idx}>{item.description}</li>
 
-            {/* Placeholders */}
-            <div className={style.activityContent}></div>
-            <div className={style.activityContent}></div>
+              <div className={style.activityContent}>
+                <div className={style.activityContentIcon}>
+                  <Image
+                    src="/icons/checklist.png"
+                    alt="Activity Image"
+                    width={50}
+                    height={50}
+                  />
+                </div>
+                <div className={style.activityContentText}>
+                  <h3>{item.type}</h3>
+                  <p>{item.deadline.slice(0, 10)}</p>
+                </div>
+
+                <div className={style.activityContentLink}>
+                  <Link
+                    href="/app/modules/1/quiz/{item.id}"
+                    className={style.activityContentLinkItem}
+                  >
+                    <Image
+                      src="/icons/link.svg"
+                      alt="Link Icon"
+                      width={50}
+                      height={50}
+                    />
+                  </Link>
+                </div>
+              </div>
+            ))}
+
+            {/* </div> */}
           </div>
         </div>
       </article>
@@ -103,7 +163,8 @@ export default async function DashboardPage({
         <h1>Frequently Accessed Courses</h1>
         <div className={style.activityListFAC}>
           {filteredModules && filteredModules.length > 0 ? (
-            filteredModules?.map((module) => (
+            // Take only last 5 modules
+            filteredModules.slice(-5).map((module) => (
               <div key={module.id} className={style.moduleCardWrapper}>
                 <ModuleCard
                   id={module.id}
@@ -132,19 +193,32 @@ export default async function DashboardPage({
         <h1>Academic Performance</h1>
         <div className={style.activityListAP}>
           <div className={style.activityContentIconAP}>
-                            <Image
-                  src="/icons/checklist.png"
-                  alt="Activity Image"
-                  width={50}
-                  height={50}
-                />
+            <Image
+              src="/icons/checklist.png"
+              alt="Activity Image"
+              width={50}
+              height={50}
+            />
           </div>
           <div className={style.activityContentTextAP}>
-            <div><h1>Last Semester was Great</h1></div>
-            <div><p>You scored a GPA of <span><b>3.5</b></span></p></div>
+            <div>
+              <h1>Last Semester was Great</h1>
+            </div>
+            <div>
+              <p>
+                You scored a GPA of{" "}
+                <span>
+                  <b>3.5</b>
+                </span>
+              </p>
+            </div>
           </div>
-          <div className={style.activityContentLinkAP}><Link href="#">Improve my GPA</Link></div>
-          <div className={style.activityContentLinkAP}><Link href="#">See examination results</Link></div>
+          <div className={style.activityContentLinkAP}>
+            <Link href="#">Improve my GPA</Link>
+          </div>
+          <div className={style.activityContentLinkAP}>
+            <Link href="#">See examination results</Link>
+          </div>
         </div>
       </article>
     </main>
