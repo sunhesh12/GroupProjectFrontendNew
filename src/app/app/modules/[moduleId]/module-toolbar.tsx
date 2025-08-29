@@ -10,20 +10,23 @@ import {
   faServer,
   faGear,
   faBook,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import Card from "../../../../components/card/view";
 import MessageBox from "../../../../components/messagebox/view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TopicForm from "@/app/app/modules/[moduleId]/topic-form";
 import archiveModule from "@/actions/archive-module";
-import { Topic } from "@/utils/types/backend";
+import { Announcement, Topic } from "@/utils/types/backend";
+import AnnouncementForm from "./announcement-form";
 
 interface TopicToolbarProps {
   moduleId: string;
   topicUpdate: (action: Topic) => void;
+  announcementUpdate: (action: Announcement) => void;
 }
 
-export default function TopicToolbar({moduleId, topicUpdate}: TopicToolbarProps) {
+export default function TopicToolbar({moduleId, topicUpdate, announcementUpdate}: TopicToolbarProps) {
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [topicVisible, setTopicVisible] = useState(false);
   const [announcementVisible, setAnnouncementVisible] = useState(false);
@@ -52,7 +55,13 @@ export default function TopicToolbar({moduleId, topicUpdate}: TopicToolbarProps)
         visible={announcementVisible}
         closeAction={() => setAnnouncementVisible(false)}
       >
-        <p>Add new topics</p>
+        <h2>
+          <FontAwesomeIcon icon={faBell} /> Add new Announcement
+        </h2>
+        <p>
+          Add any important announcements or updates related to this module
+        </p>
+        <AnnouncementForm moduleId={moduleId} announcementUpdate={announcementUpdate}  />
       </MessageBox>
       <h3 className={styles.toolbarHeader}>Module toolbar</h3>
       <p>
@@ -76,15 +85,6 @@ export default function TopicToolbar({moduleId, topicUpdate}: TopicToolbarProps)
         >
           Post Announcement
         </NobgButton>
-
-        <NobgButton
-          icon={faCode}
-          color="black"
-          onClick={() => handleButtonClick("programming")}
-        >
-          Create assignment
-        </NobgButton>
-
         <Button
           icon={faServer}
           backgroundColor="#B22222"
@@ -92,14 +92,6 @@ export default function TopicToolbar({moduleId, topicUpdate}: TopicToolbarProps)
         >
           Archive course
         </Button>
-
-        <NobgButton
-          icon={faGear}
-          color="black"
-          onClick={() => handleButtonClick("other")}
-        >
-          Course settings
-        </NobgButton>
       </div>
     </Card>
   );

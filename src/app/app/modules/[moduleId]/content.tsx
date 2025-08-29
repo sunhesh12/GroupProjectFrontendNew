@@ -11,8 +11,7 @@ import ModuleHeader from "./module-header";
 import ModuleToolbar from "./module-toolbar";
 import Announcements from "./announcements";
 import TopicToolbar from "./topic-toolbar";
-import { FullModule, User } from "@/utils/types/backend";
-import { useOptimistic } from "react";
+import { Announcement, FullModule, User } from "@/utils/types/backend";
 import { Topic } from "@/utils/types/backend";
 import { useState } from "react";
 
@@ -32,6 +31,10 @@ export default function ModuleContent({
     courseModule.topics
   );
 
+  const [optimisticAnnouncements, setOptimisticAnnouncements] = useState<
+    Announcement[]
+  >(courseModule.announcements || []);
+
   return (
     <main className={styles.main}>
       <ModuleHeader
@@ -46,13 +49,24 @@ export default function ModuleContent({
             topicUpdate={(topic) =>
               setOptimisticTopics((prev) => [...prev, topic])
             }
+            announcementUpdate={(announcement) =>
+              setOptimisticAnnouncements((prev) => [...prev, announcement])
+            }
             moduleId={moduleId}
           />
         )}
-        <Announcements />
+        <Announcements announcements={optimisticAnnouncements} />
+        {/* {assignmentsPayload.map((assignment: any) => (
+          <Panel key={assignment.id} header={assignment.title} icon={faBook}>
+            <p>{assignment.description}</p>
+            <p>
+              Due Date: {new Date(assignment.due_date).toLocaleDateString()}
+            </p>
+          </Panel>
+        ))} */}
         <ul id="topics" className={styles.topics}>
-          {optimisticTopics.map((topic) => (
-            <li key={topic.id}>
+          {optimisticTopics.map((topic, index) => (
+            <li key={index}>
               <Panel
                 header={topic.title}
                 icon={topic.type === "lecture" ? faBook : faVideo}
@@ -66,14 +80,14 @@ export default function ModuleContent({
                   {topic.lecture_materials?.length === 0 && (
                     <p>No materials have been added yet.</p>
                   )}
-                  {topic.lecture_materials &&
+                  {topic.type === "assignment" &&
+                    topic.lecture_materials &&
                     topic.lecture_materials?.length > 0 && (
                       <Timeline>
                         {topic.lecture_materials?.map((material, index) => (
                           <TimelineItem
                             key={index}
-                            link={material.material_url}
-                            title={material.material_title}
+                            lectureMaterial={material}
                           />
                         ))}
                       </Timeline>

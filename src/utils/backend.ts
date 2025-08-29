@@ -7,10 +7,13 @@ import type {
   FullModule,
   TopicCreate,
   MaterialCreate,
+  Announcement,
+  AnnouncementCreate,
+  Activity,
 } from "@/utils/types/backend";
 import { Session, Topic } from "@/utils/types/backend";
 
-export const url = process.env.BACKEND_URL;
+export const url = "http://127.0.0.1:8000";
 
 const handleResponse = async <T>(
   request: Response
@@ -130,6 +133,14 @@ const modules = {
         "Content-Type": "application/json",
       },
     }),
+    createAssignmentForTopic: (moduleId: string, topicId: string, assignmentData: Activity) =>
+    fetchAPI<Activity>(`/api/v1/modules/${moduleId}/topics/${topicId}/assignment`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
 
   unarchive: (moduleId: string) =>
     fetchAPI<null>(`/api/v1/modules/${moduleId}/unarchive`, {
@@ -137,6 +148,19 @@ const modules = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+      },
+    }),
+
+  createAnnouncement: (
+    moduleId: string,
+    announcementData: AnnouncementCreate
+  ) =>
+    fetchAPI<Announcement>(`/api/v1/modules/${moduleId}/announcements`, {
+      method: "POST",
+      body: JSON.stringify(announcementData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
     }),
 };
@@ -170,6 +194,32 @@ const topics = {
         "Content-Type": "application/json",
       },
     }),
+  // 🔹 File upload (multipart/form-data)
+  uploadMaterial: (topicId: string, formData: FormData) =>
+    fetchAPI<Topic>(`/api/v1/topics/${topicId}/materials/upload`, {
+      method: "POST",
+      body: formData, // no headers → browser sets multipart automatically
+    }),
+};
+
+const assignments = {
+  create: (moduleId: string, assignment: any) =>
+    fetchAPI<Activity>(`/api/v1/modules/${moduleId}/activities/assignment`, {
+      method: "POST",
+      body: JSON.stringify(assignment),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
+
+  // 🔹 fetch all assignments in a module
+  getByModule: (moduleId: string) =>
+    fetchAPI<Activity[]>(`/api/v1/modules/${moduleId}/activities/assignments`),
+
+  // 🔹 fetch a specific assignment
+  get: (assignmentId: string) =>
+    fetchAPI<Activity>(`/api/v1/activities/assignment/${assignmentId}`),
 };
 
 const courses = {
@@ -177,4 +227,4 @@ const courses = {
     fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`),
 };
 
-export { user, modules, courses, topics };
+export { user, modules, courses, topics, assignments };

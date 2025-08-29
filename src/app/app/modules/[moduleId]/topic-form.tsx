@@ -8,7 +8,6 @@ import Message from "@/components/message/view";
 import type { TopicCreateState } from "@/actions/types";
 import Spinner from "@/components/spinner/view";
 import { Topic } from "@/utils/types/backend";
-import { create } from "domain";
 
 type TopicType = "assignment" | "lecture" | "lab";
 
@@ -56,7 +55,7 @@ export default function TopicForm({ moduleId, topicUpdate }: TopicFormProps) {
   useEffect(() => {
     if(state.status === "success" && state.id.value) {
       const newTopic: Topic = {
-        id: state.id.value,
+        id: crypto.randomUUID(),
         module_id: moduleId,
         title: state.title.value || "",
         description: state.description.value || "",

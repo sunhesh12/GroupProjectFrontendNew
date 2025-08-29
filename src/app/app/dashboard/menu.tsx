@@ -34,26 +34,26 @@ export default function Menu({ role }: MenuProps) {
         icon: faGraduationCap,
         title: "Manage resources",
         caption: "Create or manage new courses for your student",
-        link: "#",
+        link: "/app/admin/manage/modules",
       },
       {
         icon: faPlus,
-        title: "Manage modules",
+        title: "Manage Lecturers",
         caption: "Create or manage a module for a specific course",
-        link: "#",
+        link: "/app/admin/manage/lecturers",
       },
       {
         icon: faUser,
-        title: "Manage users",
+        title: "Manage students",
         caption: "Manage all the portal users in the LMS",
-        link: "#",
+        link: "/app/admin/manage/students",
       },
-      {
-        icon: faAward,
-        title: "Manage examinations",
-        caption: "Release the semester results for a specific course",
-        link: "#",
-      },
+      // {
+      //   icon: faAward,
+      //   title: "Manage examinations",
+      //   caption: "Release the semester results for a specific course",
+      //   link: "/",
+      // },
     ];
   }
 

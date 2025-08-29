@@ -77,12 +77,55 @@ export interface Topic {
   lecture_materials?: LectureMaterial[];
 }
 
+export type Activity = {
+  id: number;
+  activity_name: string;
+  type: string; // e.g., "assignment" | "quiz" | "lecture"
+  start_date: string | null;
+  start_time: string | null;
+  end_date: string | null;
+  end_time: string | null;
+  instructions: string | null;
+  question_count: number | null;
+  module_id: number;
+
+  // relationships
+  module?: {
+    id: number;
+    module_name: string;
+    [key: string]: any;
+  };
+  questions?: {
+    id: number;
+    question_text: string;
+    [key: string]: any;
+  }[];
+  participants?: {
+    id: number;
+    name: string;
+    email: string;
+    pivot: {
+      submission: string | null;
+      marks: number | null;
+      is_done: boolean;
+      created_at: string;
+      updated_at: string;
+    };
+  }[];
+};
+
+
 export interface TopicCreate {
   title: string;
   description: string;
   type: string;
   is_visible: boolean;
   deadline?: string | null; // ISO date string or null if no deadline
+}
+
+export interface AnnouncementCreate {
+  topic: string;
+  description: string;
 }
 
 // export interface PortalUser {
@@ -103,10 +146,11 @@ export interface TopicCreate {
 
 export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executable' | 'zip' | 'image' | 'website' | 'unknown' | 'error' | 'pdf';
 
-interface LectureMaterial {
+export interface LectureMaterial {
   id: number;
   topic_id: number;
-  material_type: MaterialTypes;
+  file_path: string;
+  material_type: MaterialTypes; 
   material_title: string;
   material_url: string;
   created_at: string; // ISO 8601 timestamp format

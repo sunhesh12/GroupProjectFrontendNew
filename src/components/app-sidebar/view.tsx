@@ -129,14 +129,6 @@ export default function AppSidebar({
             </SidebarLink>
           </li>
           <div id="profile-data" className={styles.profileContainer}>
-            <SidebarLink
-              icon="/icons/gear-solid.svg"
-              alt="An icon of a cog wheel"
-              href="/app/settings"
-              expanded={expanded}
-            >
-              Settings
-            </SidebarLink>
             <div className={styles.profile}>
               <div id="profile-pic">
                 {sessionMenu && (

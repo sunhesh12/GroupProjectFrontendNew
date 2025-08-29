@@ -1,6 +1,6 @@
 import { getSession } from "@/actions/get-session";
 import { notFound, redirect } from "next/navigation";
-import { modules } from "@/utils/backend";
+import { assignments, modules } from "@/utils/backend";
 import ArchiveModule from "./archive";
 import ModuleContent from "./content";
 interface ModuleProps {
@@ -9,6 +9,7 @@ interface ModuleProps {
 
 export default async function Module({ params }: ModuleProps) {
   const currentUser = await getSession();
+  
 
   // Unauthenticated
   if (!currentUser) {
@@ -23,6 +24,7 @@ export default async function Module({ params }: ModuleProps) {
   }
 
   const moduleResponse = await modules.get(moduleId);
+  //const assignmentResponse = await assignments.getByModule(moduleId);
 
   // No module found for given id
   if (moduleResponse.status === 404 || !moduleResponse.payload) {
@@ -40,6 +42,7 @@ export default async function Module({ params }: ModuleProps) {
   }
 
   const courseModule = moduleResponse.payload;
+  //const assignmentsPayload = assignmentResponse.payload;
 
   // Handling empty module response
   if (!courseModule) {

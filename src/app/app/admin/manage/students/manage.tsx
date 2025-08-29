@@ -1,14 +1,14 @@
 "use client";
 
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import type { User } from "@/utils/types/backend";
 import { Table } from "@/components/table/view";
 import type { TableRowType } from "@/components/table/view";
-import { useAppControls } from "@/hooks/use-app-controls";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import UserUpdateForm from "./student-update-form";
 import UserCreateForm from "./student-create-form";
 import NobgButton from "@/components/buttons/nobg/view";
+import { table } from "console";
 
 // TODO: Connect backend
 
@@ -112,8 +112,16 @@ function reducer(
 }
 
 export default function Manage({ users }: ManageProps) {
-  const { openMessageBox } = useAppControls();
-  // Has expensive computation
+  const [userFormVisible, setUserFormVisible] = useState(false);
+  const [userUpdateFormVisible, setUserUpdateFormVisible] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  const updateUserFormVisible = (visible: boolean, tableRow: any) => {
+    setUserUpdateFormVisible(visible);
+    setUser(tableRow);
+
+  }
+   // Has expensive computation
   const [state, dispatch] = useReducer<Reducer, User[]>(
     reducer,
     users,
@@ -122,13 +130,19 @@ export default function Manage({ users }: ManageProps) {
   // Don't add any executions
   return (
     <div id="usersManage">
+      {userFormVisible && (
+        <UserCreateForm
+        />
+      )}
+      {userUpdateFormVisible && (
+        <UserUpdateForm
+          tableRow={user}
+        />
+      )}
       <NobgButton
         icon={faPlus}
         onClick={() => {
-          openMessageBox(
-            <UserCreateForm
-            />
-          );
+          setUserFormVisible(true);
         }}
       >
         Create new student
@@ -154,11 +168,7 @@ export default function Manage({ users }: ManageProps) {
           { name: "Updated at", type: "disabled", inputName: "updated_at" },
         ]}
         rowAction={(tableRow: TableRowType<User>) => {
-          openMessageBox(
-            <UserUpdateForm
-              tableRow={tableRow}
-            />
-          );
+          updateUserFormVisible(true, tableRow);
         }}
       />
     </div>

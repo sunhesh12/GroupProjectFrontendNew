@@ -13,6 +13,7 @@ type Option = {
 };
 
 type InputFieldProps = {
+  value?: any;
   label?: string;
   placeholder?: string;
   type: "email" | "text" | "password" | "tel" | "number" | "select" | "file" | "textarea" | "date" | "checkbox";

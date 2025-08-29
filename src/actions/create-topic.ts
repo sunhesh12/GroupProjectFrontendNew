@@ -2,8 +2,9 @@
 
 import { TopicCreateState } from "./types";
 import { topicCreateSchema } from "@/utils/schema";
-import { modules } from "@/utils/backend";
+import { assignments, modules } from "@/utils/backend";
 import { getSession } from "@/actions/get-session";
+import { start } from "repl";
 
 export default async function createTopicAction(
   moduleId: string,
@@ -124,6 +125,72 @@ const rawFormData = Object.fromEntries(
       moduleId,
       parsedForm.data
     );
+
+    if(parsedForm.data.type === "assignment") {
+      const today = new Date();
+
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+      const dd = String(today.getDate()).padStart(2, "0");
+
+      const formattedToday = `${yyyy}-${mm}-${dd}`;
+
+
+      const today2 = new Date(parsedForm.data.deadline ?? "");
+
+      const yyyy2 = today2.getFullYear();
+      const mm2 = String(today2.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+      const dd2 = String(today2.getDate()).padStart(2, "0");
+
+      const formattedToday2 = `${yyyy2}-${mm2}-${dd2}`;
+
+      console.log("Creating assignment for the topic");
+      const assignmentCreateResponse = await assignments.create(moduleId, {
+        activity_name: parsedForm.data.title,
+        type: "assignment",
+        description: parsedForm.data.description,
+        start_date: formattedToday,
+        end_date: formattedToday2,
+      });
+
+      console.log("Assignment create response:", assignmentCreateResponse);
+
+      if (!assignmentCreateResponse.success) {
+      return {
+        status: "failiure",
+        internalErrors: ["Coludn't create the topic due to server error"],
+        id: {
+          value: rawFormData.id ? rawFormData.id.toString() : "",
+          errors: [],
+        },
+        type: {
+          value: rawFormData.type ? rawFormData.type.toString() : "",
+          errors: [],
+        },
+        description: {
+          value: rawFormData.description
+            ? rawFormData.description.toString()
+            : "",
+          errors: [],
+        },
+        title: {
+          value: rawFormData.title ? rawFormData.title.toString() : "",
+          errors: [],
+        },
+        deadline: {
+          value: rawFormData.deadline ? rawFormData.deadline.toString() : "",
+          errors: [],
+        },
+        is_visible: {
+          value: rawFormData.is_visible
+            ? rawFormData.is_visible.toString()
+            : "",
+          errors: [],
+        },
+      };
+    }
+    }
+
     console.log("Topic create response:", topicCreateResponse);
 
     if (!topicCreateResponse.success) {

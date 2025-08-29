@@ -13,6 +13,23 @@ export interface SignInState {
     }
 }
 
+export type AnnouncementCreateState = {
+  status: "success" | "pending" | "failure";
+  internalErrors: string[] | null;
+  topic: {
+    value: string;
+    errors: string[] | null;
+  };
+  description: {
+    value: string;
+    errors: string[] | null;
+  };
+    is_visible: {
+        value: string;
+        errors: string[] | null;
+    };
+};
+
 export interface TopicCreateState {
     status: "pending" | "success" | "failiure",
     internalErrors: string[] | null,
@@ -43,12 +60,8 @@ export interface TopicCreateState {
 }
 
 export interface MaterialCreateState {
-    status: "pending" | "success" | "failiure",
+    status: "pending" | "success" | "failure",
     internalErrors: string[] | null,
-    material_type: {
-        value: MaterialTypes,
-        errors: string[] | null,
-      },
       material_title: {
         value: string,
         errors: string[] | null,
