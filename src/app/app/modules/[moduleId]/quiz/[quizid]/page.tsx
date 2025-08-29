@@ -3,34 +3,37 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 
+import {fetchQuizIndex} from "@/utils/quizbackend";
+import { fetchQuizAnswerIndex } from "@/utils/quizbackend";
+
 // Questions data
-const questions = [
-  {
-    topic: "What is the capital of France?",
-    options: ["Berlin", "Madrid", "Paris", "Rome"],
-    answer: "Paris",
-  },
-  {
-    topic: "Which planet is known as the Red Planet?",
-    options: ["text"],
-    answer: "Mars",
-  },
-  {
-    topic: "Who developed the theory of relativity?",
-    options: ["Isaac Newton", "Albert Einstein", "Nikola Tesla", "Galileo"],
-    answer: "Albert Einstein",
-  },
-  {
-    topic: "What is the largest ocean on Earth?",
-    options: ["Atlantic", "Pacific", "Indian", "Arctic"],
-    answer: "Pacific",
-  },
-  {
-    topic: "Which language is used to style web pages?",
-    options: ["HTML", "CSS", "Python", "Java"],
-    answer: "CSS",
-  },
-];
+// const questions = [
+//   {
+//     topic: "What is the capital of France?",
+//     options: ["Berlin", "Madrid", "Paris", "Rome"],
+//     answer: "Paris",
+//   },
+  // {
+  //   topic: "Which planet is known as the Red Planet?",
+  //   options: ["text"],
+  //   answer: "Mars",
+  // },
+  // {
+  //   topic: "Who developed the theory of relativity?",
+  //   options: ["Isaac Newton", "Albert Einstein", "Nikola Tesla", "Galileo"],
+  //   answer: "Albert Einstein",
+  // },
+  // {
+  //   topic: "What is the largest ocean on Earth?",
+  //   options: ["Atlantic", "Pacific", "Indian", "Arctic"],
+  //   answer: "Pacific",
+  // },
+  // {
+  //   topic: "Which language is used to style web pages?",
+  //   options: ["HTML", "CSS", "Python", "Java"],
+  //   answer: "CSS",
+  // },
+// ];
 
 export default function Page() {
   const [answered, setAnswered] = useState<number[]>([]);
@@ -86,8 +89,50 @@ export default function Page() {
     }
   };
 
+  const[quizAnswerList, setQuizAnswerList] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchQuizAnswerIndex();
+        setQuizAnswerList(data);
+        console.log("Fetched quiz data:", data);
+      } catch (error) {
+        console.error("Error fetching quiz data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  const[quizList, setQuizList] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchQuizIndex();
+        setQuizList(data);
+        console.log("Fetched quiz data:", data);
+      } catch (error) {
+        console.error("Error fetching quiz data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+const questions = quizList.map((quiz) => ({
+  topic: quiz.question_text,
+  options: quizAnswerList
+    .filter((answer) => answer.quizquestion_id === quiz.id)
+    .map((answer) => answer.answer_text),
+  answer: "Paris", // replace this with the correct answer if you store it
+}));
+
   return (
+
     <div className={styles.pageWrapper}>
+
       {/* Questions Container */}
       <div className={styles.QuestionContainer}>
         {questions.map((q, qIndex) => (
