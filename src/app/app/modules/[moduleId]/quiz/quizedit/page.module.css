@@ -1,0 +1,45 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.quizList {
+  list-style: none;
+  padding: 0;
+}
+
+.quizItem {
+  background: #f9f9f9;
+  margin: 12px 0;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #ddd;
+}
+
+.quizItem:hover {
+  background: #f5ffe6;
+  transform: translateY(-3px);
+  border-color: #31f300;
+}
+
+.quizTitle {
+  font-size: 20px;
+  margin: 0 0 8px;
+  color: #000000;
+}
+
+.quizDescription {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}

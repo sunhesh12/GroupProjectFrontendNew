@@ -62,7 +62,7 @@ export default function SidebarLink({
   rounded,
   onClick,
   expanded,
-  styles
+  styles,
 }: SidebarLinkProps) {
   const {isCurrent: isActive} = useIsCurrentPath(href);
 

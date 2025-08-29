@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./style.module.css";
 import Image from "next/image";
@@ -8,19 +7,24 @@ import SidebarLink from "./sidebar-link/view";
 import InputField from "@/components/input/view";
 import ToggleButton from "./toggle-button/view";
 import Menu from "@/components/menu/view";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation"; // for App Router
+import signOut from "@/actions/signout";
+import type { User } from "@/utils/types/backend";
 
 interface AppSidebarProps {
   expanded: boolean;
   toggleExpanded: Dispatch<SetStateAction<boolean>>;
+  user: User | null;
 }
 
 export default function AppSidebar({
   expanded,
   toggleExpanded,
+  user,
 }: AppSidebarProps) {
   const [sessionMenu, toggleSessionMenu] = useState(false);
+
+  const router = useRouter();
   return (
     <aside
       className={styles.sidebar}
@@ -125,27 +129,22 @@ export default function AppSidebar({
             </SidebarLink>
           </li>
           <div id="profile-data" className={styles.profileContainer}>
-            <SidebarLink
-              icon="/icons/gear-solid.svg"
-              alt="An icon of a cog wheel"
-              href="/app/settings"
-              expanded={expanded}
-            >
-              Settings
-            </SidebarLink>
             <div className={styles.profile}>
               <div id="profile-pic">
                 {sessionMenu && (
                   <Menu
                     position={{
-                      right: "0px",
+                      right: expanded ? "0px" : "-140px",
                       bottom: "60px",
+                    }}
+                    onClose={() => {
+                      toggleSessionMenu(false);
                     }}
                     options={[
                       {
                         name: "Profile",
                         action: () => {
-
+                          router.push("/app/profile");
                         },
                       },
                       {
@@ -161,17 +160,17 @@ export default function AppSidebar({
                   />
                 )}
                 <SidebarLink
-                  icon={"/profile-pic.webp"}
+                  icon={"/profile-pic.png"}
                   alt="An image of a person"
                   dimensions={{ width: 30, height: 30 }}
                   rounded={true}
                   onClick={() => {
-                    toggleSessionMenu((sessionMenu) => !sessionMenu);
+                    toggleSessionMenu(!sessionMenu);
                   }}
                   expanded={expanded}
                 >
-                  {/* <div className={styles.username}>{session?.user.name}</div> */}
-                  {/* <div className={styles.email}>{session?.user.email}</div> */}
+                  <div className={styles.username}>{user?.full_name ?? "Guest Account"}</div>
+                  <div className={styles.email}>{user?.email}</div>
                 </SidebarLink>
               </div>
             </div>

@@ -2,13 +2,18 @@ import type {
   APIResponse,
   User,
   Module,
-  Course,
   UserWithToken,
-  ModuleWithCourses,
-  PortalUser,
+  AllModulesResponse,
+  FullModule,
+  TopicCreate,
+  MaterialCreate,
+  Announcement,
+  AnnouncementCreate,
+  Activity,
 } from "@/utils/types/backend";
+import { Session, Topic } from "@/utils/types/backend";
 
-export const url = process.env.BACKEND_URL;
+export const url = "http://127.0.0.1:8000";
 
 const handleResponse = async <T>(
   request: Response
@@ -65,13 +70,32 @@ const user = {
     },
   },
 
+  // Exchanging the session object with the user object
+  get: async (session: Session) => {
+    return fetchAPI<User>(`/api/v1/users/${session.id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+  },
+
+  modules: async (user: User) =>
+    fetchAPI<Module[]>(`/api/v1/users/${user.id}/enrolled/modules`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    }),
+
   create: (newUser: Partial<User>) =>
     fetchAPI<User>("/api/v1/users/", {
       method: "POST",
       body: JSON.stringify(newUser),
     }),
-
-  get: (id: string) => fetchAPI<PortalUser>(`/api/v1/users/${id}`),
 
   getAll: () => fetchAPI<User[]>("/api/v1/users/"),
 
@@ -79,7 +103,8 @@ const user = {
 
   getLecturers: () => fetchAPI<User[]>("/api/v1/users/lecturers"),
 
-  getTeachingModules: (id: string) => fetchAPI<Module[]>(`/api/v1/users/${id}/teaching/modules`),
+  getTeachingModules: (user: User) =>
+    fetchAPI<Module[]>(`/api/v1/users/${user.id}/teaching/modules`),
 
   update: (updatedUser: Partial<User>) =>
     fetchAPI<User>(`/api/v1/users/${updatedUser.id}`, {
@@ -89,12 +114,117 @@ const user = {
 };
 
 const modules = {
-  getAll: () => fetchAPI<ModuleWithCourses[]>("/api/v1/modules"),
-  get: (id: string) => fetchAPI<Module>(`/api/v1/modules/${id}`),
+  getAll: () => fetchAPI<AllModulesResponse>("/api/v1/modules"),
+  get: (id: string) => fetchAPI<FullModule>(`/api/v1/modules/${id}`),
+  createTopic: (moduleId: string, topicData: TopicCreate) =>
+    fetchAPI<Topic>(`/api/v1/modules/${moduleId}/topics`, {
+      method: "POST",
+      body: JSON.stringify(topicData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
+  archive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/modules/${moduleId}/archive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+    createAssignmentForTopic: (moduleId: string, topicId: string, assignmentData: Activity) =>
+    fetchAPI<Activity>(`/api/v1/modules/${moduleId}/topics/${topicId}/assignment`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+
+  unarchive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/modules/${moduleId}/unarchive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+
+  createAnnouncement: (
+    moduleId: string,
+    announcementData: AnnouncementCreate
+  ) =>
+    fetchAPI<Announcement>(`/api/v1/modules/${moduleId}/announcements`, {
+      method: "POST",
+      body: JSON.stringify(announcementData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
+};
+
+const topics = {
+  get: (moduleId: string) =>
+    fetchAPI<Topic[]>(`/api/v1/modules/${moduleId}/topics`),
+  addMaterial: (topicId: string, materialData: MaterialCreate) =>
+    fetchAPI<Topic>(`/api/v1/topics/${topicId}/materials`, {
+      method: "POST",
+      body: JSON.stringify(materialData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
+  archive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/topics/${moduleId}/archive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+
+  unarchive: (moduleId: string) =>
+    fetchAPI<null>(`/api/v1/topics/${moduleId}/unarchive`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }),
+  // 🔹 File upload (multipart/form-data)
+  uploadMaterial: (topicId: string, formData: FormData) =>
+    fetchAPI<Topic>(`/api/v1/topics/${topicId}/materials/upload`, {
+      method: "POST",
+      body: formData, // no headers → browser sets multipart automatically
+    }),
+};
+
+const assignments = {
+  create: (moduleId: string, assignment: any) =>
+    fetchAPI<Activity>(`/api/v1/modules/${moduleId}/activities/assignment`, {
+      method: "POST",
+      body: JSON.stringify(assignment),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }),
+
+  // 🔹 fetch all assignments in a module
+  getByModule: (moduleId: string) =>
+    fetchAPI<Activity[]>(`/api/v1/modules/${moduleId}/activities/assignments`),
+
+  // 🔹 fetch a specific assignment
+  get: (assignmentId: string) =>
+    fetchAPI<Activity>(`/api/v1/activities/assignment/${assignmentId}`),
 };
 
 const courses = {
-  getModules: (id: string) => fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`)
-}
+  getModules: (id: string) =>
+    fetchAPI<Module[]>(`/api/v1/courses/${id}/modules`),
+};
 
-export { user, modules, courses };
+export { user, modules, courses, topics, assignments };

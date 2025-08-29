@@ -1,29 +1,29 @@
-import { Suspense } from "react";
+"use client";
 import styles from "./style.module.css";
 import Preview from "@/components/preview/view";
-import Loading from "@/app/app/modules/[id]/loading";
 import Spinner from "@/components/spinner/view";
+import { LectureMaterial } from "@/utils/types/backend";
 
 interface TimelineProps {
-  title: string;
-  link: string;
+  lectureMaterial: LectureMaterial;
 }
 
-export default async function TimelineItem({ title, link }: TimelineProps) {
+export default function TimelineItem({ lectureMaterial }: TimelineProps) {
   return (
     <li className={styles.timelineItem}>
       {/* Timeline dot */}
       <div className={styles.timelineDot} />
 
       <br />
-      <Suspense fallback={
+      <Preview material={lectureMaterial} />
+      {/* <Suspense fallback={
         <div className={styles.loading}>
           <Spinner theme="dark" width={20} height={20} />
           Loading resource
         </div>
       }>
         <Preview link={link} title={title} />
-      </Suspense>
+      </Suspense> */}
     </li>
   );
 }

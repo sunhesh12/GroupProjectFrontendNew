@@ -15,7 +15,6 @@ export default async function signInAction(
 
   if (parsedForm.success) {
     const cookieStore = await cookies();
-    // Calling the sign in route
 
     const response = await user.auth.signin({
       email: parsedForm.data.email,
@@ -50,8 +49,9 @@ export default async function signInAction(
 
     // Setting the cookie with the access token
     cookieStore.set({
-      name: "access_token",
-      value: response.payload?.token,
+      name: "session",
+      // TODO: Make it more secure
+      value: JSON.stringify({id: response.payload.user.id, token: response.payload?.token}),
       httpOnly: true,
       maxAge: 86400,
     });

@@ -4,11 +4,12 @@ import { useReducer } from "react";
 import type { User } from "@/utils/types/backend";
 import { Table } from "@/components/table/view";
 import type { TableRowType } from "@/components/table/view";
-import { useAppControls } from "@/hooks/use-app-controls";
 import LecturerUpdateForm from "./lecturer-update-form";
 import NobgButton from "@/components/buttons/nobg/view";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import LecturerCreateForm from "./lecturer-create-form";
+import UserCreateForm from "./lecturer-create-form";
+import UserUpdateForm from "./lecturer-update-form";
+import { useState } from "react";
 
 // TODO: Connect backend
 
@@ -112,20 +113,38 @@ function reducer(
 }
 
 export default function Manage({ users }: ManageProps) {
-  const { openMessageBox } = useAppControls();
   // Has expensive computation
   const [state, dispatch] = useReducer<Reducer, User[]>(
     reducer,
     users,
     prepare
   );
+  const [userUpdateFormVisible, setUserUpdateFormVisible] = useState(false);
+    const [user, setUser] = useState<any>(null);
+  const [userFormVisible, setUserFormVisible] = useState(false);
   // Don't add any executions
+
+  const updateUserFormVisible = (visible: boolean, tableRow: any) => {
+    setUserUpdateFormVisible(visible);
+    setUser(tableRow);
+
+  }
+
   return (
     <div id="usersManage">
+      {userFormVisible && (
+              <UserCreateForm
+              />
+            )}
+            {userUpdateFormVisible && (
+              <UserUpdateForm
+                tableRow={user}
+              />
+            )}
       <NobgButton
         icon={faPlus}
         onClick={() => {
-          openMessageBox(<LecturerCreateForm />);
+          setUserFormVisible(true);
         }}
       >
         Create new lecturer
@@ -151,7 +170,7 @@ export default function Manage({ users }: ManageProps) {
           { name: "Updated at", type: "disabled", inputName: "updated_at" },
         ]}
         rowAction={(tableRow: TableRowType<User>) => {
-          openMessageBox(<LecturerUpdateForm tableRow={tableRow} />);
+                    updateUserFormVisible(true, tableRow);
         }}
       />
     </div>

@@ -14,16 +14,19 @@ const initialState: SignInState = {
   internalErrors: null,
   email: {
     value: "",
-    errors: null
+    errors: null,
   },
   password: {
     value: "",
-    errors: null
+    errors: null,
   },
-}
+};
 
 export default function SignInForm() {
-    const [values, formAction, isPending] = useActionState(signInAction, initialState);
+  const [values, formAction, isPending] = useActionState(
+    signInAction,
+    initialState
+  );
   const LoginIcon = "/logo.jpg";
 
   return (
@@ -32,8 +35,19 @@ export default function SignInForm() {
         <header className={styles.formHeader}>
           <Image src={LoginIcon} alt="LMS Logo" width={80} height={80} />
           <h1>Sign in</h1>
-          {values.status === "success" && <Message type="success" message="Form submitted successfully" />}
-          {values.status === "failiure" && <Message type="error" message={values.internalErrors?.reduce((acc, curr) => acc + curr + ",") || "Form couldnt submit due to an unknown error"} />}
+          {values.status === "success" && (
+            <Message type="success" message="Form submitted successfully" />
+          )}
+          {values.status === "failiure" && (
+            <Message
+              type="error"
+              message={
+                values.internalErrors?.reduce(
+                  (acc, curr) => acc + curr + ","
+                ) || "Form couldnt submit due to an unknown error"
+              }
+            />
+          )}
         </header>
         <InputField
           type="text"

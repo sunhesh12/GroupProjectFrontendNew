@@ -7,6 +7,43 @@ export type APIResponse<PayloadType> = {
   errors?: string[];
 };
 
+export interface MaterialCreate {
+  material_type: MaterialTypes;
+  material_title: string;
+  material_url?: string;
+}
+
+export interface Session {
+  id: string;
+  token: string;
+}
+
+export type Module = {
+  id: string;
+  module_name: string;
+  credit_value: number;
+  practical_exam_count: number;
+  description: string;
+  writing_exam_count: number;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  image: string | null;
+  semester: string | null;
+  archived: boolean;
+  courses: Course[];
+};
+
+export type Course = {
+  id: number;
+  course_name: string;
+  credit_value: number;
+  maximum_students: number;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  description: string;
+};
+
+
 export interface User {
   full_name: string;
   age: string;
@@ -16,6 +53,7 @@ export interface User {
   profile_picture: string;
   password: string;
   role: string;
+  token: string;
   status: string;
   course_id: string;
   updated_at: string;
@@ -33,39 +71,91 @@ export interface Topic {
   type: string;
   is_visible: string;
   is_complete: string;
-  created_at: string;
-  updated_at: string;
-  lecture_materials: LectureMaterial[];
+  deadline: string | null; // ISO date string or null if no deadline
+  created_at?: string;
+  updated_at?: string;
+  lecture_materials?: LectureMaterial[];
 }
 
-export interface PortalUser {
-  id: string;
-  Full_Name: string;
-  Age: string;
-  Email: string;
-  Mobile_No: string;
-  Address: string;
-  Profile_Picture: string | null;
-  Password: string;
-  updated_at: string;
-  created_at: string;
-  Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
-  Status: number; // maybe use enum for 0 = inactive, 1 = active
-  course_id: number | null;
+export type Activity = {
+  id: number;
+  activity_name: string;
+  type: string; // e.g., "assignment" | "quiz" | "lecture"
+  start_date: string | null;
+  start_time: string | null;
+  end_date: string | null;
+  end_time: string | null;
+  instructions: string | null;
+  question_count: number | null;
+  module_id: number;
+
+  // relationships
+  module?: {
+    id: number;
+    module_name: string;
+    [key: string]: any;
+  };
+  questions?: {
+    id: number;
+    question_text: string;
+    [key: string]: any;
+  }[];
+  participants?: {
+    id: number;
+    name: string;
+    email: string;
+    pivot: {
+      submission: string | null;
+      marks: number | null;
+      is_done: boolean;
+      created_at: string;
+      updated_at: string;
+    };
+  }[];
+};
+
+
+export interface TopicCreate {
+  title: string;
+  description: string;
+  type: string;
+  is_visible: boolean;
+  deadline?: string | null; // ISO date string or null if no deadline
 }
+
+export interface AnnouncementCreate {
+  topic: string;
+  description: string;
+}
+
+// export interface PortalUser {
+//   id: string;
+//   Full_Name: string;
+//   Age: string;
+//   Email: string;
+//   Mobile_No: string;
+//   Address: string;
+//   Profile_Picture: string | null;
+//   Password: string;
+//   updated_at: string;
+//   created_at: string;
+//   Role: 'lecturer' | 'student' | 'admin'; // you can adjust roles as needed
+//   Status: number; // maybe use enum for 0 = inactive, 1 = active
+//   course_id: string | null;
+// }
 
 export type MaterialTypes = 'video' | 'document' | 'link' | 'audio' | 'executable' | 'zip' | 'image' | 'website' | 'unknown' | 'error' | 'pdf';
 
-interface LectureMaterial {
+export interface LectureMaterial {
   id: number;
   topic_id: number;
-  material_type: MaterialTypes; // Adjust based on your use cases
+  file_path: string;
+  material_type: MaterialTypes; 
   material_title: string;
   material_url: string;
   created_at: string; // ISO 8601 timestamp format
   updated_at: string; // ISO 8601 timestamp format
 };
-
 
 export interface Announcement {
   id: string;
@@ -77,54 +167,6 @@ export interface Announcement {
   updated_at: string;
 }
 
-export interface Module {
-  id: string;
-  module_name: string | null;
-  credit_value: string | null;
-  semester: string | null;
-  image: string | null;
-  practical_exam_count: string | null;
-  writing_exam_count: string | null;
-  course_id: string | null;
-  created_at: string | null;
-  updated_at: string | null;
-  pivot?: {
-    module_id: string;
-    course_id: string;
-  };
-  activities: {
-    id: string;
-    activity_name: string | null;
-    type: "lesson";
-    start_date: string | null;
-    start_time: string | null;
-    end_date: string | null;
-    end_time: string | null;
-    instructions: string | null;
-    question_count: string;
-    module_id: string | null;
-    created_at: string | null;
-    updated_at: string | null;
-  }[];
-  topics: Topic[];
-  teachers: PortalUser[];
-  annoucements: Announcement[];
-}
-
-export interface Course {
-  id: string;
-  course_name: string;
-  credit_value: string;
-  maximum_students: string;
-  created_at: string;
-  updated_at: string | null;
-  description: string | null;
-  pivot: {
-    module_id: string;
-    course_id: string;
-  };
-}
-
 export interface CourseWithPivot extends Course {
   pivot: {
     module_id: string;
@@ -132,11 +174,13 @@ export interface CourseWithPivot extends Course {
   };
 }
 
-export interface ModuleWithCourses extends Module {
-  courses: CourseWithPivot[];
-}
+export type AllModulesResponse = APIResponse<Module[]>;
 
 export type UserWithToken = {
   user: User;
   token: string;
-};
+}
+export type FullModule = Module & {
+  topics: Topic[];
+  announcements: Announcement[];
+}

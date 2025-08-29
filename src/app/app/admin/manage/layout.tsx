@@ -1,4 +1,3 @@
-import { auth } from "@/utils/auth";
 import styles from "./layout.module.css";
 import { redirect } from "next/navigation";
 import { user } from "@/utils/backend";
@@ -11,6 +10,7 @@ import {
   faPersonChalkboard,
   faSchool,
 } from "@fortawesome/free-solid-svg-icons";
+import { getSession } from "@/actions/get-session";
 
 const workSansFont = Work_Sans({
   subsets: ["latin"],
@@ -21,15 +21,13 @@ export default async function ManageLayout({
 }: {
   children: ReactNode;
 }) {
-  const session = await auth();
-
+  const session = await getSession();
   // Unauthenticated
   if (!session) {
     redirect("/auth/signin");
   }
 
-  const res = await user.get(session.user.id!);
-  const currentUser = res?.payload;
+  const currentUser = session
 
   // Invalid user
   if (!currentUser) {
@@ -37,7 +35,7 @@ export default async function ManageLayout({
   }
 
   // Only for authorized admins
-  if (currentUser.role !== "admin") {
+  if (currentUser.role !== "lecturer") {
     redirect("/app/dashboard");
   }
 

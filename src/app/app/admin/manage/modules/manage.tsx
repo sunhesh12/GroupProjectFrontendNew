@@ -4,13 +4,13 @@ import { useReducer } from "react";
 import type { User } from "@/utils/types/backend";
 import { Table } from "@/components/table/view";
 import type { TableRowType } from "@/components/table/view";
-import { useAppControls } from "@/hooks/use-app-controls";
 import { faPlus, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import UserUpdateForm from "./student-update-form";
 import UserCreateForm from "./student-create-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NobgButton from "@/components/buttons/nobg/view";
 import Button from "@/components/buttons/view";
+import { useState } from "react";
 
 // TODO: Connect backend
 
@@ -114,16 +114,33 @@ function reducer(
 }
 
 export default function Manage({ users }: ManageProps) {
-  const { openMessageBox } = useAppControls();
-  // Has expensive computation
+    // Has expensive computation
   const [state, dispatch] = useReducer<Reducer, User[]>(
     reducer,
     users,
     prepare
   );
+  const [userUpdateFormVisible, setUserUpdateFormVisible] = useState(false);
+  const [userFormVisible, setUserFormVisible] = useState(false);
+    const [user, setUser] = useState<any>(null);
+
+  const updateUserFormVisible = (visible: boolean, tableRow: any) => {
+    setUserUpdateFormVisible(visible);
+    setUser(tableRow);
+
+  }
   // Don't add any executions
   return (
     <div id="usersManage">
+       {userFormVisible && (
+              <UserCreateForm
+              />
+            )}
+            {userUpdateFormVisible && (
+              <UserUpdateForm
+                tableRow={user}
+              />
+            )}
       <NobgButton
         icon={faPlus}
         onClick={() => {
@@ -160,7 +177,7 @@ export default function Manage({ users }: ManageProps) {
           { name: "Course id", type: "text", inputName: "address" },
         ]}
         rowAction={(tableRow: TableRowType<User>) => {
-          openMessageBox(<UserUpdateForm tableRow={tableRow} />);
+          updateUserFormVisible(true, tableRow);
         }}
       />
     </div>
